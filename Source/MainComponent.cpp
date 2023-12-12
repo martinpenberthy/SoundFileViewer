@@ -5,7 +5,7 @@ MainComponent::MainComponent()
 {
     // Make sure you set the size of the component after
     // you add any child components.
-    setSize (600, 800);
+    setSize (800, 600);
 
     // Some platforms require permissions to open input channels so request that here
     if (juce::RuntimePermissions::isRequired (juce::RuntimePermissions::recordAudio)
@@ -38,6 +38,7 @@ MainComponent::MainComponent()
             DBG("Constructor");
         }
     }
+    DBG(fileComponents.size());
     
     for(it = fileComponents.begin(); it != fileComponents.end(); it++)
     {
@@ -84,7 +85,8 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
     }*/
     for(it = fileComponents.begin(); it != fileComponents.end(); it++)
     {
-        it->get()->prepareToPlay(samplesPerBlockExpected, sampleRate);
+        //it->get()->prepareToPlay(samplesPerBlockExpected, sampleRate);
+        (*it)->prepareToPlay(samplesPerBlockExpected, sampleRate);
     }
 
 }
@@ -115,7 +117,9 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
     }*/
     for(it = fileComponents.begin(); it != fileComponents.end(); it++)
     {
-        it->get()->getNextAudioBlock(bufferToFill);
+        //it->get()->getNextAudioBlock(bufferToFill);
+        (*it)->getNextAudioBlock(bufferToFill);
+
     }
 
 }
@@ -135,7 +139,8 @@ void MainComponent::releaseResources()
     }*/
     for(it = fileComponents.begin(); it != fileComponents.end(); it++)
     {
-        it->get()->releaseResources();
+        //it->get()->releaseResources();
+        (*it)->releaseResources();
     }
     
 }
@@ -172,7 +177,7 @@ void MainComponent::resized()
     }*/
     for(it = fileComponents.begin(); it != fileComponents.end(); it++)
     {
-        it->get()->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
+        (*it)->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
     }
 
 }
