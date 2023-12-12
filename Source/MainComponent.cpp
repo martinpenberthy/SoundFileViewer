@@ -5,7 +5,7 @@ MainComponent::MainComponent()
 {
     // Make sure you set the size of the component after
     // you add any child components.
-    setSize (800, 600);
+    setSize (600, 800);
 
     // Some platforms require permissions to open input channels so request that here
     if (juce::RuntimePermissions::isRequired (juce::RuntimePermissions::recordAudio)
@@ -20,11 +20,35 @@ MainComponent::MainComponent()
         setAudioChannels (2, 2);
     }    
     
-        
-    addAndMakeVisible(&fileComp1);
-    addAndMakeVisible(&fileComp2);
-    addAndMakeVisible(&fileComp3);
+    //formatManager = new juce::AudioFormatManager();
+    //fileComp1 = new fileComponent(formatManager);
+    
+    //addAndMakeVisible(&fileComp1);
+    //addAndMakeVisible(&fileComp2);
+    //addAndMakeVisible(&fileComp3);
 
+    for(int i = 0; i < 5; i++)
+    {
+        try{
+            fileComponents.push_back(std::make_unique<fileComponent>());
+        }
+        catch(std::exception e)
+        {
+            DBG(e.what());
+            DBG("Constructor");
+        }
+    }
+    
+    for(it = fileComponents.begin(); it != fileComponents.end(); it++)
+    {
+        try{
+            addAndMakeVisible(it->get());
+        }
+        catch(std::exception e)
+        {
+            DBG("Add and make visible");
+        }
+    }
 }
 
 MainComponent::~MainComponent()
@@ -43,9 +67,25 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
     // but be careful - it will be called on the audio thread, not the GUI thread.
 
     // For more details, see the help for AudioProcessor::prepareToPlay()
-    fileComp1.prepareToPlay(samplesPerBlockExpected, sampleRate);
-    fileComp2.prepareToPlay(samplesPerBlockExpected, sampleRate);
-    fileComp3.prepareToPlay(samplesPerBlockExpected, sampleRate);
+    //fileComp1.prepareToPlay(samplesPerBlockExpected, sampleRate);
+    //fileComp2.prepareToPlay(samplesPerBlockExpected, sampleRate);
+    //fileComp3.prepareToPlay(samplesPerBlockExpected, sampleRate);
+    
+    /*for(int i = 0; i < 5; i++)
+    {
+        try{
+            fileComponents.at(i)->prepareToPlay(samplesPerBlockExpected, sampleRate);
+        }
+        catch(std::exception e)
+        {
+            DBG(e.what());
+            DBG("Prepare to play");
+        }
+    }*/
+    for(it = fileComponents.begin(); it != fileComponents.end(); it++)
+    {
+        it->get()->prepareToPlay(samplesPerBlockExpected, sampleRate);
+    }
 
 }
 
@@ -59,10 +99,24 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
     }
 
     transportSource.getNextAudioBlock (bufferToFill);*/
-    fileComp1.getNextAudioBlock(bufferToFill);
-    fileComp2.getNextAudioBlock(bufferToFill);
-    fileComp3.getNextAudioBlock(bufferToFill);
-
+    //fileComp1.getNextAudioBlock(bufferToFill);
+    //fileComp2.getNextAudioBlock(bufferToFill);
+    //fileComp3.getNextAudioBlock(bufferToFill);
+    /*for(int i = 0; i < 5; i++)
+    {
+        try{
+            fileComponents.at(i)->getNextAudioBlock(bufferToFill);
+        }
+        catch(std::exception e)
+        {
+            DBG(e.what());
+            DBG("Get next audio block");
+        }
+    }*/
+    for(it = fileComponents.begin(); it != fileComponents.end(); it++)
+    {
+        it->get()->getNextAudioBlock(bufferToFill);
+    }
 
 }
 
@@ -72,9 +126,17 @@ void MainComponent::releaseResources()
     // restarted due to a setting change.
 
     // For more details, see the help for AudioProcessor::releaseResources()
-    fileComp1.releaseResources();
-    fileComp2.releaseResources();
-    fileComp3.releaseResources();
+    //fileComp1.releaseResources();
+    //fileComp2.releaseResources();
+    //fileComp3.releaseResources();
+    /*for(int i = 0; i < 5; i++)
+    {
+        fileComponents.at(i)->releaseResources();
+    }*/
+    for(it = fileComponents.begin(); it != fileComponents.end(); it++)
+    {
+        it->get()->releaseResources();
+    }
     
 }
 
@@ -89,17 +151,28 @@ void MainComponent::paint (juce::Graphics& g)
 
 void MainComponent::resized()
 {
-    // This is called when the MainContentComponent is resized.
-    // If you add any child components, this is where you should
-    // update their positions.
-    //fileComp1.setBounds(getWidth(), getHeight(), getWidth(), getHeight() / 4);
-    
     auto area = getLocalBounds();
     
     auto heightFile1 = 50;
     auto marginFile1 = 7;
-    fileComp1.setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
-    fileComp2.setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
-    fileComp3.setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
+    //fileComp1.setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
+    //fileComp2.setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
+    //fileComp3.setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
+    /*
+    for(int i = 0; i < 5; i++)
+    {
+        try{
+            fileComponents[i]->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
+        }
+        catch(std::exception e)
+        {
+            DBG(e.what());
+            DBG("resized");
+        }
+    }*/
+    for(it = fileComponents.begin(); it != fileComponents.end(); it++)
+    {
+        it->get()->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
+    }
 
 }

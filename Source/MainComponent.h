@@ -27,12 +27,17 @@ private:
     //==============================================================================
     // Your private member variables go here...
 
-    fileComponent fileComp1;
-    fileComponent fileComp2;
-    fileComponent fileComp3;
+    //fileComponent fileComp1;
+    //fileComponent fileComp2;
+    //fileComponent fileComp3;
+    std::vector<std::unique_ptr<fileComponent>> fileComponents;
     
+    std::vector<std::unique_ptr<fileComponent>>::iterator it;
+
     //std::unique_ptr<juce::AudioFormatReaderSource> readerSource1;
 
+    juce::AudioFormatManager* formatManager;
+    std::unique_ptr<juce::AudioFormatReaderSource> readerSource;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

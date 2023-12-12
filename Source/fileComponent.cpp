@@ -39,6 +39,7 @@ fileComponent::fileComponent() : state(Stopped), thumbnailCache (5),
     startTimer(40);
 }
 
+
 fileComponent::~fileComponent()
 {
 }
@@ -70,6 +71,7 @@ void fileComponent::openButtonClicked()
             {
                 //Make the Format Reader Source from the reader
                 auto newSource = std::make_unique<juce::AudioFormatReaderSource> (reader, true);
+                //auto newSource = std::make_shared<juce::AudioFormatReaderSource> (reader, true);
                 //Set the transport source
                 transportSource.setSource (newSource.get(), 0, nullptr, reader->sampleRate);
                 playButton.setEnabled (true);
@@ -77,6 +79,8 @@ void fileComponent::openButtonClicked()
                 thumbnail.setSource(new juce::FileInputSource (file));
                 //Get rid of the Reader Source
                 readerSource.reset (newSource.release());
+                //readerSource.reset ();
+
             }
         }
     });
@@ -178,7 +182,6 @@ void fileComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
 
 void fileComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
 {
-
     if (readerSource.get() == nullptr)
     {
         bufferToFill.clearActiveBufferRegion();

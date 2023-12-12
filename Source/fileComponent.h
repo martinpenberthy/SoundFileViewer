@@ -19,6 +19,7 @@ class fileComponent  : public juce::AudioAppComponent, public juce::ChangeListen
 {
 public:
     fileComponent();
+
     ~fileComponent() override;
 
     enum TransportState
@@ -38,6 +39,7 @@ public:
     void getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill) override;
     void releaseResources() override;
     
+    void setReaderSource();
     
     void changeListenerCallback (juce::ChangeBroadcaster* source) override;
     void changeState (TransportState newState);
@@ -52,14 +54,13 @@ public:
     void paintIfFileLoaded (juce::Graphics& g, const juce::Rectangle<int>& thumbnailBounds);
     void timerCallback() override;
 
-
-    //void setReaderSource(std::unique<juce::AudioFormatReaderSource>());
-    
 private:
     std::unique_ptr<juce::FileChooser> chooser;
 
     juce::AudioFormatManager formatManager;
+    //juce::AudioFormatManager *formatManager;
     std::unique_ptr<juce::AudioFormatReaderSource> readerSource;
+    //std::shared_ptr<juce::AudioFormatReaderSource> readerSource;
     //juce::AudioFormatReaderSource* readerSource;
     juce::AudioTransportSource transportSource;
     TransportState state;
