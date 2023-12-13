@@ -52,6 +52,9 @@ public:
     void paintIfFileLoaded (juce::Graphics& g, const juce::Rectangle<int>& thumbnailBounds);
     void timerCallback() override;
 
+    
+    int sampsPerBlock;
+    double sampRate;
 private:
     std::unique_ptr<juce::FileChooser> chooser;
 

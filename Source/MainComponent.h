@@ -23,7 +23,7 @@ public:
     void paint (juce::Graphics& g) override;
     void resized() override;
 
-    int numFiles = 5;
+    int numFiles = 2;
 private:
     //==============================================================================
     // Your private member variables go here...

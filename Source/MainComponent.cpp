@@ -87,9 +87,14 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
             DBG("Prepare to play");
         }
     }*/
+    DBG("prepareToPlay");
+    
+
     for(it = fileComponents.begin(); it != fileComponents.end(); it++)
     {
-        DBG("prepareToPlay");
+        it->get()->sampRate = sampleRate;
+        it->get()->sampsPerBlock = samplesPerBlockExpected;
+        
         it->get()->prepareToPlay(samplesPerBlockExpected, sampleRate);
         //(*it)->prepareToPlay(samplesPerBlockExpected, sampleRate);
     }
@@ -123,6 +128,8 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
     
     for(it = fileComponents.begin(); it != fileComponents.end(); it++)
     {
+        DBG("getNextAudioBlock");
+        //it->get()->sampRate = bufferToFill
         it->get()->getNextAudioBlock(bufferToFill);
         //(*it)->getNextAudioBlock(bufferToFill);
     }

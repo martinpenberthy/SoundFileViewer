@@ -44,11 +44,6 @@ fileComponent::~fileComponent()
 {
 }
 
-/*void fileComponent::setReaderSource(std::unique<juce::AudioFormatReaderSource> (newSource))
-{
-    readerSource = newSource;
-}
-*/
 void fileComponent::openButtonClicked()
 {
     chooser = std::make_unique<juce::FileChooser> ("Select a Wave file to play...",
@@ -80,10 +75,11 @@ void fileComponent::openButtonClicked()
                 //Get rid of the Reader Source
                 readerSource.reset (newSource.release());
                 //readerSource.reset ();
-
             }
         }
     });
+    
+    prepareToPlay(sampsPerBlock, sampRate);
 }
 
 void fileComponent::timerCallback()
@@ -176,7 +172,6 @@ void fileComponent::changeState (TransportState newState)
 
 void fileComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
-
     transportSource.prepareToPlay (samplesPerBlockExpected, sampleRate);
 }
 
@@ -207,7 +202,7 @@ void fileComponent::paint (juce::Graphics& g)
     g.setColour (juce::Colours::grey);
     g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
     
-    auto lb = getLocalBounds()  ;
+    auto lb = getLocalBounds();
     juce::Rectangle<int> thumbnailBounds (lb.getWidth() / 2, lb.getY(), lb.getWidth() / 2, lb.getHeight());
 
     if (thumbnail.getNumChannels() == 0)
@@ -263,8 +258,6 @@ void fileComponent::resized()
     const auto container = getLocalBounds().reduced(4);
     auto bounds = container;
     
-    auto buttonHeight = 35;
-    auto buttonWidth = 100;
     auto buttonMargin = 4;
     
     //openButton.setBounds(area.removeFromTop(buttonHeight).removeFromLeft(buttonWidth).reduced(buttonMargin));
