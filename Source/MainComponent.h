@@ -23,6 +23,7 @@ public:
     void paint (juce::Graphics& g) override;
     void resized() override;
 
+    int numFiles = 5;
 private:
     //==============================================================================
     // Your private member variables go here...
@@ -36,8 +37,8 @@ private:
 
     //std::unique_ptr<juce::AudioFormatReaderSource> readerSource1;
 
-    juce::AudioFormatManager* formatManager;
-    std::unique_ptr<juce::AudioFormatReaderSource> readerSource;
+    //juce::AudioFormatManager* formatManager;
+    //std::unique_ptr<juce::AudioFormatReaderSource> readerSource;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

@@ -189,7 +189,6 @@ void fileComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
     }
 
     transportSource.getNextAudioBlock (bufferToFill);
-    
 }
 
 

@@ -3,9 +3,7 @@
 //==============================================================================
 MainComponent::MainComponent()
 {
-    // Make sure you set the size of the component after
-    // you add any child components.
-    setSize (800, 600);
+
 
     // Some platforms require permissions to open input channels so request that here
     if (juce::RuntimePermissions::isRequired (juce::RuntimePermissions::recordAudio)
@@ -27,7 +25,7 @@ MainComponent::MainComponent()
     //addAndMakeVisible(&fileComp2);
     //addAndMakeVisible(&fileComp3);
 
-    for(int i = 0; i < 5; i++)
+    for(int i = 0; i < numFiles; i++)
     {
         try{
             fileComponents.push_back(std::make_unique<fileComponent>());
@@ -40,16 +38,22 @@ MainComponent::MainComponent()
     }
     DBG(fileComponents.size());
     
+    
     for(it = fileComponents.begin(); it != fileComponents.end(); it++)
     {
         try{
             addAndMakeVisible(it->get());
+            DBG(typeid(it->get()).name());
         }
         catch(std::exception e)
         {
             DBG("Add and make visible");
         }
     }
+    
+    // Make sure you set the size of the component after
+    // you add any child components.
+    setSize (800, 600);
 }
 
 MainComponent::~MainComponent()
@@ -85,8 +89,9 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
     }*/
     for(it = fileComponents.begin(); it != fileComponents.end(); it++)
     {
-        //it->get()->prepareToPlay(samplesPerBlockExpected, sampleRate);
-        (*it)->prepareToPlay(samplesPerBlockExpected, sampleRate);
+        DBG("prepareToPlay");
+        it->get()->prepareToPlay(samplesPerBlockExpected, sampleRate);
+        //(*it)->prepareToPlay(samplesPerBlockExpected, sampleRate);
     }
 
 }
@@ -115,11 +120,11 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
             DBG("Get next audio block");
         }
     }*/
+    
     for(it = fileComponents.begin(); it != fileComponents.end(); it++)
     {
-        //it->get()->getNextAudioBlock(bufferToFill);
-        (*it)->getNextAudioBlock(bufferToFill);
-
+        it->get()->getNextAudioBlock(bufferToFill);
+        //(*it)->getNextAudioBlock(bufferToFill);
     }
 
 }
@@ -139,8 +144,8 @@ void MainComponent::releaseResources()
     }*/
     for(it = fileComponents.begin(); it != fileComponents.end(); it++)
     {
-        //it->get()->releaseResources();
-        (*it)->releaseResources();
+        it->get()->releaseResources();
+        //(*it)->releaseResources();
     }
     
 }
@@ -177,7 +182,8 @@ void MainComponent::resized()
     }*/
     for(it = fileComponents.begin(); it != fileComponents.end(); it++)
     {
-        (*it)->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
+        it->get()->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
+        //(*it)->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
     }
 
 }
