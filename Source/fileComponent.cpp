@@ -224,10 +224,12 @@ void fileComponent::paintIfNoFileLoaded (juce::Graphics& g, const juce::Rectangl
     g.fillRect (thumbnailBounds);
     g.setColour (juce::Colours::white);
     g.drawFittedText ("No File Loaded", thumbnailBounds, juce::Justification::centred, 1);
+    DBG("paintNoFile");
 }
 
 void fileComponent::paintIfFileLoaded (juce::Graphics& g, const juce::Rectangle<int>& thumbnailBounds)
 {
+    DBG("paintFileLoaded");
     g.setColour (juce::Colours::white);
     g.fillRect (thumbnailBounds);
 
