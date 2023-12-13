@@ -37,6 +37,7 @@ fileComponent::fileComponent() : state(Stopped), thumbnailCache (5),
     transportSource.addChangeListener (this);
     thumbnail.addChangeListener (this);
     startTimer(40);
+    fileLoaded = false;
 }
 
 
@@ -79,6 +80,11 @@ void fileComponent::openButtonClicked()
         }
     });
     
+    
+    if(transportSource.getLengthInSeconds() > .01f)
+        fileLoaded = true;
+    else
+        fileLoaded = false;
     prepareToPlay(sampsPerBlock, sampRate);
 }
 

@@ -126,12 +126,15 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
         }
     }*/
     
+    int i = 0;
     for(it = fileComponents.begin(); it != fileComponents.end(); it++)
     {
-        DBG("getNextAudioBlock");
-        //it->get()->sampRate = bufferToFill
-        it->get()->getNextAudioBlock(bufferToFill);
-        //(*it)->getNextAudioBlock(bufferToFill);
+        auto curr = it->get();
+        curr->getNextAudioBlock(bufferToFill);
+        //DBG("getNextAudioBlock");
+        //DBG(i);
+        
+        i++;
     }
 
 }
@@ -149,6 +152,7 @@ void MainComponent::releaseResources()
     {
         fileComponents.at(i)->releaseResources();
     }*/
+    
     for(it = fileComponents.begin(); it != fileComponents.end(); it++)
     {
         it->get()->releaseResources();

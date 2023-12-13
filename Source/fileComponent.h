@@ -55,14 +55,15 @@ public:
     
     int sampsPerBlock;
     double sampRate;
+    
+    bool fileLoaded = false;
 private:
     std::unique_ptr<juce::FileChooser> chooser;
 
     juce::AudioFormatManager formatManager;
-    //juce::AudioFormatManager *formatManager;
+
     std::unique_ptr<juce::AudioFormatReaderSource> readerSource;
-    //std::shared_ptr<juce::AudioFormatReaderSource> readerSource;
-    //juce::AudioFormatReaderSource* readerSource;
+
     juce::AudioTransportSource transportSource;
     TransportState state;
     juce::AudioThumbnailCache thumbnailCache;
