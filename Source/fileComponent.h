@@ -60,13 +60,13 @@ public:
     juce::AudioFormatManager formatManager;
     std::unique_ptr<juce::AudioFormatReaderSource> readerSource;
     juce::AudioTransportSource transportSource;
+    
+    juce::AudioThumbnailCache thumbnailCache;
     juce::AudioThumbnail thumbnail;
 private:
     std::unique_ptr<juce::FileChooser> chooser;
 
     TransportState state;
-    juce::AudioThumbnailCache thumbnailCache;
-
     
     juce::TextButton openButton;
     juce::TextButton playButton;

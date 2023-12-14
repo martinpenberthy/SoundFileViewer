@@ -25,40 +25,24 @@ MainComponent::MainComponent()
     //addAndMakeVisible(&fileComp2);
     //addAndMakeVisible(&fileComp3);
 
+    //Call constructors for fileComponent
     for(int i = 0; i < numFiles; i++)
-    {
-        try{
-            fileComponents.push_back(std::make_unique<fileComponent>());
-        }
-        catch(std::exception e)
-        {
-            DBG(e.what());
-            DBG("Constructor");
-        }
-    }
-    DBG(fileComponents.size());
+        fileComponents.push_back(std::make_unique<fileComponent>());
     
     
+    //addAndMakeVisible
+    for(it = fileComponents.begin(); it != fileComponents.end(); it++)
+        addAndMakeVisible(it->get());
+
+
+    
+    //Add listeners
     for(it = fileComponents.begin(); it != fileComponents.end(); it++)
     {
-        try{
-            addAndMakeVisible(it->get());
-            DBG(typeid(it->get()).name());
-        }
-        catch(std::exception e)
-        {
-            DBG("Add and make visible");
-        }
+        it->get()->transportSource.addChangeListener (this);
+        it->get()->thumbnail.addChangeListener (this);
     }
-    
-    
-    
-     transportSource.addChangeListener (this);
-     thumbnail.addChangeListener (this);
-     startTimer(40);
-     
-    
-    
+    //startTimer(40);
     
     // Make sure you set the size of the component after
     // you add any child components.
@@ -135,15 +119,11 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
         }
     }*/
     
-    int i = 0;
+
     for(it = fileComponents.begin(); it != fileComponents.end(); it++)
     {
         auto curr = it->get();
         curr->getNextAudioBlock(bufferToFill);
-        //DBG("getNextAudioBlock");
-        //DBG(i);
-        
-        i++;
     }
 
 }
@@ -185,26 +165,9 @@ void MainComponent::resized()
     
     auto heightFile1 = 50;
     auto marginFile1 = 7;
-    //fileComp1.setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
-    //fileComp2.setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
-    //fileComp3.setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
-    /*
-    for(int i = 0; i < 5; i++)
-    {
-        try{
-            fileComponents[i]->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
-        }
-        catch(std::exception e)
-        {
-            DBG(e.what());
-            DBG("resized");
-        }
-    }*/
+
     for(it = fileComponents.begin(); it != fileComponents.end(); it++)
-    {
         it->get()->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
-        //(*it)->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
-    }
 
 }
 

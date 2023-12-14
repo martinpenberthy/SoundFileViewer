@@ -24,11 +24,11 @@ public:
     void resized() override;
 
     void changeListenerCallback (juce::ChangeBroadcaster* source) override;
-    void timerCallback() override;
+
 
 private:
     //==============================================================================
-    
+    void timerCallback() override;
 
     //fileComponent fileComp1;
     //fileComponent fileComp2;

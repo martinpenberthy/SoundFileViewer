@@ -12,8 +12,8 @@
 #include "fileComponent.h"
 
 //==============================================================================
-fileComponent::fileComponent() : state(Stopped), thumbnailCache (5),
-                                 thumbnail (512, formatManager, thumbnailCache) // [5]
+fileComponent::fileComponent() : thumbnailCache (5), thumbnail (512, formatManager, thumbnailCache),
+state(Stopped)
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
