@@ -7,7 +7,7 @@
     This component lives inside our window, and this is where you should put all
     your controls and content.
 */
-class MainComponent  : public juce::AudioAppComponent
+class MainComponent  : public juce::AudioAppComponent, public juce::ChangeListener, private juce::Timer
 {
 public:
     //==============================================================================
@@ -23,10 +23,12 @@ public:
     void paint (juce::Graphics& g) override;
     void resized() override;
 
-    int numFiles = 2;
+    void changeListenerCallback (juce::ChangeBroadcaster* source) override;
+    void timerCallback() override;
+
 private:
     //==============================================================================
-    // Your private member variables go here...
+    
 
     //fileComponent fileComp1;
     //fileComponent fileComp2;
@@ -35,6 +37,7 @@ private:
     
     std::vector<std::unique_ptr<fileComponent>>::iterator it;
 
+    int numFiles = 2;
     //std::unique_ptr<juce::AudioFormatReaderSource> readerSource1;
 
     //juce::AudioFormatManager* formatManager;

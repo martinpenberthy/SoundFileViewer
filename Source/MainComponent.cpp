@@ -51,6 +51,15 @@ MainComponent::MainComponent()
         }
     }
     
+    
+    
+     transportSource.addChangeListener (this);
+     thumbnail.addChangeListener (this);
+     startTimer(40);
+     
+    
+    
+    
     // Make sure you set the size of the component after
     // you add any child components.
     setSize (800, 600);
@@ -197,4 +206,22 @@ void MainComponent::resized()
         //(*it)->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
     }
 
+}
+
+void MainComponent::timerCallback()
+{
+    for(it = fileComponents.begin(); it != fileComponents.end(); it++)
+        it->get()->repaint();
+}
+
+void MainComponent::changeListenerCallback (juce::ChangeBroadcaster* source)
+{
+    for(it = fileComponents.begin(); it != fileComponents.end(); it++)
+    {
+        if (source == &((*it)->transportSource))
+            it->get()->transportSourceChanged();
+        if (source == &((*it)->thumbnail))
+            it->get()->thumbnailChanged();
+    }
+    
 }

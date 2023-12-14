@@ -34,9 +34,7 @@ fileComponent::fileComponent() : state(Stopped), thumbnailCache (5),
     stopButton.setEnabled (false);
     
     formatManager.registerBasicFormats();
-    transportSource.addChangeListener (this);
-    thumbnail.addChangeListener (this);
-    startTimer(40);
+
     fileLoaded = false;
 }
 
@@ -87,12 +85,16 @@ void fileComponent::openButtonClicked()
         fileLoaded = false;
     prepareToPlay(sampsPerBlock, sampRate);
 }
-
-void fileComponent::timerCallback()
+/*
+void fileComponent::changeListenerCallback (juce::ChangeBroadcaster* source)
 {
-    repaint();
-}
+    if (source == &transportSource)
+        transportSourceChanged();
+    if (source == &thumbnail)
+        thumbnailChanged();
 
+}
+*/
 void fileComponent::playButtonClicked()
 {
     if ((state == Stopped) || (state == Paused))
@@ -110,14 +112,7 @@ void fileComponent::stopButtonClicked()
 }
 
 
-void fileComponent::changeListenerCallback (juce::ChangeBroadcaster* source)
-{
-    if (source == &transportSource)
-        transportSourceChanged();
-    if (source == &thumbnail)
-        thumbnailChanged();
-    
-}
+
 
 void fileComponent::transportSourceChanged()
 {

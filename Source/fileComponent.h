@@ -15,7 +15,7 @@
 //==============================================================================
 /*
 */
-class fileComponent  : public juce::AudioAppComponent, public juce::ChangeListener, private juce::Timer
+class fileComponent  : public juce::AudioAppComponent
 {
 public:
     fileComponent();
@@ -39,7 +39,7 @@ public:
     void getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill) override;
     void releaseResources() override;
         
-    void changeListenerCallback (juce::ChangeBroadcaster* source) override;
+
     void changeState (TransportState newState);
     
     void openButtonClicked();
@@ -50,24 +50,23 @@ public:
     void thumbnailChanged();
     void paintIfNoFileLoaded (juce::Graphics& g, const juce::Rectangle<int>& thumbnailBounds);
     void paintIfFileLoaded (juce::Graphics& g, const juce::Rectangle<int>& thumbnailBounds);
-    void timerCallback() override;
 
     
     int sampsPerBlock;
     double sampRate;
     
     bool fileLoaded = false;
+    
+    juce::AudioFormatManager formatManager;
+    std::unique_ptr<juce::AudioFormatReaderSource> readerSource;
+    juce::AudioTransportSource transportSource;
+    juce::AudioThumbnail thumbnail;
 private:
     std::unique_ptr<juce::FileChooser> chooser;
 
-    juce::AudioFormatManager formatManager;
-
-    std::unique_ptr<juce::AudioFormatReaderSource> readerSource;
-
-    juce::AudioTransportSource transportSource;
     TransportState state;
     juce::AudioThumbnailCache thumbnailCache;
-    juce::AudioThumbnail thumbnail;
+
     
     juce::TextButton openButton;
     juce::TextButton playButton;
