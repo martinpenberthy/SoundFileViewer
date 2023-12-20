@@ -109,10 +109,8 @@ void fileComponent::stopButtonClicked()
         changeState (Stopped);
     else
         changeState (Stopping);
+    
 }
-
-
-
 
 void fileComponent::transportSourceChanged()
 {

@@ -63,10 +63,13 @@ public:
     
     juce::AudioThumbnailCache thumbnailCache;
     juce::AudioThumbnail thumbnail;
+    
+    
+    TransportState state;
+
 private:
     std::unique_ptr<juce::FileChooser> chooser;
 
-    TransportState state;
     
     juce::TextButton openButton;
     juce::TextButton playButton;

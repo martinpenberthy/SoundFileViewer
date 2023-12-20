@@ -37,9 +37,11 @@ private:
     
     std::vector<std::unique_ptr<fileComponent>>::iterator it;
 
-    int numFiles = 2;
+    int numFiles = 1;
+    std::unique_ptr<juce::AudioTransportSource> globalTransportSource;
+    
     //std::unique_ptr<juce::AudioFormatReaderSource> readerSource1;
-
+    
     //juce::AudioFormatManager* formatManager;
     //std::unique_ptr<juce::AudioFormatReaderSource> readerSource;
 

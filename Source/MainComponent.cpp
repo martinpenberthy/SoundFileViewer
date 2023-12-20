@@ -120,12 +120,17 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
     }*/
     
 
+    /*for(it = fileComponents.begin(); it != fileComponents.end(); it++)
+    {
+        auto curr = it->get();
+        curr->getNextAudioBlock(bufferToFill);
+    }*/
+
     for(it = fileComponents.begin(); it != fileComponents.end(); it++)
     {
         auto curr = it->get();
         curr->getNextAudioBlock(bufferToFill);
     }
-
 }
 
 void MainComponent::releaseResources()
