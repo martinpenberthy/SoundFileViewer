@@ -85,11 +85,12 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
 
     for(it = fileComponents.begin(); it != fileComponents.end(); it++)
     {
-        it->get()->sampRate = sampleRate;
-        it->get()->sampsPerBlock = samplesPerBlockExpected;
+        auto curr = it->get();
+        curr->sampRate = sampleRate;
+        curr->sampsPerBlock = samplesPerBlockExpected;
         
-        it->get()->prepareToPlay(samplesPerBlockExpected, sampleRate);
-        //(*it)->prepareToPlay(samplesPerBlockExpected, sampleRate);
+        if(curr->fileLoaded)
+            curr->prepareToPlay(samplesPerBlockExpected, sampleRate);
     }
 
 }
@@ -129,7 +130,8 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
     for(it = fileComponents.begin(); it != fileComponents.end(); it++)
     {
         auto curr = it->get();
-        curr->getNextAudioBlock(bufferToFill);
+        if(curr->state == fileComponent::Playing)
+            curr->getNextAudioBlock(bufferToFill);
     }
 }
 
