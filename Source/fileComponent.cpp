@@ -61,11 +61,11 @@ void fileComponent::openButtonClicked()
         {
             //Make a reader for this file
             reader = std::make_unique<juce::AudioFormatReader>(formatManager.createReaderFor (file));
-
+            
             if (reader != nullptr)
             {
                 //Make the Format Reader Source from the reader
-                auto newSource = std::make_unique<juce::AudioFormatReaderSource> (reader, true);
+                auto newSource = std::make_unique<juce::AudioFormatReaderSource> (reader.get(), true);
                 //Set the transport source
                // transportSource.setSource (newSource.get(), 0, nullptr, reader->sampleRate);
                 playButton.setEnabled (true);
@@ -86,16 +86,16 @@ void fileComponent::openButtonClicked()
 }
 
 
-/*
+
 void fileComponent::changeListenerCallback (juce::ChangeBroadcaster* source)
 {
-    if (source == &transportSource)
-        transportSourceChanged();
+    //if (source == &transportSource)
+        //transportSourceChanged();
     if (source == &thumbnail)
         thumbnailChanged();
 
 }
-*/
+
 void fileComponent::playButtonClicked()
 {
     if ((state == Stopped) || (state == Paused))
@@ -270,3 +270,4 @@ void fileComponent::resized()
     playButton.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.1f)).reduced(buttonMargin));
     stopButton.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.1f)).reduced(buttonMargin));
 }
+

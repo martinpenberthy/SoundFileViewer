@@ -132,7 +132,7 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
         auto curr = it->get();
         if(curr->state == fileComponent::Playing)
         {
-            auto newSource = std::make_unique<juce::AudioFormatReaderSource> (curr->reader, true);
+            auto newSource = std::make_unique<juce::AudioFormatReaderSource> (curr->reader.get(), true);
             //Set the transport source
            // transportSource.setSource (newSource.get(), 0, nullptr, reader->sampleRate);
             globalTransportSource->setSource(newSource.get(), 0, nullptr, curr->reader->sampleRate);

@@ -46,12 +46,17 @@ public:
     void playButtonClicked();
     void stopButtonClicked();
     
+    void changeListenerCallback (juce::ChangeBroadcaster* source) override;
     void transportSourceChanged();
     void thumbnailChanged();
     
     void paintIfNoFileLoaded (juce::Graphics& g, const juce::Rectangle<int>& thumbnailBounds);
     void paintIfFileLoaded (juce::Graphics& g, const juce::Rectangle<int>& thumbnailBounds);
-
+    bool readSamples (int* const* destChannels,
+                              int numDestChannels,
+                              int startOffsetInDestBuffer,
+                              juce::int64 startSampleInFile,
+                              int numSamples);
     
     int sampsPerBlock;
     double sampRate;
