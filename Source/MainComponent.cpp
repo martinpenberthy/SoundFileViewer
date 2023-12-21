@@ -34,14 +34,14 @@ MainComponent::MainComponent()
     for(it = fileComponents.begin(); it != fileComponents.end(); it++)
         addAndMakeVisible(it->get());
 
-
-    
+    //globalTransportSource = std::make_shared<juce::AudioTransportSource>();
+    globalTransportSource->addChangeListener(this);
     //Add listeners
-    for(it = fileComponents.begin(); it != fileComponents.end(); it++)
+    /*for(it = fileComponents.begin(); it != fileComponents.end(); it++)
     {
         it->get()->transportSource.addChangeListener (this);
         it->get()->thumbnail.addChangeListener (this);
-    }
+    }*/
     //startTimer(40);
     
     // Make sure you set the size of the component after
@@ -131,7 +131,14 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
     {
         auto curr = it->get();
         if(curr->state == fileComponent::Playing)
+        {
+            auto newSource = std::make_unique<juce::AudioFormatReaderSource> (curr->reader, true);
+            //Set the transport source
+           // transportSource.setSource (newSource.get(), 0, nullptr, reader->sampleRate);
+            globalTransportSource->setSource(newSource.get(), 0, nullptr, curr->reader->sampleRate);
             curr->getNextAudioBlock(bufferToFill);
+            
+        }
     }
 }
 
@@ -188,8 +195,8 @@ void MainComponent::changeListenerCallback (juce::ChangeBroadcaster* source)
 {
     for(it = fileComponents.begin(); it != fileComponents.end(); it++)
     {
-        if (source == &((*it)->transportSource))
-            it->get()->transportSourceChanged();
+        /*if (source == &((*it)->transportSource))
+            it->get()->transportSourceChanged();*/
         if (source == &((*it)->thumbnail))
             it->get()->thumbnailChanged();
     }

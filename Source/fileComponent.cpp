@@ -34,7 +34,8 @@ state(Stopped)
     stopButton.setEnabled (false);
     
     formatManager.registerBasicFormats();
-
+    thumbnail.addChangeListener(this);
+    
     fileLoaded = false;
 }
 
@@ -59,15 +60,14 @@ void fileComponent::openButtonClicked()
         if (file != juce::File{})
         {
             //Make a reader for this file
-            auto* reader = formatManager.createReaderFor (file);
+            reader = std::make_unique<juce::AudioFormatReader>(formatManager.createReaderFor (file));
 
             if (reader != nullptr)
             {
                 //Make the Format Reader Source from the reader
                 auto newSource = std::make_unique<juce::AudioFormatReaderSource> (reader, true);
-                //auto newSource = std::make_shared<juce::AudioFormatReaderSource> (reader, true);
                 //Set the transport source
-                transportSource.setSource (newSource.get(), 0, nullptr, reader->sampleRate);
+               // transportSource.setSource (newSource.get(), 0, nullptr, reader->sampleRate);
                 playButton.setEnabled (true);
                 //Set source for the thumbnail
                 thumbnail.setSource(new juce::FileInputSource (file));
@@ -77,14 +77,15 @@ void fileComponent::openButtonClicked()
             }
         }
     });
-    
-    
-    if(transportSource.getLengthInSeconds() > .01f)
+    //if(readerSource->getLength() > 100)
+    /*if(transportSource->getLengthInSeconds() > .01f)
         fileLoaded = true;
     else
-        fileLoaded = false;
+        fileLoaded = false;*/
     prepareToPlay(sampsPerBlock, sampRate);
 }
+
+
 /*
 void fileComponent::changeListenerCallback (juce::ChangeBroadcaster* source)
 {
@@ -114,7 +115,8 @@ void fileComponent::stopButtonClicked()
 
 void fileComponent::transportSourceChanged()
 {
-    if (transportSource.isPlaying())
+    
+    if (transportSource->isPlaying())
         changeState (Playing);
     else if ((state == Stopping) || (state == Playing))
         changeState (Stopped);
@@ -140,11 +142,11 @@ void fileComponent::changeState (TransportState newState)
                 playButton.setButtonText ("Play");
                 stopButton.setButtonText ("Stop");
                 stopButton.setEnabled (false);
-                transportSource.setPosition (0.0);
+                transportSource->setPosition (0.0);
                 break;
 
             case Starting:
-                transportSource.start();
+                transportSource->start();
                 break;
 
             case Playing:
@@ -154,7 +156,7 @@ void fileComponent::changeState (TransportState newState)
                 break;
 
             case Pausing:
-                transportSource.stop();
+                transportSource->stop();
                 break;
 
             case Paused:
@@ -163,7 +165,7 @@ void fileComponent::changeState (TransportState newState)
                 break;
 
             case Stopping:
-                transportSource.stop();
+                transportSource->stop();
                 break;
         }
     }
@@ -171,7 +173,7 @@ void fileComponent::changeState (TransportState newState)
 
 void fileComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
-    transportSource.prepareToPlay (samplesPerBlockExpected, sampleRate);
+    transportSource->prepareToPlay (samplesPerBlockExpected, sampleRate);
 }
 
 void fileComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
@@ -182,7 +184,7 @@ void fileComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
         return;
     }
 
-    transportSource.getNextAudioBlock (bufferToFill);
+    transportSource->getNextAudioBlock (bufferToFill);
 }
 
 
@@ -192,7 +194,7 @@ void fileComponent::releaseResources()
     // restarted due to a setting change.
 
     // For more details, see the help for AudioProcessor::releaseResources()
-    transportSource.releaseResources();
+    transportSource->releaseResources();
 }
 
 void fileComponent::paint (juce::Graphics& g)
@@ -237,7 +239,7 @@ void fileComponent::paintIfFileLoaded (juce::Graphics& g, const juce::Rectangle<
 
     g.setColour (juce::Colours::green);
 
-    auto audioPosition = (float) transportSource.getCurrentPosition();
+    auto audioPosition = (float) transportSource->getCurrentPosition();
     auto drawPosition = (audioPosition / audioLength) * (float) thumbnailBounds.getWidth()
                         + (float) thumbnailBounds.getX();                                // [13]
     g.drawLine (drawPosition, (float) thumbnailBounds.getY(), drawPosition,

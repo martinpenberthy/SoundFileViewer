@@ -15,7 +15,7 @@
 //==============================================================================
 /*
 */
-class fileComponent  : public juce::AudioAppComponent
+class fileComponent  : public juce::AudioAppComponent, public juce::ChangeListener
 {
 public:
     fileComponent();
@@ -48,6 +48,7 @@ public:
     
     void transportSourceChanged();
     void thumbnailChanged();
+    
     void paintIfNoFileLoaded (juce::Graphics& g, const juce::Rectangle<int>& thumbnailBounds);
     void paintIfFileLoaded (juce::Graphics& g, const juce::Rectangle<int>& thumbnailBounds);
 
@@ -59,13 +60,17 @@ public:
     
     juce::AudioFormatManager formatManager;
     std::unique_ptr<juce::AudioFormatReaderSource> readerSource;
-    juce::AudioTransportSource transportSource;
+    std::unique_ptr<juce::AudioFormatReader> reader;
+    
+    //juce::AudioTransportSource transportSource;
+    juce::AudioTransportSource *transportSource;
     
     juce::AudioThumbnailCache thumbnailCache;
     juce::AudioThumbnail thumbnail;
     
     
     TransportState state;
+    
 
 private:
     std::unique_ptr<juce::FileChooser> chooser;
