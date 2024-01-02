@@ -13,8 +13,19 @@
 #include <JuceHeader.h>
 
 //==============================================================================
+
+class fileComponent : public juce::AudioSource
+{
+public:
+    fileComponent();
+
+    ~fileComponent() override;
+private:
+    juce::AudioFormatManager* formatManager;
+};
+
+
 /*
-*/
 class fileComponent  : public juce::AudioAppComponent, public juce::ChangeListener
 {
 public:
@@ -52,11 +63,6 @@ public:
     
     void paintIfNoFileLoaded (juce::Graphics& g, const juce::Rectangle<int>& thumbnailBounds);
     void paintIfFileLoaded (juce::Graphics& g, const juce::Rectangle<int>& thumbnailBounds);
-    bool readSamples (int* const* destChannels,
-                              int numDestChannels,
-                              int startOffsetInDestBuffer,
-                              juce::int64 startSampleInFile,
-                              int numSamples);
     
     int sampsPerBlock;
     double sampRate;
@@ -65,7 +71,8 @@ public:
     
     juce::AudioFormatManager formatManager;
     std::unique_ptr<juce::AudioFormatReaderSource> readerSource;
-    std::unique_ptr<juce::AudioFormatReader> reader;
+    //std::unique_ptr<juce::AudioFormatReader> reader;
+    juce::AudioFormatReader* reader;
     
     //juce::AudioTransportSource transportSource;
     juce::AudioTransportSource *transportSource;
@@ -87,3 +94,4 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (fileComponent)
 };
+*/

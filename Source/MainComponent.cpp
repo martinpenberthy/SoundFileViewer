@@ -34,7 +34,7 @@ MainComponent::MainComponent()
     for(it = fileComponents.begin(); it != fileComponents.end(); it++)
         addAndMakeVisible(it->get());
 
-    //globalTransportSource = std::make_shared<juce::AudioTransportSource>();
+    globalTransportSource = std::make_shared<juce::AudioTransportSource>();
     globalTransportSource->addChangeListener(this);
     //Add listeners
     /*for(it = fileComponents.begin(); it != fileComponents.end(); it++)
@@ -132,7 +132,7 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
         auto curr = it->get();
         if(curr->state == fileComponent::Playing)
         {
-            auto newSource = std::make_unique<juce::AudioFormatReaderSource> (curr->reader.get(), true);
+            auto newSource = std::make_unique<juce::AudioFormatReaderSource> (curr->reader, true);
             //Set the transport source
            // transportSource.setSource (newSource.get(), 0, nullptr, reader->sampleRate);
             globalTransportSource->setSource(newSource.get(), 0, nullptr, curr->reader->sampleRate);

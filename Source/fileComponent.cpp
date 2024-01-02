@@ -60,12 +60,15 @@ void fileComponent::openButtonClicked()
         if (file != juce::File{})
         {
             //Make a reader for this file
-            reader = std::make_unique<juce::AudioFormatReader>(formatManager.createReaderFor (file));
+            //reader = std::make_unique<juce::AudioFormatReader>(formatManager.createReaderFor (file));
+            //reader = std::make_unique<juce::AudioFormatReader>();
+            reader = formatManager.createReaderFor (file);
+            
             
             if (reader != nullptr)
             {
                 //Make the Format Reader Source from the reader
-                auto newSource = std::make_unique<juce::AudioFormatReaderSource> (reader.get(), true);
+                auto newSource = std::make_unique<juce::AudioFormatReaderSource> (reader, true);
                 //Set the transport source
                // transportSource.setSource (newSource.get(), 0, nullptr, reader->sampleRate);
                 playButton.setEnabled (true);
@@ -82,7 +85,7 @@ void fileComponent::openButtonClicked()
         fileLoaded = true;
     else
         fileLoaded = false;*/
-    prepareToPlay(sampsPerBlock, sampRate);
+    //prepareToPlay(sampsPerBlock, sampRate);
 }
 
 
