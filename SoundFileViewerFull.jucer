@@ -4,6 +4,14 @@
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
   <MAINGROUP id="jJSBLy" name="SoundFileViewerFull">
     <GROUP id="{4332C0CC-810D-3C70-2D67-A81CEFA09806}" name="Source">
+      <FILE id="LYK3cW" name="fileComponentAudio.cpp" compile="1" resource="0"
+            file="Source/fileComponentAudio.cpp"/>
+      <FILE id="oOFWb4" name="fileComponentAudio.h" compile="0" resource="0"
+            file="Source/fileComponentAudio.h"/>
+      <FILE id="pyx1fU" name="fileComponentGUI.cpp" compile="1" resource="0"
+            file="Source/fileComponentGUI.cpp"/>
+      <FILE id="jbm6mJ" name="fileComponentGUI.h" compile="0" resource="0"
+            file="Source/fileComponentGUI.h"/>
       <FILE id="np69eg" name="fileComponent.cpp" compile="1" resource="0"
             file="Source/fileComponent.cpp"/>
       <FILE id="bjDyd9" name="fileComponent.h" compile="0" resource="0" file="Source/fileComponent.h"/>

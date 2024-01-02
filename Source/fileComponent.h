@@ -14,16 +14,6 @@
 
 //==============================================================================
 
-class fileComponent : public juce::AudioSource
-{
-public:
-    fileComponent();
-
-    ~fileComponent() override;
-private:
-    juce::AudioFormatManager* formatManager;
-};
-
 
 /*
 class fileComponent  : public juce::AudioAppComponent, public juce::ChangeListener

@@ -12,6 +12,10 @@
 #include "fileComponent.h"
 
 //==============================================================================
+
+
+
+/*
 fileComponent::fileComponent() : thumbnailCache (5), thumbnail (512, formatManager, thumbnailCache),
 state(Stopped)
 {
@@ -81,10 +85,7 @@ void fileComponent::openButtonClicked()
         }
     });
     //if(readerSource->getLength() > 100)
-    /*if(transportSource->getLengthInSeconds() > .01f)
-        fileLoaded = true;
-    else
-        fileLoaded = false;*/
+
     //prepareToPlay(sampsPerBlock, sampRate);
 }
 
@@ -254,12 +255,6 @@ void fileComponent::resized()
 {
     // This method is where you should set the bounds of any child
     // components that your component contains..
-    /*float buttonWidth = 50;
-    float buttonHeight = 25;
-    
-    openButton.setBounds(getLocalBounds().getX(), getLocalBounds().getY() - 100, buttonWidth, buttonHeight);
-    playButton.setBounds(openButton.getX() + buttonWidth, getLocalBounds().getY() - 100, buttonWidth, buttonHeight);
-    stopButton.setBounds(playButton.getX() + buttonWidth, getLocalBounds().getY() - 100, buttonWidth, buttonHeight);*/
     
     const auto container = getLocalBounds().reduced(4);
     auto bounds = container;
@@ -273,4 +268,4 @@ void fileComponent::resized()
     playButton.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.1f)).reduced(buttonMargin));
     stopButton.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.1f)).reduced(buttonMargin));
 }
-
+*/
