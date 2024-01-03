@@ -22,7 +22,7 @@ state(Stopped)
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
     addAndMakeVisible (&openButton);
-    openButton.setButtonText ("Open...");
+    
     openButton.onClick = [this] { openButtonClicked(); };
 
     addAndMakeVisible (&playButton);

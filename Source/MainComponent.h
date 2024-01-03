@@ -1,7 +1,9 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "fileComponent.h"
+//#include "fileComponent.h"
+#include "fileComponentAudio.h"
+#include "fileComponentGUI.h"
 //==============================================================================
 /*
     This component lives inside our window, and this is where you should put all
@@ -44,7 +46,9 @@ private:
     
     //juce::AudioFormatManager* formatManager;
     //std::unique_ptr<juce::AudioFormatReaderSource> readerSource;
-
+    juce::AudioFormatManager formatManager;
+    fileComponentAudio fileAudio{&formatManager};
+    fileComponentGUI fileGUI{&fileAudio};
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

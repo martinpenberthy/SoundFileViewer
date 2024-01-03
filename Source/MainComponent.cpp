@@ -3,8 +3,6 @@
 //==============================================================================
 MainComponent::MainComponent()
 {
-
-
     // Some platforms require permissions to open input channels so request that here
     if (juce::RuntimePermissions::isRequired (juce::RuntimePermissions::recordAudio)
         && ! juce::RuntimePermissions::isGranted (juce::RuntimePermissions::recordAudio))
@@ -26,16 +24,16 @@ MainComponent::MainComponent()
     //addAndMakeVisible(&fileComp3);
 
     //Call constructors for fileComponent
-    for(int i = 0; i < numFiles; i++)
+    /*for(int i = 0; i < numFiles; i++)
         fileComponents.push_back(std::make_unique<fileComponent>());
-    
+    */
     
     //addAndMakeVisible
-    for(it = fileComponents.begin(); it != fileComponents.end(); it++)
+    /*for(it = fileComponents.begin(); it != fileComponents.end(); it++)
         addAndMakeVisible(it->get());
 
     globalTransportSource = std::make_shared<juce::AudioTransportSource>();
-    globalTransportSource->addChangeListener(this);
+    globalTransportSource->addChangeListener(this);*/
     //Add listeners
     /*for(it = fileComponents.begin(); it != fileComponents.end(); it++)
     {
@@ -43,6 +41,10 @@ MainComponent::MainComponent()
         it->get()->thumbnail.addChangeListener (this);
     }*/
     //startTimer(40);
+    
+    addAndMakeVisible(&fileGUI);
+    
+    formatManager.registerBasicFormats();
     
     // Make sure you set the size of the component after
     // you add any child components.
@@ -83,7 +85,7 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
     DBG("prepareToPlay");
     
 
-    for(it = fileComponents.begin(); it != fileComponents.end(); it++)
+    /*for(it = fileComponents.begin(); it != fileComponents.end(); it++)
     {
         auto curr = it->get();
         curr->sampRate = sampleRate;
@@ -91,7 +93,7 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
         
         if(curr->fileLoaded)
             curr->prepareToPlay(samplesPerBlockExpected, sampleRate);
-    }
+    }*/
 
 }
 
@@ -127,7 +129,7 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
         curr->getNextAudioBlock(bufferToFill);
     }*/
 
-    for(it = fileComponents.begin(); it != fileComponents.end(); it++)
+    /*for(it = fileComponents.begin(); it != fileComponents.end(); it++)
     {
         auto curr = it->get();
         if(curr->state == fileComponent::Playing)
@@ -139,7 +141,7 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
             curr->getNextAudioBlock(bufferToFill);
             
         }
-    }
+    }*/
 }
 
 void MainComponent::releaseResources()
@@ -156,12 +158,12 @@ void MainComponent::releaseResources()
         fileComponents.at(i)->releaseResources();
     }*/
     
-    for(it = fileComponents.begin(); it != fileComponents.end(); it++)
+    /*for(it = fileComponents.begin(); it != fileComponents.end(); it++)
     {
         it->get()->releaseResources();
         //(*it)->releaseResources();
-    }
-    
+    }*/
+    fileAudio.releaseResources();
 }
 
 //==============================================================================
@@ -180,25 +182,24 @@ void MainComponent::resized()
     auto heightFile1 = 50;
     auto marginFile1 = 7;
 
-    for(it = fileComponents.begin(); it != fileComponents.end(); it++)
-        it->get()->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
+    /*for(it = fileComponents.begin(); it != fileComponents.end(); it++)
+        it->get()->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));*/
 
+    fileGUI.setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
 }
 
 void MainComponent::timerCallback()
 {
-    for(it = fileComponents.begin(); it != fileComponents.end(); it++)
-        it->get()->repaint();
+    /*for(it = fileComponents.begin(); it != fileComponents.end(); it++)
+        it->get()->repaint();*/
 }
 
 void MainComponent::changeListenerCallback (juce::ChangeBroadcaster* source)
 {
-    for(it = fileComponents.begin(); it != fileComponents.end(); it++)
+    /*for(it = fileComponents.begin(); it != fileComponents.end(); it++)
     {
-        /*if (source == &((*it)->transportSource))
-            it->get()->transportSourceChanged();*/
         if (source == &((*it)->thumbnail))
             it->get()->thumbnailChanged();
-    }
+    }*/
     
 }

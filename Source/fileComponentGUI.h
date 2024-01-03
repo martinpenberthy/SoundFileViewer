@@ -12,7 +12,7 @@
 #include <JuceHeader.h>
 #include "fileComponentAudio.h"
 
-class fileComponentGUI : public juce::Component, public juce::Button::Listener, public juce::Timer
+class fileComponentGUI : public juce::Component
 {
 public:
     fileComponentGUI(fileComponentAudio *player);//, juce::AudioFormatManager* formatManagerToUse);, juce::AudioThumbnailCache cacheToUse);
@@ -22,12 +22,15 @@ public:
     void paint(juce::Graphics& g) override;
     void resized() override;
     
-    void buttonClicked(juce::Button *button) override;
+    //void buttonClicked(juce::Button *button) override;
+    
+    void loadButtonClicked();
+    void playButtonClicked();
     
     fileComponentAudio* player;
     juce::TextButton buttonPlay;
-        
+    juce::TextButton buttonLoad;
+
 private:
     
-    juce::TextButton buttonLoad;
 };
