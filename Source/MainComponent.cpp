@@ -94,11 +94,12 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
         if(curr->fileLoaded)
             curr->prepareToPlay(samplesPerBlockExpected, sampleRate);
     }*/
-
+    //fileAudio.prepareToPlay(samplesPerBlockExpected, sampleRate);
 }
 
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
 {
+    //fileAudio.getNextAudioBlock(bufferToFill);
 
     /*if (readerSource.get() == nullptr)
     {

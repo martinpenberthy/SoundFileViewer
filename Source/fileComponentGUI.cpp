@@ -65,9 +65,11 @@ void fileComponentGUI::loadButtonClicked()
 
 void fileComponentGUI::playButtonClicked()
 {
-    if(buttonPlay.getToggleState())
+    DBG("Play button clicked");
+    /*if(buttonPlay.getToggleState())
         player->start();
     else
-        player->stop();
+        player->stop();*/
+
 }
 

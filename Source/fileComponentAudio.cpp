@@ -21,11 +21,17 @@ fileComponentAudio::~fileComponentAudio()
 
 void fileComponentAudio::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
-    
+    transportSource.prepareToPlay(samplesPerBlockExpected, sampleRate);
 }
 void fileComponentAudio::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
 {
-    
+    if (readerSource.get() == nullptr)
+    {
+        bufferToFill.clearActiveBufferRegion();
+        return;
+    }
+
+    transportSource.getNextAudioBlock (bufferToFill);
 }
 void fileComponentAudio::releaseResources()
 {
@@ -54,9 +60,12 @@ void fileComponentAudio::loadURL(juce::URL audioURL)
 
 void fileComponentAudio::start()
 {
+    DBG("transport started");
     transportSource.start();
 }
 void fileComponentAudio::stop()
 {
+    DBG("transport stopped");
+
     transportSource.stop(); //pausing only
 }
