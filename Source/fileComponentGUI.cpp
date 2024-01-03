@@ -13,6 +13,7 @@
 
 fileComponentGUI::fileComponentGUI(fileComponentAudio *player) : player(player)
 {
+    DBG("fcGUI constructor");
     addAndMakeVisible(&buttonLoad);
     buttonLoad.setButtonText("Open...");
     buttonLoad.onClick = [this] {loadButtonClicked();};
@@ -46,14 +47,17 @@ void fileComponentGUI::resized()
     
 void fileComponentGUI::loadButtonClicked()
 {
-    std::unique_ptr<juce::FileChooser> myChooser;
+    DBG("loadButtonClicked");
+
     myChooser = std::make_unique<juce::FileChooser> ("Please select the .wav you want to load...",
                                                      juce::File{},
                                                      "*.wav");
     auto folderChooserFlags = juce::FileBrowserComponent::openMode | juce::FileBrowserComponent::canSelectFiles;
- 
+    
+
     myChooser->launchAsync (folderChooserFlags, [this] (const juce::FileChooser& chooser)
     {
+        DBG("Chooser callback");
         juce::URL audioURL = juce::URL{chooser.getResult()};
         player->loadURL(audioURL);
     });

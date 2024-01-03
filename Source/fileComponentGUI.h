@@ -32,5 +32,5 @@ public:
     juce::TextButton buttonLoad;
 
 private:
-    
+    std::unique_ptr<juce::FileChooser> myChooser;
 };

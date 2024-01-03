@@ -11,7 +11,7 @@
 #include "fileComponentAudio.h"
 fileComponentAudio::fileComponentAudio(juce::AudioFormatManager* formatManager) : formatManager(formatManager)
 {
-    
+    DBG("fcAudio constructor");
 }
 
 fileComponentAudio::~fileComponentAudio()
