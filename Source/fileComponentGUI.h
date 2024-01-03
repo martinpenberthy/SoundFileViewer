@@ -15,16 +15,18 @@
 class fileComponentGUI : public juce::Component, public juce::Button::Listener, public juce::Timer
 {
 public:
-    fileComponentGUI(fileComponentAudio *player, juce::AudioFormatManager* formatManagerToUse, juce::AudioThumbnailCache cacheToUse);
+    fileComponentGUI(fileComponentAudio *player);//, juce::AudioFormatManager* formatManagerToUse);, juce::AudioThumbnailCache cacheToUse);
     ~fileComponentGUI();
     
     //Component overrides
     void paint(juce::Graphics& g) override;
     void resized() override;
     
-    fileComponentGUI* player;
+    void buttonClicked(juce::Button *button) override;
     
+    fileComponentAudio* player;
     juce::TextButton buttonPlay;
+        
 private:
     
     juce::TextButton buttonLoad;
