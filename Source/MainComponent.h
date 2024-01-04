@@ -50,5 +50,9 @@ private:
     fileComponentAudio fileAudio{&formatManager};
     fileComponentGUI fileGUI{&fileAudio};
     
+    fileComponentAudio fileAudio2{&formatManager};
+    fileComponentGUI fileGUI2{&fileAudio2};
+    
+    juce::MixerAudioSource mixer;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

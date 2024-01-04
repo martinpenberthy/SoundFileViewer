@@ -43,6 +43,7 @@ MainComponent::MainComponent()
     //startTimer(40);
     
     addAndMakeVisible(&fileGUI);
+    addAndMakeVisible(&fileGUI2);
     
     formatManager.registerBasicFormats();
     
@@ -95,11 +96,19 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
             curr->prepareToPlay(samplesPerBlockExpected, sampleRate);
     }*/
     fileAudio.prepareToPlay(samplesPerBlockExpected, sampleRate);
+    fileAudio2.prepareToPlay(samplesPerBlockExpected, sampleRate);
+    
+    mixer.addInputSource(&fileAudio, false);
+    mixer.addInputSource(&fileAudio2, false);
+
+
 }
 
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
 {
-    fileAudio.getNextAudioBlock(bufferToFill);
+    mixer.getNextAudioBlock(bufferToFill);
+    //fileAudio.getNextAudioBlock(bufferToFill);
+    //fileAudio2.getNextAudioBlock(bufferToFill);
 
     /*if (readerSource.get() == nullptr)
     {
@@ -165,6 +174,7 @@ void MainComponent::releaseResources()
         //(*it)->releaseResources();
     }*/
     fileAudio.releaseResources();
+    fileAudio2.releaseResources();
 }
 
 //==============================================================================
@@ -187,6 +197,7 @@ void MainComponent::resized()
         it->get()->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));*/
 
     fileGUI.setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
+    fileGUI2.setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
 }
 
 void MainComponent::timerCallback()
