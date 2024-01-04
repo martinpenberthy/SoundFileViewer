@@ -69,3 +69,9 @@ void fileComponentAudio::stop()
 
     transportSource.stop(); //pausing only
 }
+
+bool fileComponentAudio::isPlaying()
+{
+    return transportSource.isPlaying();
+}
+

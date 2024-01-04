@@ -70,6 +70,10 @@ void fileComponentGUI::playButtonClicked()
         player->start();
     else
         player->stop();*/
-
+    
+    if(player->isPlaying())
+        player->stop();
+    else
+        player->start();
 }
 

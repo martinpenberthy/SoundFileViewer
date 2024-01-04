@@ -26,6 +26,8 @@ public:
 
     void start();
     void stop();
+    
+    bool isPlaying();
 private:
     juce::AudioFormatManager* formatManager;
     
