@@ -24,6 +24,8 @@ fileComponentGUI::fileComponentGUI(fileComponentAudio *player,
     addAndMakeVisible(&buttonPlay);
     buttonPlay.setButtonText("Play/Stop");
     buttonPlay.onClick = [this] {playButtonClicked();};
+    
+    addAndMakeVisible(&waveformDisplay);
 }
 
 fileComponentGUI::~fileComponentGUI()
@@ -46,6 +48,8 @@ void fileComponentGUI::resized()
     
     buttonLoad.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.1f)).reduced(buttonMargin));
     buttonPlay.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.1f)).reduced(buttonMargin));
+    
+    waveformDisplay.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.5f)));
 }
     
 void fileComponentGUI::loadButtonClicked()
@@ -63,6 +67,7 @@ void fileComponentGUI::loadButtonClicked()
         DBG("Chooser callback");
         juce::URL audioURL = juce::URL{chooser.getResult()};
         player->loadURL(audioURL);
+        waveformDisplay.loadURL(audioURL);
     });
 }
 
