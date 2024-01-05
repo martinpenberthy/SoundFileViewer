@@ -11,11 +11,12 @@
 #pragma once
 #include <JuceHeader.h>
 #include "fileComponentAudio.h"
+#include "Waveform.h"
 
 class fileComponentGUI : public juce::Component
 {
 public:
-    fileComponentGUI(fileComponentAudio *player);//, juce::AudioFormatManager* formatManagerToUse);, juce::AudioThumbnailCache cacheToUse);
+    fileComponentGUI(fileComponentAudio *player, juce::AudioFormatManager* formatManagerToUse, juce::AudioThumbnailCache cacheToUse);
     ~fileComponentGUI();
     
     //Component overrides
@@ -31,6 +32,8 @@ public:
     juce::TextButton buttonPlay;
     juce::TextButton buttonLoad;
 
+    Waveform waveformDisplay;
 private:
     std::unique_ptr<juce::FileChooser> myChooser;
+
 };
