@@ -68,6 +68,7 @@ void fileComponentGUI::loadButtonClicked()
         juce::URL audioURL = juce::URL{chooser.getResult()};
         player->loadURL(audioURL);
         waveformDisplay.loadURL(audioURL);
+        FFTDisplay.loadURL(audioURL);
     });
 }
 

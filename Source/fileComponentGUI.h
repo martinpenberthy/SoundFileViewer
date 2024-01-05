@@ -12,6 +12,7 @@
 #include <JuceHeader.h>
 #include "fileComponentAudio.h"
 #include "Waveform.h"
+#include "FFTGenerator.h"
 
 class fileComponentGUI : public juce::Component
 {
@@ -33,6 +34,7 @@ public:
     juce::TextButton buttonLoad;
 
     Waveform waveformDisplay;
+    FFTGenerator FFTDisplay;
 private:
     std::unique_ptr<juce::FileChooser> myChooser;
 
