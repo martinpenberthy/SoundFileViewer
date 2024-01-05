@@ -46,12 +46,14 @@ private:
     
     //juce::AudioFormatManager* formatManager;
     //std::unique_ptr<juce::AudioFormatReaderSource> readerSource;
+    juce::AudioThumbnailCache thumbnailCache{100};
+    
     juce::AudioFormatManager formatManager;
     fileComponentAudio fileAudio{&formatManager};
-    fileComponentGUI fileGUI{&fileAudio, &formatManager};
+    fileComponentGUI fileGUI{&fileAudio, &formatManager, &thumbnailCache};
     
     fileComponentAudio fileAudio2{&formatManager};
-    fileComponentGUI fileGUI2{&fileAudio2, &formatManager};
+    fileComponentGUI fileGUI2{&fileAudio2, &formatManager, &thumbnailCache};
     
     juce::MixerAudioSource mixer;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)

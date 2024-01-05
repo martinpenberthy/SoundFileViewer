@@ -16,7 +16,7 @@
 class fileComponentGUI : public juce::Component
 {
 public:
-    fileComponentGUI(fileComponentAudio *player, juce::AudioFormatManager* formatManagerToUse, juce::AudioThumbnailCache cacheToUse);
+    fileComponentGUI(fileComponentAudio *player, juce::AudioFormatManager *formatManagerToUse, juce::AudioThumbnailCache *cacheToUse);
     ~fileComponentGUI();
     
     //Component overrides
