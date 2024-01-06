@@ -14,7 +14,7 @@
 class FFTGenerator : public juce::Component
 {
 public:
-    FFTGenerator();
+    FFTGenerator(juce::AudioFormatManager*);
     ~FFTGenerator();
     
     void loadURL(juce::URL audioURL);
@@ -27,6 +27,8 @@ public:
         scopeSize = 256
     };
 private:
+    juce::AudioFormatManager* formatManager;
+    
     juce::dsp::FFT forwardFFT;
     juce::dsp::WindowingFunction<float> window;
     
@@ -38,6 +40,6 @@ private:
     
     std::unique_ptr<juce::AudioBuffer<float>> fileBuffer;
     
-    std::unique_ptr<juce::AudioFormatReaderSource> readerSource;
+    //std::unique_ptr<juce::AudioFormatReader> reader;
 
 };

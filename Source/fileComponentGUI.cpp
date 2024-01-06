@@ -14,7 +14,7 @@
 fileComponentGUI::fileComponentGUI(fileComponentAudio *player,
                                    juce::AudioFormatManager* formatManagerToUse,
                                    juce::AudioThumbnailCache* cacheToUse)
-                                   : player(player), waveformDisplay(formatManagerToUse, cacheToUse)
+                                   : player(player), waveformDisplay(formatManagerToUse, cacheToUse), FFTDisplay(formatManagerToUse)
 {
     DBG("fcGUI constructor");
     addAndMakeVisible(&buttonLoad);
