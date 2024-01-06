@@ -26,6 +26,7 @@ fileComponentGUI::fileComponentGUI(fileComponentAudio *player,
     buttonPlay.onClick = [this] {playButtonClicked();};
     
     addAndMakeVisible(&waveformDisplay);
+    addAndMakeVisible(&FFTDisplay);
 }
 
 fileComponentGUI::~fileComponentGUI()
@@ -49,7 +50,9 @@ void fileComponentGUI::resized()
     buttonLoad.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.1f)).reduced(buttonMargin));
     buttonPlay.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.1f)).reduced(buttonMargin));
     
-    waveformDisplay.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.5f)));
+    waveformDisplay.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.4f)));
+    
+    FFTDisplay.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.4f)));
 }
     
 void fileComponentGUI::loadButtonClicked()

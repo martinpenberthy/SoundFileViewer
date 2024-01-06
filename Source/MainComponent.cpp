@@ -190,7 +190,7 @@ void MainComponent::resized()
 {
     auto area = getLocalBounds();
     
-    auto heightFile1 = 50;
+    auto heightFile1 = 100;
     auto marginFile1 = 7;
 
     /*for(it = fileComponents.begin(); it != fileComponents.end(); it++)

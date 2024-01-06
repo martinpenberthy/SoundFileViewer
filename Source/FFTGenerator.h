@@ -11,7 +11,7 @@
 #pragma once
 #include <JuceHeader.h>
 
-class FFTGenerator : public juce::Component
+class FFTGenerator : public juce::Component, public juce::Timer
 {
 public:
     FFTGenerator(juce::AudioFormatManager*);
@@ -19,6 +19,14 @@ public:
     
     void loadURL(juce::URL audioURL);
     void generateFFT();
+    void pushNextSampleIntoFifo (float sample) noexcept;
+    void drawNextFrameOfSpectrum();
+    void drawFrame (juce::Graphics& g);
+    
+    void timerCallback();
+    
+    void paint (juce::Graphics& g) override;
+
     
     enum
     {
@@ -37,6 +45,8 @@ private:
     int fifoIndex = 0;                              // [8]
     bool nextFFTBlockReady = false;                 // [9]
     float scopeDataSummed [scopeSize];
+    
+    int frameCount = 0;
     
     std::unique_ptr<juce::AudioBuffer<float>> fileBuffer;
     
