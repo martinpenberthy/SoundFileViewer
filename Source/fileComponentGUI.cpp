@@ -51,13 +51,13 @@ void fileComponentGUI::resized()
     const auto container = getLocalBounds().reduced(4);
     auto bounds = container;
     
-    auto buttonMargin = 4;
+    auto buttonMargin = 10;
     
     buttonLoad.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.1f)).reduced(buttonMargin));
     buttonPlay.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.1f)).reduced(buttonMargin));
     
-    labelSampleRate.setBounds(bounds.removeFromTop(container.proportionOfHeight(0.2f)).removeFromLeft(container.proportionOfWidth(0.1f)));
-    labelBitDepth.setBounds(bounds.removeFromTop(container.proportionOfHeight(0.2f)).removeFromLeft(container.proportionOfWidth(0.1f)));
+    labelSampleRate.setBounds(bounds.removeFromTop(container.proportionOfHeight(0.2f)).removeFromLeft(container.proportionOfWidth(0.2f)));
+    labelBitDepth.setBounds(bounds.removeFromTop(container.proportionOfHeight(0.2f)).removeFromLeft(container.proportionOfWidth(0.2f)));
     
     waveformDisplay.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.4f)));
     
@@ -83,9 +83,15 @@ void fileComponentGUI::loadButtonClicked()
         FFTDisplay.loadURL(audioURL);
         
         auto tempStr = juce::String("Sample Rate: ");
-        tempStr.append(juce::String(player->sampleRate), 7);
+        tempStr.append(juce::String(player->sampleRate), 23);
         
         labelSampleRate.setText(tempStr, juce::NotificationType::dontSendNotification);
+        
+        auto tempStr2 = juce::String("Bit Depth: ");
+        tempStr2.append(juce::String(player->bitDepth), 23);
+        
+        labelBitDepth.setText(tempStr2, juce::NotificationType::dontSendNotification);
+        
     });
 }
 
