@@ -143,8 +143,12 @@ void FFTGenerator::drawFrame (juce::Graphics& g)
                               juce::jmap (scopeDataSummed[i - 1], 0.0f, 1.0f, (float) height, 0.0f),
                       (float) juce::jmap (i,     0, scopeSize - 1, 0, width),
                               juce::jmap (scopeDataSummed[i],     0.0f, 1.0f, (float) height, 0.0f) });
-    
+        
+        
+
+        //g.drawVerticalLine(std::pow(std::log(1000), 2), 1.0f, 10.0f);
     }
+
 }
 
 
@@ -156,8 +160,15 @@ void FFTGenerator::paint (juce::Graphics& g)
     g.setColour (juce::Colours::white);
     drawFrame (g);
     
+    //auto skewedProportionX = std::exp (std::log (1.0f - (float) 1 / (float) getLocalBounds().getWidth()));
+    
+    
+    g.drawVerticalLine(skewedProportionX * 100, 1.0f, 10.0f);
+    
+    std::cout << skewedProportionX << std::endl;
+    
     //g.drawText("12345", getWidth()-40, getHeight(), 40, 40, juce::NotificationType::dontSendNotification);
-    g.drawText("100", getLocalBounds(), juce::Justification::topLeft, true);
-    g.drawText("1000", getLocalBounds(), juce::Justification::centredTop, true);
+    //g.drawText("100", getLocalBounds(), juce::Justification::topLeft, true);
+    //g.drawText("1000", getLocalBounds(), juce::Justification::centredTop, true);
     
 }
