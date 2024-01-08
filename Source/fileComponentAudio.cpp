@@ -68,6 +68,7 @@ void fileComponentAudio::stop()
     DBG("transport stopped");
 
     transportSource.stop(); //pausing only
+    transportSource.setPosition(0.0f);
 }
 
 bool fileComponentAudio::isPlaying()

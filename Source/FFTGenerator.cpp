@@ -13,7 +13,7 @@
 FFTGenerator::FFTGenerator(juce::AudioFormatManager* formatManagerToUse) : formatManager(formatManagerToUse), forwardFFT(fftOrder), window (fftSize, juce::dsp::WindowingFunction<float>::triangular)
 {
     juce::zeromem(scopeDataSummed, sizeof(scopeDataSummed));
-    startTimerHz (30);
+    //startTimerHz (30);
 
 }
 
@@ -147,16 +147,6 @@ void FFTGenerator::drawFrame (juce::Graphics& g)
     }
 }
 
-void FFTGenerator::timerCallback()
-{
-    if (nextFFTBlockReady)
-    {
-        drawNextFrameOfSpectrum();
-        nextFFTBlockReady = false;
-        repaint();
-    }
-}
-
 
 void FFTGenerator::paint (juce::Graphics& g)
 {
@@ -165,4 +155,7 @@ void FFTGenerator::paint (juce::Graphics& g)
     g.setOpacity (1.0f);
     g.setColour (juce::Colours::white);
     drawFrame (g);
+    
+    //g.drawText("12345", getWidth()-40, getHeight(), 40, 40, juce::NotificationType::dontSendNotification);
+    g.drawText("1234", getLocalBounds(), juce::Justification::bottomLeft, true);
 }

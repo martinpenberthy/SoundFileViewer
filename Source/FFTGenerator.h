@@ -11,7 +11,7 @@
 #pragma once
 #include <JuceHeader.h>
 
-class FFTGenerator : public juce::Component, public juce::Timer
+class FFTGenerator : public juce::Component
 {
 public:
     FFTGenerator(juce::AudioFormatManager*);
@@ -22,9 +22,7 @@ public:
     void pushNextSampleIntoFifo (float sample) noexcept;
     void drawNextFrameOfSpectrum();
     void drawFrame (juce::Graphics& g);
-    
-    void timerCallback();
-    
+        
     void paint (juce::Graphics& g) override;
 
     
