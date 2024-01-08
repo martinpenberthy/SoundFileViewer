@@ -49,6 +49,9 @@ void fileComponentAudio::loadURL(juce::URL audioURL)
         //reset to delete, release doesnt delete
         readerSource.reset (newSource.release());
         std::cout << "File loaded successfully." << std::endl;
+        
+        sampleRate = reader->sampleRate;
+        bitDepth = reader->bitsPerSample;
     }
     else
     {

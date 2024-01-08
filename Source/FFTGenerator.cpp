@@ -157,5 +157,7 @@ void FFTGenerator::paint (juce::Graphics& g)
     drawFrame (g);
     
     //g.drawText("12345", getWidth()-40, getHeight(), 40, 40, juce::NotificationType::dontSendNotification);
-    g.drawText("1234", getLocalBounds(), juce::Justification::bottomLeft, true);
+    g.drawText("100", getLocalBounds(), juce::Justification::topLeft, true);
+    g.drawText("1000", getLocalBounds(), juce::Justification::centredTop, true);
+    
 }

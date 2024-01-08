@@ -25,6 +25,12 @@ fileComponentGUI::fileComponentGUI(fileComponentAudio *player,
     buttonPlay.setButtonText("Play/Stop");
     buttonPlay.onClick = [this] {playButtonClicked();};
     
+    addAndMakeVisible(&labelSampleRate);
+    labelSampleRate.setText("Sample Rate: ", juce::NotificationType::dontSendNotification);
+    
+    addAndMakeVisible(&labelBitDepth);
+    labelBitDepth.setText("Bit Depth: ", juce::NotificationType::dontSendNotification);
+    
     addAndMakeVisible(&waveformDisplay);
     addAndMakeVisible(&FFTDisplay);
 }
@@ -50,6 +56,9 @@ void fileComponentGUI::resized()
     buttonLoad.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.1f)).reduced(buttonMargin));
     buttonPlay.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.1f)).reduced(buttonMargin));
     
+    labelSampleRate.setBounds(bounds.removeFromTop(container.proportionOfHeight(0.2f)).removeFromLeft(container.proportionOfWidth(0.1f)));
+    labelBitDepth.setBounds(bounds.removeFromTop(container.proportionOfHeight(0.2f)).removeFromLeft(container.proportionOfWidth(0.1f)));
+    
     waveformDisplay.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.4f)));
     
     FFTDisplay.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.4f)));
@@ -72,6 +81,11 @@ void fileComponentGUI::loadButtonClicked()
         player->loadURL(audioURL);
         waveformDisplay.loadURL(audioURL);
         FFTDisplay.loadURL(audioURL);
+        
+        auto tempStr = juce::String("Sample Rate: ");
+        tempStr.append(juce::String(player->sampleRate), 7);
+        
+        labelSampleRate.setText(tempStr, juce::NotificationType::dontSendNotification);
     });
 }
 

@@ -28,6 +28,9 @@ public:
     void stop();
     
     bool isPlaying();
+    
+    double sampleRate;
+    unsigned int bitDepth;
 private:
     juce::AudioFormatManager* formatManager;
     

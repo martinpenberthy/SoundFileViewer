@@ -37,5 +37,8 @@ public:
     FFTGenerator FFTDisplay;
 private:
     std::unique_ptr<juce::FileChooser> myChooser;
+    
+    juce::Label labelSampleRate;
+    juce::Label labelBitDepth;
 
 };
