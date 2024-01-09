@@ -32,6 +32,9 @@ void fileComponentAudio::getNextAudioBlock (const juce::AudioSourceChannelInfo& 
     }
 
     transportSource.getNextAudioBlock (bufferToFill);
+    
+    if(!isPlaying())
+        transportSource.setPosition(0.0f);
 }
 void fileComponentAudio::releaseResources()
 {

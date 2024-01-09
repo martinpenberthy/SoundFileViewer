@@ -162,10 +162,14 @@ void FFTGenerator::paint (juce::Graphics& g)
     
     //auto skewedProportionX = std::exp (std::log (1.0f - (float) 1 / (float) getLocalBounds().getWidth()));
     
+    auto width = getLocalBounds().getWidth();
     
-    g.drawVerticalLine(skewedProportionX * 100, 1.0f, 10.0f);
+    auto increments = (float)width / 5000.0f;
+    std::cout << increments << std::endl;
+    //auto skewedProportionX = std::log();
+    g.drawVerticalLine(std::log(increments * 5000.0f), 1.0f, 10.0f);
     
-    std::cout << skewedProportionX << std::endl;
+    //std::cout << skewedProportionX << std::endl;
     
     //g.drawText("12345", getWidth()-40, getHeight(), 40, 40, juce::NotificationType::dontSendNotification);
     //g.drawText("100", getLocalBounds(), juce::Justification::topLeft, true);
