@@ -20,6 +20,10 @@ class fileComponent
 public:
     fileComponent();
     ~fileComponent();
+    
+    fileComponentAudio* getFileComponentAudio();
+    fileComponentGUI* getFileComponentGUI();
+
 private:
     fileComponentAudio* thisAudio;
     fileComponentGUI* thisGUI;

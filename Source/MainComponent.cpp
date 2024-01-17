@@ -16,36 +16,13 @@ MainComponent::MainComponent()
         setAudioChannels (2, 2);
     }    
     
-    //formatManager = new juce::AudioFormatManager();
-    //fileComp1 = new fileComponent(formatManager);
+   
     
-    //addAndMakeVisible(&fileComp1);
-    //addAndMakeVisible(&fileComp2);
-    //addAndMakeVisible(&fileComp3);
-
-    //Call constructors for fileComponent
-    /*for(int i = 0; i < numFiles; i++)
-        fileComponents.push_back(std::make_unique<fileComponent>());
+    /*addAndMakeVisible(&fileGUI);
+    addAndMakeVisible(&fileGUI2);
     */
     
-    //addAndMakeVisible
-    /*for(it = fileComponents.begin(); it != fileComponents.end(); it++)
-        addAndMakeVisible(it->get());
-
-    globalTransportSource = std::make_shared<juce::AudioTransportSource>();
-    globalTransportSource->addChangeListener(this);*/
-    //Add listeners
-    /*for(it = fileComponents.begin(); it != fileComponents.end(); it++)
-    {
-        it->get()->transportSource.addChangeListener (this);
-        it->get()->thumbnail.addChangeListener (this);
-    }*/
-    //startTimer(40);
-    
-    addAndMakeVisible(&fileGUI);
-    addAndMakeVisible(&fileGUI2);
-    
-    formatManager.registerBasicFormats();
+    addAndMakeVisible(file1.getFileComponentGUI());
     
     // Make sure you set the size of the component after
     // you add any child components.
@@ -95,12 +72,15 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
         if(curr->fileLoaded)
             curr->prepareToPlay(samplesPerBlockExpected, sampleRate);
     }*/
-    fileAudio.prepareToPlay(samplesPerBlockExpected, sampleRate);
-    fileAudio2.prepareToPlay(samplesPerBlockExpected, sampleRate);
+    //fileAudio.prepareToPlay(samplesPerBlockExpected, sampleRate);
+    //fileAudio2.prepareToPlay(samplesPerBlockExpected, sampleRate);
     
-    mixer.addInputSource(&fileAudio, false);
-    mixer.addInputSource(&fileAudio2, false);
-
+    auto tempAudio = file1.getFileComponentAudio();
+    
+    tempAudio->prepareToPlay(samplesPerBlockExpected, sampleRate);
+    //mixer.addInputSource(&fileAudio, false);
+    //mixer.addInputSource(&fileAudio2, false);
+    mixer.addInputSource(tempAudio, false);
 
 }
 
@@ -110,48 +90,7 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
     //fileAudio.getNextAudioBlock(bufferToFill);
     //fileAudio2.getNextAudioBlock(bufferToFill);
 
-    /*if (readerSource.get() == nullptr)
-    {
-        bufferToFill.clearActiveBufferRegion();
-        return;
-    }
 
-    transportSource.getNextAudioBlock (bufferToFill);*/
-    //fileComp1.getNextAudioBlock(bufferToFill);
-    //fileComp2.getNextAudioBlock(bufferToFill);
-    //fileComp3.getNextAudioBlock(bufferToFill);
-    /*for(int i = 0; i < 5; i++)
-    {
-        try{
-            fileComponents.at(i)->getNextAudioBlock(bufferToFill);
-        }
-        catch(std::exception e)
-        {
-            DBG(e.what());
-            DBG("Get next audio block");
-        }
-    }*/
-    
-
-    /*for(it = fileComponents.begin(); it != fileComponents.end(); it++)
-    {
-        auto curr = it->get();
-        curr->getNextAudioBlock(bufferToFill);
-    }*/
-
-    /*for(it = fileComponents.begin(); it != fileComponents.end(); it++)
-    {
-        auto curr = it->get();
-        if(curr->state == fileComponent::Playing)
-        {
-            auto newSource = std::make_unique<juce::AudioFormatReaderSource> (curr->reader, true);
-            //Set the transport source
-           // transportSource.setSource (newSource.get(), 0, nullptr, reader->sampleRate);
-            globalTransportSource->setSource(newSource.get(), 0, nullptr, curr->reader->sampleRate);
-            curr->getNextAudioBlock(bufferToFill);
-            
-        }
-    }*/
 }
 
 void MainComponent::releaseResources()
@@ -159,22 +98,8 @@ void MainComponent::releaseResources()
     // This will be called when the audio device stops, or when it is being
     // restarted due to a setting change.
 
-    // For more details, see the help for AudioProcessor::releaseResources()
-    //fileComp1.releaseResources();
-    //fileComp2.releaseResources();
-    //fileComp3.releaseResources();
-    /*for(int i = 0; i < 5; i++)
-    {
-        fileComponents.at(i)->releaseResources();
-    }*/
-    
-    /*for(it = fileComponents.begin(); it != fileComponents.end(); it++)
-    {
-        it->get()->releaseResources();
-        //(*it)->releaseResources();
-    }*/
-    fileAudio.releaseResources();
-    fileAudio2.releaseResources();
+    auto tempAudio = file1.getFileComponentAudio();
+    tempAudio->releaseResources();
 }
 
 //==============================================================================
@@ -196,22 +121,8 @@ void MainComponent::resized()
     /*for(it = fileComponents.begin(); it != fileComponents.end(); it++)
         it->get()->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));*/
 
-    fileGUI.setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
-    fileGUI2.setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
-}
-
-void MainComponent::timerCallback()
-{
-    /*for(it = fileComponents.begin(); it != fileComponents.end(); it++)
-        it->get()->repaint();*/
-}
-
-void MainComponent::changeListenerCallback (juce::ChangeBroadcaster* source)
-{
-    /*for(it = fileComponents.begin(); it != fileComponents.end(); it++)
-    {
-        if (source == &((*it)->thumbnail))
-            it->get()->thumbnailChanged();
-    }*/
-    
+    auto tempGUI = file1.getFileComponentGUI();
+    /*fileGUI.setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
+    fileGUI2.setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));*/
+    tempGUI->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
 }

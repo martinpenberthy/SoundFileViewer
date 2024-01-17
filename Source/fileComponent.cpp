@@ -15,8 +15,26 @@
 
 fileComponent::fileComponent()
 {
+    formatManager.registerBasicFormats();
+    
     thisAudio = new fileComponentAudio(&formatManager);
     thisGUI = new fileComponentGUI(thisAudio, &formatManager, &thumbnailCache);
+}
+
+
+fileComponent::~fileComponent()
+{
+    
+}
+
+fileComponentAudio* fileComponent::getFileComponentAudio()
+{
+    return thisAudio;
+}
+
+fileComponentGUI* fileComponent::getFileComponentGUI()
+{
+    return thisGUI;
 }
 
 /*
