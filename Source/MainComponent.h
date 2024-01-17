@@ -23,6 +23,8 @@ public:
     //==============================================================================
     void paint (juce::Graphics& g) override;
     void resized() override;
+    
+    fileComponent* makeNewFileComponent(juce::URL audioURL);
 
 private:
     //==============================================================================

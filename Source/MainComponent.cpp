@@ -51,25 +51,16 @@ MainComponent::MainComponent()
                 std::cout << "one file picked" << std::endl;
 
                 juce::URL audioURL = juce::URL{*results.data()};
-                //file1.loadFile(audioURL);
-                auto fc = new fileComponent();
-                fc->loadFile(audioURL);
-                filesVec.push_back(fc);
-                
-                addAndMakeVisible(fc->getFileComponentGUI());
-                resized();
-                
-                /*file1 = new fileComponent();
-                file1->loadFile(audioURL);
-                
-                addAndMakeVisible(file1->getFileComponentGUI());
-                resized();*/
-                prepareToPlay(myBlockSize, mySampleRate);
+                //Make a fileComponent and add it to the vector
+                filesVec.push_back(makeNewFileComponent(audioURL));
             }
             else if (results.size() > 1 && results.size() <= 20) //User picked multiple files
             {
                     
             }
+            
+            resized();
+            prepareToPlay(myBlockSize, mySampleRate);
             
         });
     };
@@ -88,6 +79,20 @@ MainComponent::~MainComponent()
     shutdownAudio();
 }
 
+fileComponent* MainComponent::makeNewFileComponent(juce::URL audioURL)
+{
+    //Make fileComponent object
+    auto fc = new fileComponent();
+    //Load the chosen file
+    fc->loadFile(audioURL);
+    //Make the GUI visible
+    addAndMakeVisible(fc->getFileComponentGUI());
+    
+    return fc;
+}
+
+
+
 //==============================================================================
 void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
@@ -98,7 +103,6 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
     // but be careful - it will be called on the audio thread, not the GUI thread.
 
     // For more details, see the help for AudioProcessor::prepareToPlay()
-    DBG("prepareToPlay");
     std::cout << "prepareToPlay" << std::endl;
     
     //fileAudio.prepareToPlay(samplesPerBlockExpected, sampleRate);
@@ -129,8 +133,6 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
             mixer.prepareToPlay(samplesPerBlockExpected, sampleRate);
         }
     }
-    
-    
 }
 
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
