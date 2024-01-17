@@ -30,5 +30,10 @@ private:
     fileComponent file1;
     
     juce::MixerAudioSource mixer;
+    
+    std::unique_ptr<juce::FileChooser> myChooser;
+    
+    
+    juce::TextButton openChooser;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

@@ -21,6 +21,37 @@ MainComponent::MainComponent()
     /*addAndMakeVisible(&fileGUI);
     addAndMakeVisible(&fileGUI2);
     */
+    addAndMakeVisible(openChooser);
+    myChooser = std::make_unique<juce::FileChooser> ("Please select the .wav you want to load...",
+                                                     juce::File{},
+                                                     "*.wav");
+    auto folderChooserFlags = juce::FileBrowserComponent::openMode | juce::FileBrowserComponent::canSelectFiles | juce::FileBrowserComponent::canSelectMultipleItems | juce::FileBrowserComponent::canSelectDirectories;
+    
+
+    myChooser->launchAsync (folderChooserFlags, [this] (const juce::FileChooser& chooser)
+    {
+        auto result = chooser.getResult();
+        auto results = chooser.getResults();
+        
+        //User picked a directory
+        if(result.isDirectory())
+        {
+            
+        }
+        else if(results.size() == 1) //User picked one file
+        {
+            
+        }else if (results.size() > 1 && results.size() <= 20) //User picked multiple files
+        {
+            
+        }
+            
+        
+        juce::URL audioURL = juce::URL{result};
+        
+    });
+    
+    
     
     addAndMakeVisible(file1.getFileComponentGUI());
     
