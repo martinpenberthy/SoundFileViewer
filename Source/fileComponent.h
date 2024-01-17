@@ -9,11 +9,25 @@
 */
 
 #pragma once
-
 #include <JuceHeader.h>
-
+#include "fileComponentGUI.h"
+#include "fileComponentAudio.h"
 //==============================================================================
 
+
+class fileComponent
+{
+public:
+    fileComponent();
+    ~fileComponent();
+private:
+    fileComponentAudio* thisAudio;
+    fileComponentGUI* thisGUI;
+
+    juce::AudioThumbnailCache thumbnailCache{100};
+    
+    juce::AudioFormatManager formatManager;
+};
 
 /*
 class fileComponent  : public juce::AudioAppComponent, public juce::ChangeListener

@@ -26,7 +26,7 @@ public:
     void resized() override;
 
     void changeListenerCallback (juce::ChangeBroadcaster* source) override;
-
+    
 
 private:
     //==============================================================================
@@ -49,6 +49,8 @@ private:
     juce::AudioThumbnailCache thumbnailCache{100};
     
     juce::AudioFormatManager formatManager;
+    
+    
     fileComponentAudio fileAudio{&formatManager};
     fileComponentGUI fileGUI{&fileAudio, &formatManager, &thumbnailCache};
     

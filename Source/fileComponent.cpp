@@ -13,7 +13,11 @@
 
 //==============================================================================
 
-
+fileComponent::fileComponent()
+{
+    thisAudio = new fileComponentAudio(&formatManager);
+    thisGUI = new fileComponentGUI(thisAudio, &formatManager, &thumbnailCache);
+}
 
 /*
 fileComponent::fileComponent() : thumbnailCache (5), thumbnail (512, formatManager, thumbnailCache),
