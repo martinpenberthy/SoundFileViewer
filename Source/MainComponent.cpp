@@ -25,6 +25,7 @@ MainComponent::MainComponent()
 
     
     buttonOpenChooser.onClick = [this] {
+        DBG("openButton clicked");
         myChooser = std::make_unique<juce::FileChooser> ("Please select the .wav you want to load...",
                                                          juce::File{},
                                                          "*.wav");
@@ -43,22 +44,25 @@ MainComponent::MainComponent()
             }
             else if(results.size() == 1) //User picked one file
             {
+                DBG("one file picked");
                 juce::URL audioURL = juce::URL{*results.data()};
-                file1.loadFile(audioURL);
+                //file1.loadFile(audioURL);
+                auto fc = new fileComponent();
+                fc->loadFile(audioURL);
+                filesVec.push_back(fc);
+                
+                addAndMakeVisible(fc->getFileComponentGUI());
             }
             else if (results.size() > 1 && results.size() <= 20) //User picked multiple files
             {
-                
+                    
             }
-                
-            
-
             
         });
     };
     
     
-    addAndMakeVisible(file1.getFileComponentGUI());
+    //addAndMakeVisible(file1.getFileComponentGUI());
     
     // Make sure you set the size of the component after
     // you add any child components.
@@ -111,13 +115,20 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
     //fileAudio.prepareToPlay(samplesPerBlockExpected, sampleRate);
     //fileAudio2.prepareToPlay(samplesPerBlockExpected, sampleRate);
     
-    auto tempAudio = file1.getFileComponentAudio();
+    //auto tempAudio = file1.getFileComponentAudio();
     
-    tempAudio->prepareToPlay(samplesPerBlockExpected, sampleRate);
+    //tempAudio->prepareToPlay(samplesPerBlockExpected, sampleRate);
     //mixer.addInputSource(&fileAudio, false);
     //mixer.addInputSource(&fileAudio2, false);
-    mixer.addInputSource(tempAudio, false);
+    //mixer.addInputSource(tempAudio, false);
 
+    for(int i = 0; i < filesVec.size(); i++)
+    {
+        auto tempAudio = filesVec[i]->getFileComponentAudio();
+        tempAudio->prepareToPlay(samplesPerBlockExpected, sampleRate);
+        mixer.addInputSource(tempAudio, false);
+
+    }
 }
 
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
@@ -134,8 +145,14 @@ void MainComponent::releaseResources()
     // This will be called when the audio device stops, or when it is being
     // restarted due to a setting change.
 
-    auto tempAudio = file1.getFileComponentAudio();
-    tempAudio->releaseResources();
+    //auto tempAudio = file1.getFileComponentAudio();
+    //tempAudio->releaseResources();
+    
+    for(int i = 0; i < filesVec.size(); i++)
+    {
+        auto tempAudio = filesVec[i]->getFileComponentAudio();
+        tempAudio->releaseResources();
+    }
 }
 
 //==============================================================================
@@ -157,8 +174,15 @@ void MainComponent::resized()
     /*for(it = fileComponents.begin(); it != fileComponents.end(); it++)
         it->get()->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));*/
 
-    auto tempGUI = file1.getFileComponentGUI();
-    /*fileGUI.setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
-    fileGUI2.setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));*/
-    tempGUI->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
+    buttonOpenChooser.setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
+    
+    //auto tempGUI = file1.getFileComponentGUI();
+    //tempGUI->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
+    
+    
+    for(int i = 0; i < filesVec.size(); i++)
+    {
+        auto tempGUI = filesVec[i]->getFileComponentGUI();
+        tempGUI->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
+    }
 }

@@ -15,6 +15,7 @@
 
 fileComponent::fileComponent()
 {
+    DBG("fileComponent constructor");
     formatManager.registerBasicFormats();
     
     thisAudio = new fileComponentAudio(&formatManager);
@@ -41,6 +42,8 @@ void fileComponent::loadFile(juce::URL fileToLoad)
 {
     thisAudio->loadURL(fileToLoad);
     thisGUI->loadURL(fileToLoad);
+    
+    DBG("fileLoaded");
 }
 
 
