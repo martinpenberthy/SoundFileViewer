@@ -29,6 +29,8 @@ public:
     void loadButtonClicked();
     void playButtonClicked();
     
+    void loadURL(juce::URL fileToLoad);
+    
     fileComponentAudio* player;
     juce::TextButton buttonPlay;
     juce::TextButton buttonLoad;

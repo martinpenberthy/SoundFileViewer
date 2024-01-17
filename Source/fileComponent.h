@@ -23,6 +23,9 @@ public:
     
     fileComponentAudio* getFileComponentAudio();
     fileComponentGUI* getFileComponentGUI();
+    
+    void loadFile(juce::URL fileToLoad);
+    
 
 private:
     fileComponentAudio* thisAudio;

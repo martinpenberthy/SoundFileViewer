@@ -66,7 +66,7 @@ void fileComponentGUI::resized()
     
 void fileComponentGUI::loadButtonClicked()
 {
-    DBG("loadButtonClicked");
+    /*DBG("loadButtonClicked");
 
     myChooser = std::make_unique<juce::FileChooser> ("Please select the .wav you want to load...",
                                                      juce::File{},
@@ -92,7 +92,7 @@ void fileComponentGUI::loadButtonClicked()
         
         labelBitDepth.setText(tempStr2, juce::NotificationType::dontSendNotification);
         
-    });
+    });*/
 }
 
 void fileComponentGUI::playButtonClicked()
@@ -104,4 +104,24 @@ void fileComponentGUI::playButtonClicked()
     else
         player->start();
 }
+
+
+void fileComponentGUI::loadURL(juce::URL fileToLoad)
+{
+    player->loadURL(fileToLoad);
+    waveformDisplay.loadURL(fileToLoad);
+    FFTDisplay.loadURL(fileToLoad);
+    
+    auto tempStr = juce::String("Sample Rate: ");
+    tempStr.append(juce::String(player->sampleRate), 23);
+    
+    labelSampleRate.setText(tempStr, juce::NotificationType::dontSendNotification);
+    
+    auto tempStr2 = juce::String("Bit Depth: ");
+    tempStr2.append(juce::String(player->bitDepth), 23);
+    
+    labelBitDepth.setText(tempStr2, juce::NotificationType::dontSendNotification);
+    
+}
+
 

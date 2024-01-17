@@ -34,6 +34,6 @@ private:
     std::unique_ptr<juce::FileChooser> myChooser;
     
     
-    juce::TextButton openChooser;
+    juce::TextButton buttonOpenChooser;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

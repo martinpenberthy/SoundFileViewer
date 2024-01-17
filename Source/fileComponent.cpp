@@ -37,6 +37,14 @@ fileComponentGUI* fileComponent::getFileComponentGUI()
     return thisGUI;
 }
 
+void fileComponent::loadFile(juce::URL fileToLoad)
+{
+    thisAudio->loadURL(fileToLoad);
+    thisGUI->loadURL(fileToLoad);
+}
+
+
+
 /*
 fileComponent::fileComponent() : thumbnailCache (5), thumbnail (512, formatManager, thumbnailCache),
 state(Stopped)
