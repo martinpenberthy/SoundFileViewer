@@ -21,6 +21,7 @@ MainComponent::MainComponent()
     /*addAndMakeVisible(&fileGUI);
     addAndMakeVisible(&fileGUI2);
     */
+    
     addAndMakeVisible(buttonOpenChooser);
     buttonOpenChooser.setButtonText("Add file");
     
@@ -57,6 +58,13 @@ MainComponent::MainComponent()
                 
                 addAndMakeVisible(fc->getFileComponentGUI());
                 resized();
+                
+                /*file1 = new fileComponent();
+                file1->loadFile(audioURL);
+                
+                addAndMakeVisible(file1->getFileComponentGUI());
+                resized();*/
+                prepareToPlay(myBlockSize, mySampleRate);
             }
             else if (results.size() > 1 && results.size() <= 20) //User picked multiple files
             {
@@ -65,7 +73,7 @@ MainComponent::MainComponent()
             
         });
     };
-    
+
     
     //addAndMakeVisible(file1.getFileComponentGUI());
     
@@ -90,49 +98,39 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
     // but be careful - it will be called on the audio thread, not the GUI thread.
 
     // For more details, see the help for AudioProcessor::prepareToPlay()
-    //fileComp1.prepareToPlay(samplesPerBlockExpected, sampleRate);
-    //fileComp2.prepareToPlay(samplesPerBlockExpected, sampleRate);
-    //fileComp3.prepareToPlay(samplesPerBlockExpected, sampleRate);
-    
-    /*for(int i = 0; i < 5; i++)
-    {
-        try{
-            fileComponents.at(i)->prepareToPlay(samplesPerBlockExpected, sampleRate);
-        }
-        catch(std::exception e)
-        {
-            DBG(e.what());
-            DBG("Prepare to play");
-        }
-    }*/
     DBG("prepareToPlay");
+    std::cout << "prepareToPlay" << std::endl;
     
-
-    /*for(it = fileComponents.begin(); it != fileComponents.end(); it++)
-    {
-        auto curr = it->get();
-        curr->sampRate = sampleRate;
-        curr->sampsPerBlock = samplesPerBlockExpected;
-        
-        if(curr->fileLoaded)
-            curr->prepareToPlay(samplesPerBlockExpected, sampleRate);
-    }*/
     //fileAudio.prepareToPlay(samplesPerBlockExpected, sampleRate);
     //fileAudio2.prepareToPlay(samplesPerBlockExpected, sampleRate);
     
-    //auto tempAudio = file1.getFileComponentAudio();
-    
-    //tempAudio->prepareToPlay(samplesPerBlockExpected, sampleRate);
+    mySampleRate = sampleRate;
+    myBlockSize = samplesPerBlockExpected;
+    /*
+    if(file1 != nullptr)
+    {
+        auto tempAudio = file1->getFileComponentAudio();
+        tempAudio->prepareToPlay(samplesPerBlockExpected, sampleRate);
+        mixer.addInputSource(tempAudio, false);
+        mixer.prepareToPlay(samplesPerBlockExpected, sampleRate);
+    }*/
     //mixer.addInputSource(&fileAudio, false);
     //mixer.addInputSource(&fileAudio2, false);
-    //mixer.addInputSource(tempAudio, false);
+
 
     for(int i = 0; i < filesVec.size(); i++)
     {
-        auto tempAudio = filesVec[i]->getFileComponentAudio();
-        tempAudio->prepareToPlay(samplesPerBlockExpected, sampleRate);
-        mixer.addInputSource(tempAudio, false);
+        if(filesVec[i] != nullptr)
+        {
+            auto tempAudio = filesVec[i]->getFileComponentAudio();
+            tempAudio->prepareToPlay(samplesPerBlockExpected, sampleRate);
+            
+            mixer.addInputSource(tempAudio, false);
+            mixer.prepareToPlay(samplesPerBlockExpected, sampleRate);
+        }
     }
+    
+    
 }
 
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
@@ -147,13 +145,16 @@ void MainComponent::releaseResources()
     // This will be called when the audio device stops, or when it is being
     // restarted due to a setting change.
 
-    //auto tempAudio = file1.getFileComponentAudio();
+    //auto tempAudio = file1->getFileComponentAudio();
     //tempAudio->releaseResources();
     
     for(int i = 0; i < filesVec.size(); i++)
     {
-        auto tempAudio = filesVec[i]->getFileComponentAudio();
-        tempAudio->releaseResources();
+        if(filesVec[i] != nullptr)
+        {
+            auto tempAudio = filesVec[i]->getFileComponentAudio();
+            tempAudio->releaseResources();
+        }
     }
 }
 
@@ -178,13 +179,18 @@ void MainComponent::resized()
 
     buttonOpenChooser.setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
     
-    //auto tempGUI = file1.getFileComponentGUI();
-    //tempGUI->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
-    
+    /*if(file1 != nullptr)
+    {
+        auto tempGUI = file1->getFileComponentGUI();
+        tempGUI->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
+    }*/
     
     for(int i = 0; i < filesVec.size(); i++)
     {
-        auto tempGUI = filesVec[i]->getFileComponentGUI();
-        tempGUI->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
+        if(filesVec[i] != nullptr)
+        {
+            auto tempGUI = filesVec[i]->getFileComponentGUI();
+            tempGUI->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
+        }
     }
 }

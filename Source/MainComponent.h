@@ -26,8 +26,10 @@ public:
 
 private:
     //==============================================================================
+    float myBlockSize = 0.0f;
+    float mySampleRate = 0.0f;
     
-    fileComponent file1;
+    fileComponent* file1 = nullptr;
     
     juce::MixerAudioSource mixer;
     

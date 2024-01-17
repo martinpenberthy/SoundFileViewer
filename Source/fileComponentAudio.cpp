@@ -67,13 +67,12 @@ void fileComponentAudio::loadURL(juce::URL audioURL)
 
 void fileComponentAudio::start()
 {
-    DBG("transport started");
+    std::cout <<"transport started" << std::endl;
     transportSource.start();
 }
 void fileComponentAudio::stop()
 {
-    DBG("transport stopped");
-
+    std::cout <<"transport stopped" << std::endl;
     transportSource.stop(); //pausing only
     transportSource.setPosition(0.0f);
 }

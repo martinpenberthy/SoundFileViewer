@@ -17,6 +17,7 @@ fileComponentGUI::fileComponentGUI(fileComponentAudio *player,
                                    : player(player), waveformDisplay(formatManagerToUse, cacheToUse), FFTDisplay(formatManagerToUse)
 {
     DBG("fcGUI constructor");
+    
     addAndMakeVisible(&buttonLoad);
     buttonLoad.setButtonText("Open...");
     buttonLoad.onClick = [this] {loadButtonClicked();};
@@ -98,6 +99,7 @@ void fileComponentGUI::loadButtonClicked()
 void fileComponentGUI::playButtonClicked()
 {
     DBG("Play button clicked");
+    std::cout <<"Play button clicked" << std::endl;
     
     if(player->isPlaying())
         player->stop();
