@@ -165,7 +165,7 @@ void FFTGenerator::paint (juce::Graphics& g)
     auto width = getLocalBounds().getWidth();
     
     auto increments = (float)width / 5000.0f;
-    std::cout << increments << std::endl;
+    //std::cout << increments << std::endl;
     //auto skewedProportionX = std::log();
     g.drawVerticalLine(std::log(increments * 5000.0f), 1.0f, 10.0f);
     

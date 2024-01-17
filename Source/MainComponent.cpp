@@ -22,10 +22,11 @@ MainComponent::MainComponent()
     addAndMakeVisible(&fileGUI2);
     */
     addAndMakeVisible(buttonOpenChooser);
-
+    buttonOpenChooser.setButtonText("Add file");
     
-    buttonOpenChooser.onClick = [this] {
-        DBG("openButton clicked");
+    buttonOpenChooser.onClick = [this]
+    {
+        std::cout << "openButton clicked" << std::endl;
         myChooser = std::make_unique<juce::FileChooser> ("Please select the .wav you want to load...",
                                                          juce::File{},
                                                          "*.wav");
@@ -34,17 +35,20 @@ MainComponent::MainComponent()
 
         myChooser->launchAsync (folderChooserFlags, [this] (const juce::FileChooser& chooser)
         {
+            std::cout << "chooser" << std::endl;
             auto result = chooser.getResult();
             auto results = chooser.getResults();
             
             //User picked a directory
             if(result.isDirectory())
             {
-                DBG("No directories yet");
+                //DBG("No directories yet");
+                std::cout << "No directories yet" << std::endl;
             }
             else if(results.size() == 1) //User picked one file
             {
-                DBG("one file picked");
+                std::cout << "one file picked" << std::endl;
+
                 juce::URL audioURL = juce::URL{*results.data()};
                 //file1.loadFile(audioURL);
                 auto fc = new fileComponent();
@@ -52,6 +56,7 @@ MainComponent::MainComponent()
                 filesVec.push_back(fc);
                 
                 addAndMakeVisible(fc->getFileComponentGUI());
+                resized();
             }
             else if (results.size() > 1 && results.size() <= 20) //User picked multiple files
             {
@@ -127,7 +132,6 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
         auto tempAudio = filesVec[i]->getFileComponentAudio();
         tempAudio->prepareToPlay(samplesPerBlockExpected, sampleRate);
         mixer.addInputSource(tempAudio, false);
-
     }
 }
 
@@ -136,8 +140,6 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
     mixer.getNextAudioBlock(bufferToFill);
     //fileAudio.getNextAudioBlock(bufferToFill);
     //fileAudio2.getNextAudioBlock(bufferToFill);
-
-
 }
 
 void MainComponent::releaseResources()

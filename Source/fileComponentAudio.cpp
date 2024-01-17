@@ -23,6 +23,7 @@ void fileComponentAudio::prepareToPlay (int samplesPerBlockExpected, double samp
 {
     transportSource.prepareToPlay(samplesPerBlockExpected, sampleRate);
 }
+
 void fileComponentAudio::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
 {
     if (readerSource.get() == nullptr)
