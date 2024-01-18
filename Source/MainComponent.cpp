@@ -49,19 +49,27 @@ MainComponent::MainComponent()
             else if(results.size() == 1) //User picked one file
             {
                 std::cout << "one file picked" << std::endl;
-
+                    
                 juce::URL audioURL = juce::URL{*results.data()};
                 //Make a fileComponent and add it to the vector
                 filesVec.push_back(makeNewFileComponent(audioURL));
             }
             else if (results.size() > 1 && results.size() <= 20) //User picked multiple files
             {
-                    
+                for(int i = 0; i < results.size(); i++)
+                {
+                    juce::File temp = results[i];
+                    juce::URL audioURL = juce::URL{temp};
+                
+                    filesVec.push_back(makeNewFileComponent(audioURL));
+                }
             }
-            
+            else if(results.size() > 20)
+            {
+                
+            }
             resized();
             prepareToPlay(myBlockSize, mySampleRate);
-            
         });
     };
 
