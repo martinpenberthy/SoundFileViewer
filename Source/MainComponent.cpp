@@ -172,14 +172,17 @@ void MainComponent::paint (juce::Graphics& g)
 void MainComponent::resized()
 {
     auto area = getLocalBounds();
+    auto const container = area;
     
     auto heightFile1 = 100;
     auto marginFile1 = 7;
+    
+    
 
     /*for(it = fileComponents.begin(); it != fileComponents.end(); it++)
         it->get()->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));*/
 
-    buttonOpenChooser.setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
+    buttonOpenChooser.setBounds(area.removeFromTop(container.proportionOfHeight(0.15f)).removeFromLeft(container.proportionOfWidth(0.15f)).reduced(marginFile1));
     
     /*if(file1 != nullptr)
     {

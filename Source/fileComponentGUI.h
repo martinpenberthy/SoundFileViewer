@@ -40,7 +40,9 @@ public:
 private:
     std::unique_ptr<juce::FileChooser> myChooser;
     
+    juce::Label labelFileName;
     juce::Label labelSampleRate;
     juce::Label labelBitDepth;
+    
 
 };

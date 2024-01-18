@@ -17,14 +17,18 @@ fileComponentGUI::fileComponentGUI(fileComponentAudio *player,
                                    : player(player), waveformDisplay(formatManagerToUse, cacheToUse), FFTDisplay(formatManagerToUse)
 {
     DBG("fcGUI constructor");
-    
+    /*
     addAndMakeVisible(&buttonLoad);
     buttonLoad.setButtonText("Open...");
-    buttonLoad.onClick = [this] {loadButtonClicked();};
+    buttonLoad.onClick = [this] {loadButtonClicked();};*/
     
     addAndMakeVisible(&buttonPlay);
     buttonPlay.setButtonText("Play/Stop");
     buttonPlay.onClick = [this] {playButtonClicked();};
+    
+    addAndMakeVisible(&labelFileName);
+    labelFileName.setText("Name: ", juce::NotificationType::dontSendNotification);
+    
     
     addAndMakeVisible(&labelSampleRate);
     labelSampleRate.setText("Sample Rate: ", juce::NotificationType::dontSendNotification);
@@ -54,9 +58,10 @@ void fileComponentGUI::resized()
     
     auto buttonMargin = 10;
     
-    buttonLoad.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.1f)).reduced(buttonMargin));
+    //buttonLoad.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.1f)).reduced(buttonMargin));
     buttonPlay.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.1f)).reduced(buttonMargin));
     
+    labelFileName.setBounds(bounds.removeFromTop(container.proportionOfHeight(0.2f)).removeFromLeft(container.proportionOfWidth(0.2f)));
     labelSampleRate.setBounds(bounds.removeFromTop(container.proportionOfHeight(0.2f)).removeFromLeft(container.proportionOfWidth(0.2f)));
     labelBitDepth.setBounds(bounds.removeFromTop(container.proportionOfHeight(0.2f)).removeFromLeft(container.proportionOfWidth(0.2f)));
     
@@ -116,14 +121,15 @@ void fileComponentGUI::loadURL(juce::URL fileToLoad)
     
     auto tempStr = juce::String("Sample Rate: ");
     tempStr.append(juce::String(player->sampleRate), 23);
-    
     labelSampleRate.setText(tempStr, juce::NotificationType::dontSendNotification);
     
-    auto tempStr2 = juce::String("Bit Depth: ");
-    tempStr2.append(juce::String(player->bitDepth), 23);
+    tempStr = juce::String("Bit Depth: ");
+    tempStr.append(juce::String(player->bitDepth), 23);
+    labelBitDepth.setText(tempStr, juce::NotificationType::dontSendNotification);
     
-    labelBitDepth.setText(tempStr2, juce::NotificationType::dontSendNotification);
-    
+    tempStr = juce::String("Name: ");
+    tempStr.append(juce::String(fileToLoad.getFileName()), 25);
+    labelFileName.setText(tempStr, juce::NotificationType::dontSendNotification);
 }
 
 
