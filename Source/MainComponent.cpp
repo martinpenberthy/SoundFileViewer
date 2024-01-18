@@ -45,6 +45,8 @@ MainComponent::MainComponent()
             {
                 //DBG("No directories yet");
                 std::cout << "No directories yet" << std::endl;
+                int numFiles = result.getNumberOfChildFiles(20);
+                //auto array = result.getc
             }
             else if(results.size() == 1) //User picked one file
             {
@@ -66,7 +68,9 @@ MainComponent::MainComponent()
             }
             else if(results.size() > 20)
             {
+                /*auto alertWindow = juce::AlertWindow("Load Error", "Too many files! (20 max)", juce::MessageBoxIconType::WarningIcon, this);
                 
+                addAndMakeVisible(alertWindow);*/
             }
             resized();
             prepareToPlay(myBlockSize, mySampleRate);
@@ -78,7 +82,7 @@ MainComponent::MainComponent()
     
     // Make sure you set the size of the component after
     // you add any child components.
-    setSize (800, 600);
+    setSize (800, 700);
 }
 
 MainComponent::~MainComponent()
