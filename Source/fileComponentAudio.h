@@ -28,6 +28,7 @@ public:
     void stop();
     
     bool isPlaying();
+    juce::AudioTransportSource* getTransport();
     
     double sampleRate;
     unsigned int bitDepth;

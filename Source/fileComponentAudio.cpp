@@ -85,3 +85,9 @@ bool fileComponentAudio::isPlaying()
     return transportSource.isPlaying();
 }
 
+juce::AudioTransportSource* fileComponentAudio::getTransport()
+{
+    return &transportSource;
+}
+
+

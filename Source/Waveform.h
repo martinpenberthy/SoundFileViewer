@@ -10,11 +10,12 @@
 
 #pragma once
 #include <JuceHeader.h>
+#include "fileComponentAudio.h"
 
 class Waveform : public juce::Component, public juce::ChangeListener
 {
 public:
-    Waveform(juce::AudioFormatManager* formatManagerToUse, juce::AudioThumbnailCache* cacheToUse);
+    Waveform(juce::AudioFormatManager* formatManagerToUse, juce::AudioThumbnailCache* cacheToUse, fileComponentAudio* player);
     ~Waveform();
     
     void paint (juce::Graphics&) override;
@@ -32,4 +33,5 @@ public:
 private:
     juce::AudioThumbnail thumbnail;
     bool fileLoaded;
+    fileComponentAudio* fCA;
 };

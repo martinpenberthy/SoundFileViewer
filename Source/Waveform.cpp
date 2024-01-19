@@ -10,8 +10,9 @@
 
 #include "Waveform.h"
 
-Waveform::Waveform(juce::AudioFormatManager* formatManagerToUse, juce::AudioThumbnailCache* cacheToUse) : thumbnail(1000, *formatManagerToUse, *cacheToUse)
+Waveform::Waveform(juce::AudioFormatManager* formatManagerToUse, juce::AudioThumbnailCache* cacheToUse, fileComponentAudio* player) : thumbnail(1000, *formatManagerToUse, *cacheToUse)
 {
+    fCA = player;
     thumbnail.addChangeListener(this);
     fileLoaded = false;
 }
@@ -61,13 +62,13 @@ void Waveform::paintIfFileLoaded (juce::Graphics& g, const juce::Rectangle<int>&
                             audioLength,                            // end time
                             1.0f);                                  // vertical zoom
 
-    /*g.setColour (juce::Colours::green);
+    g.setColour (juce::Colours::green);
 
-    auto audioPosition = (float) transportSource->getCurrentPosition();
+    auto audioPosition = (float) fCA->getTransport()->getCurrentPosition();
     auto drawPosition = (audioPosition / audioLength) * (float) thumbnailBounds.getWidth()
                         + (float) thumbnailBounds.getX();
     g.drawLine (drawPosition, (float) thumbnailBounds.getY(), drawPosition,
-                (float) thumbnailBounds.getBottom(), 2.0f);*/
+                (float) thumbnailBounds.getBottom(), 2.0f);
 }
 
 void Waveform::resized()
