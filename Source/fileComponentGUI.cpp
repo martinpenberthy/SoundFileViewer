@@ -55,18 +55,47 @@ void fileComponentGUI::resized()
     const auto container = getLocalBounds().reduced(4);
     auto bounds = container;
     
-    auto buttonMargin = 10;
+    auto buttonMargin = 5;
     
-    buttonLoad.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.1f)).reduced(buttonMargin));
+    
+    auto area = getLocalBounds();
+    auto area2 = getLocalBounds();
+    area = area.removeFromLeft(proportionOfWidth(0.4f));
+    area2 = area2.removeFromRight(proportionOfWidth(0.6f));
+    auto const containerNew1 = area;
+    auto const containerNew2 = area2;
+
+    //buttonLoad
+    buttonLoad.setBounds(area.removeFromLeft(containerNew1.proportionOfWidth(0.33f)).reduced(buttonMargin));
+    //buttonPlay
+    buttonPlay.setBounds(area.removeFromLeft(containerNew1.proportionOfWidth(0.33f)).reduced(buttonMargin));
+
+    //labelFileName
+    labelFileName.setBounds(area.removeFromTop(containerNew1.proportionOfHeight(0.2f)));
+    //labelSampleRate
+    labelSampleRate.setBounds(area.removeFromTop(containerNew1.proportionOfHeight(0.2f)));
+    //labelBitDepth
+    labelBitDepth.setBounds(area.removeFromTop(containerNew1.proportionOfHeight(0.2f)));
+    
+    
+    //waveformDisplay
+    waveformDisplay.setBounds(area2);
+    //FFTDisplay
+    FFTDisplay.setBounds(area2.removeFromLeft(containerNew2.proportionOfWidth(0.5f)));
+    
+    /*buttonLoad.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.1f)).reduced(buttonMargin));
     buttonPlay.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.1f)).reduced(buttonMargin));
+    //buttonLoad.setBounds(
     
     labelFileName.setBounds(bounds.removeFromTop(container.proportionOfHeight(0.2f)).removeFromLeft(container.proportionOfWidth(0.2f)));
     labelSampleRate.setBounds(bounds.removeFromTop(container.proportionOfHeight(0.2f)).removeFromLeft(container.proportionOfWidth(0.2f)));
     labelBitDepth.setBounds(bounds.removeFromTop(container.proportionOfHeight(0.2f)).removeFromLeft(container.proportionOfWidth(0.2f)));
     
+    bounds.removeFromLeft(container.proportionOfWidth(0.2f));
+    
     waveformDisplay.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.5f)));
     
-    FFTDisplay.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.5f)));
+    FFTDisplay.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.5f)));*/
 }
     
 void fileComponentGUI::loadButtonClicked()
