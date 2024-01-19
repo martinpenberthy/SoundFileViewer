@@ -244,7 +244,7 @@ void MainComponent::resized()
         if(filesVec[i] != nullptr)
         {
             auto tempGUI = filesVec[i]->getFileComponentGUI();
-            tempGUI->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
+            tempGUI->setBounds(area2.removeFromTop(heightFile1).reduced(marginFile1));
         }
     }
 }

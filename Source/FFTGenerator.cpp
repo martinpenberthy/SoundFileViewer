@@ -52,6 +52,8 @@ void FFTGenerator::loadURL(juce::URL audioURL)
 
 void FFTGenerator::generateFFT()
 {
+    juce::zeromem(scopeDataSummed, sizeof(scopeDataSummed));
+
     if(fileBuffer.get() != nullptr)
     {
         for(int i = 0; i < fileBuffer->getNumChannels(); i++)
@@ -179,4 +181,5 @@ void FFTGenerator::setWindowingFunction(juce::dsp::WindowingFunction<float>::Win
 {
     delete window;
     window = new juce::dsp::WindowingFunction<float>(fftSize, func);
+    generateFFT();
 }
