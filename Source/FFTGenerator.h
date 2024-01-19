@@ -22,8 +22,10 @@ public:
     void pushNextSampleIntoFifo (float sample) noexcept;
     void drawNextFrameOfSpectrum();
     void drawFrame (juce::Graphics& g);
+    
         
     void paint (juce::Graphics& g) override;
+    void setWindowingFunction(juce::dsp::WindowingFunction<float>::WindowingMethod func);
 
     
     enum
@@ -36,7 +38,7 @@ private:
     juce::AudioFormatManager* formatManager;
     
     juce::dsp::FFT forwardFFT;
-    juce::dsp::WindowingFunction<float> window;
+    juce::dsp::WindowingFunction<float>* window;
     
     float fifo [fftSize];                           // [6]
     float fftData [2 * fftSize];                    // [7]

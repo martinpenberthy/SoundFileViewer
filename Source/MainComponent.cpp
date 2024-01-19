@@ -77,6 +77,19 @@ MainComponent::MainComponent()
         });
     };
 
+    addAndMakeVisible(comboWindowType);
+    comboWindowType.addItem("Hann", 1);
+    comboWindowType.addItem("Flat Top", 2);
+    
+    comboWindowType.onChange = [this] {
+        for(int i = 0; i < filesVec.size(); i++)
+        {
+            if(filesVec[i] != nullptr)
+            {
+                
+            }
+        }
+    };
     
     //addAndMakeVisible(file1.getFileComponentGUI());
     
@@ -195,6 +208,7 @@ void MainComponent::resized()
         it->get()->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));*/
 
     buttonOpenChooser.setBounds(area.removeFromTop(container.proportionOfHeight(0.15f)).removeFromLeft(container.proportionOfWidth(0.15f)).reduced(marginFile1));
+    
     
     /*if(file1 != nullptr)
     {

@@ -38,6 +38,11 @@ private:
     std::unique_ptr<juce::FileChooser> myChooser;
     juce::TextButton buttonOpenChooser;
     
+    juce::ComboBox comboWindowType;
+    
+    
     std::vector<fileComponent*> filesVec;
+    
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

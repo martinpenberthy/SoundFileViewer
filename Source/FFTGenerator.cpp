@@ -10,16 +10,18 @@
 
 #include "FFTGenerator.h"
 
-FFTGenerator::FFTGenerator(juce::AudioFormatManager* formatManagerToUse) : formatManager(formatManagerToUse), forwardFFT(fftOrder), window (fftSize, juce::dsp::WindowingFunction<float>::triangular)
+FFTGenerator::FFTGenerator(juce::AudioFormatManager* formatManagerToUse) : formatManager(formatManagerToUse), forwardFFT(fftOrder)//, window (fftSize, juce::dsp::WindowingFunction<float>::triangular)
 {
     juce::zeromem(scopeDataSummed, sizeof(scopeDataSummed));
     //startTimerHz (30);
-
+    
+    window = new juce::dsp::WindowingFunction<float>(fftSize, juce::dsp::WindowingFunction<float>::triangular);
+    
 }
 
 FFTGenerator::~FFTGenerator()
 {
-    
+    delete window;
 }
 
 void FFTGenerator::loadURL(juce::URL audioURL)
@@ -57,15 +59,15 @@ void FFTGenerator::generateFFT()
                 pushNextSampleIntoFifo(fileBuffer->getSample(i, j));
     }
     
-    for(int i = 0; i < scopeSize; i++)
-        DBG(scopeDataSummed[i]);
+    /*for(int i = 0; i < scopeSize; i++)
+        DBG(scopeDataSummed[i]);*/
     
-    DBG("=================================================================");
+    //DBG("=================================================================");
     
     for(int i = 0; i < scopeSize; i++)
     {
         scopeDataSummed[i] = fmod(scopeDataSummed[i], 1);
-        DBG(scopeDataSummed[i]);
+        //DBG(scopeDataSummed[i]);
     }
 }
 
@@ -101,7 +103,7 @@ void FFTGenerator::pushNextSampleIntoFifo (float sample) noexcept
 void FFTGenerator::drawNextFrameOfSpectrum()
 {
     // first apply a windowing function to our data
-    window.multiplyWithWindowingTable (fftData, fftSize);       // [1]
+    window->multiplyWithWindowingTable (fftData, fftSize);       // [1]
 
     // then render our FFT data..
     forwardFFT.performFrequencyOnlyForwardTransform (fftData);  // [2]
@@ -143,12 +145,7 @@ void FFTGenerator::drawFrame (juce::Graphics& g)
                               juce::jmap (scopeDataSummed[i - 1], 0.0f, 1.0f, (float) height, 0.0f),
                       (float) juce::jmap (i,     0, scopeSize - 1, 0, width),
                               juce::jmap (scopeDataSummed[i],     0.0f, 1.0f, (float) height, 0.0f) });
-        
-        
-
-        //g.drawVerticalLine(std::pow(std::log(1000), 2), 1.0f, 10.0f);
-    }
-
+        }
 }
 
 
@@ -175,4 +172,11 @@ void FFTGenerator::paint (juce::Graphics& g)
     //g.drawText("100", getLocalBounds(), juce::Justification::topLeft, true);
     //g.drawText("1000", getLocalBounds(), juce::Justification::centredTop, true);
     
+}
+
+
+void FFTGenerator::setWindowingFunction(juce::dsp::WindowingFunction<float>::WindowingMethod func)
+{
+    delete window;
+    window = new juce::dsp::WindowingFunction<float>(fftSize, func);
 }

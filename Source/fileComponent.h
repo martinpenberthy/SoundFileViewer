@@ -25,7 +25,7 @@ public:
     fileComponentGUI* getFileComponentGUI();
     
     void loadFile(juce::URL fileToLoad);
-    
+    void setWindowingFunction(juce::dsp::WindowingFunction<float>::WindowingMethod func);
 
 private:
     fileComponentAudio* thisAudio;

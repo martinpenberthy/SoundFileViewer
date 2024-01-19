@@ -46,6 +46,13 @@ void fileComponent::loadFile(juce::URL fileToLoad)
     DBG("fileLoaded");
 }
 
+void fileComponent::setWindowingFunction(juce::dsp::WindowingFunction<float>::WindowingMethod func)
+{
+    thisGUI->FFTDisplay.setWindowingFunction(func);
+}
+
+
+
 
 
 /*
