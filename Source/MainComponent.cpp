@@ -80,13 +80,30 @@ MainComponent::MainComponent()
     addAndMakeVisible(comboWindowType);
     comboWindowType.addItem("Hann", 1);
     comboWindowType.addItem("Flat Top", 2);
+    comboWindowType.setSelectedId(1);
     
     comboWindowType.onChange = [this] {
         for(int i = 0; i < filesVec.size(); i++)
         {
             if(filesVec[i] != nullptr)
             {
+                //Make tr
+                auto func = juce::dsp::WindowingFunction<float>::WindowingMethod::triangular;
                 
+                switch(comboWindowType.getSelectedId())
+                {
+                    case 1:
+                        func = juce::dsp::WindowingFunction<float>::WindowingMethod::hann;
+                        break;
+                    case 2:
+                        func = juce::dsp::WindowingFunction<float>::WindowingMethod::flatTop;
+                        break;
+                    default:
+                        func = juce::dsp::WindowingFunction<float>::WindowingMethod::hann;
+                        break;
+                        
+                };
+                filesVec[i]->getFileComponentGUI()->FFTDisplay.setWindowingFunction(func);
             }
         }
     };
@@ -208,7 +225,7 @@ void MainComponent::resized()
         it->get()->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));*/
 
     buttonOpenChooser.setBounds(area.removeFromTop(container.proportionOfHeight(0.15f)).removeFromLeft(container.proportionOfWidth(0.15f)).reduced(marginFile1));
-    
+    comboWindowType.setBounds(area.removeFromRight(container.proportionOfWidth(0.15f)));
     
     /*if(file1 != nullptr)
     {
