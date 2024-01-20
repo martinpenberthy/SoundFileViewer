@@ -15,6 +15,8 @@ Waveform::Waveform(juce::AudioFormatManager* formatManagerToUse, juce::AudioThum
     fCA = player;
     thumbnail.addChangeListener(this);
     fileLoaded = false;
+    
+    startTimer(30);
 }
 
 Waveform::~Waveform()
@@ -96,4 +98,9 @@ void Waveform::loadURL(juce::URL audioURL)
         std::cout << "wfd: not loaded! " << std::endl;
     }
 
+}
+
+void Waveform::timerCallback()
+{
+    repaint();
 }

@@ -12,7 +12,7 @@
 #include <JuceHeader.h>
 #include "fileComponentAudio.h"
 
-class Waveform : public juce::Component, public juce::ChangeListener
+class Waveform : public juce::Component, public juce::ChangeListener, public juce::Timer
 {
 public:
     Waveform(juce::AudioFormatManager* formatManagerToUse, juce::AudioThumbnailCache* cacheToUse, fileComponentAudio* player);
@@ -23,6 +23,8 @@ public:
     void paintIfFileLoaded (juce::Graphics& g, const juce::Rectangle<int>& thumbnailBounds);
     
     void resized() override;
+    
+    void timerCallback() override;
     
     /* this method listens for any changes, if any, repaints the updated pos in wfd */
     void changeListenerCallback (juce::ChangeBroadcaster *source) override;
