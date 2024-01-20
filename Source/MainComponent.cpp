@@ -80,6 +80,14 @@ MainComponent::MainComponent()
     addAndMakeVisible(comboWindowType);
     comboWindowType.addItem("Hann", 1);
     comboWindowType.addItem("Flat Top", 2);
+    comboWindowType.addItem("Rectangular", 3);
+    comboWindowType.addItem("Triangular", 4);
+    comboWindowType.addItem("Hamming", 5);
+    comboWindowType.addItem("Blackman-Harris", 6);
+    comboWindowType.addItem("Blackman", 7);
+    comboWindowType.addItem("Kaiser", 8);
+    
+    
     comboWindowType.setSelectedId(1);
     
     comboWindowType.onChange = [this] {
@@ -87,8 +95,8 @@ MainComponent::MainComponent()
         {
             if(filesVec[i] != nullptr)
             {
-                //Make tr
-                auto func = juce::dsp::WindowingFunction<float>::WindowingMethod::triangular;
+                //Make temp
+                juce::dsp::WindowingFunction<float>::WindowingMethod func;
                 
                 switch(comboWindowType.getSelectedId())
                 {
@@ -97,6 +105,24 @@ MainComponent::MainComponent()
                         break;
                     case 2:
                         func = juce::dsp::WindowingFunction<float>::WindowingMethod::flatTop;
+                        break;
+                    case 3:
+                        func = juce::dsp::WindowingFunction<float>::WindowingMethod::rectangular;
+                        break;
+                    case 4:
+                        func = juce::dsp::WindowingFunction<float>::WindowingMethod::triangular;
+                        break;
+                    case 5:
+                        func = juce::dsp::WindowingFunction<float>::WindowingMethod::hamming;
+                        break;
+                    case 6:
+                        func = juce::dsp::WindowingFunction<float>::WindowingMethod::blackmanHarris;
+                        break;
+                    case 7:
+                        func = juce::dsp::WindowingFunction<float>::WindowingMethod::blackman;
+                        break;
+                    case 8:
+                        func = juce::dsp::WindowingFunction<float>::WindowingMethod::kaiser;
                         break;
                     default:
                         func = juce::dsp::WindowingFunction<float>::WindowingMethod::hann;
