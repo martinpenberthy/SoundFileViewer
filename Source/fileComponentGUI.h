@@ -43,6 +43,7 @@ private:
     juce::Label labelFileName;
     juce::Label labelSampleRate;
     juce::Label labelBitDepth;
+    juce::Label labelPosition;
     
 
 };

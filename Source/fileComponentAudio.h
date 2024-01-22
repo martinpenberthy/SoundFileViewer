@@ -29,6 +29,7 @@ public:
     
     bool isPlaying();
     juce::AudioTransportSource* getTransport();
+    double getCurrentPosition();
     
     double sampleRate;
     unsigned int bitDepth;

@@ -31,7 +31,7 @@ public:
     /* if valid file has been loaded, sets class bool fileLoaded to true (repaint waveform)*/
     void loadURL(juce::URL audioURL);
 
-    
+    juce::String positionFormatted = juce::String::formatted ("%02d:%02d:%03d", 0.0f, 0.0f, 0.0f);
 private:
     juce::AudioThumbnail thumbnail;
     bool fileLoaded;

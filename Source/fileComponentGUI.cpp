@@ -35,6 +35,9 @@ fileComponentGUI::fileComponentGUI(fileComponentAudio *player,
     addAndMakeVisible(&labelBitDepth);
     labelBitDepth.setText("Bit Depth: ", juce::NotificationType::dontSendNotification);
     
+    addAndMakeVisible(&labelPosition);
+    labelPosition.setText("Position: ", juce::NotificationType::dontSendNotification);
+    
     addAndMakeVisible(&waveformDisplay);
     addAndMakeVisible(&FFTDisplay);
 }
@@ -82,7 +85,8 @@ void fileComponentGUI::resized()
     labelSampleRate.setBounds(areaLabels.removeFromTop(containerNew1Labels.proportionOfHeight(0.2f)));
     //labelBitDepth
     labelBitDepth.setBounds(areaLabels.removeFromTop(containerNew1Labels.proportionOfHeight(0.2f)));
-    
+    //labelPosition
+    labelPosition.setBounds(areaLabels.removeFromTop(containerNew1Labels.proportionOfHeight(0.2f)));
     
     //waveformDisplay
     waveformDisplay.setBounds(area2);
@@ -165,6 +169,10 @@ void fileComponentGUI::loadURL(juce::URL fileToLoad)
     tempStr = juce::String("Name: ");
     tempStr.append(juce::String(fileToLoad.getFileName()), 25);
     labelFileName.setText(tempStr, juce::NotificationType::dontSendNotification);
+    
+    tempStr = juce::String("Position: ");
+    tempStr.append(waveformDisplay.positionFormatted);
+    labelPosition.setText(tempStr, juce::NotificationType::dontSendNotification);
 }
 
 

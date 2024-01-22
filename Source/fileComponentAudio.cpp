@@ -60,6 +60,7 @@ void fileComponentAudio::loadURL(juce::URL audioURL)
         sampleRate = reader->sampleRate;
         bitDepth = reader->bitsPerSample;
         lengthInSecs = transportSource.getLengthInSeconds();
+        
     }
     else
     {
@@ -91,4 +92,8 @@ juce::AudioTransportSource* fileComponentAudio::getTransport()
     return &transportSource;
 }
 
+double fileComponentAudio::getCurrentPosition()
+{
+    return transportSource.getCurrentPosition();
+}
 
