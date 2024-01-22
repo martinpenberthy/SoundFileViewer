@@ -60,22 +60,28 @@ void fileComponentGUI::resized()
     
     auto area = getLocalBounds();
     auto area2 = getLocalBounds();
-    area = area.removeFromLeft(proportionOfWidth(0.4f));
-    area2 = area2.removeFromRight(proportionOfWidth(0.6f));
+    auto areaLabels = getLocalBounds();
+    
+    area = area.removeFromLeft(proportionOfWidth(0.25f));
+    areaLabels = area.removeFromRight(area.proportionOfWidth(0.6f));
+    area2 = area2.removeFromRight(proportionOfWidth(0.75f));
+    
     auto const containerNew1 = area;
+    auto const containerNew1Labels = areaLabels;
     auto const containerNew2 = area2;
 
     //buttonLoad
-    buttonLoad.setBounds(area.removeFromLeft(containerNew1.proportionOfWidth(0.33f)).reduced(buttonMargin));
+    buttonLoad.setBounds(area.removeFromTop(containerNew1.proportionOfHeight(0.5f)).reduced(buttonMargin));
     //buttonPlay
-    buttonPlay.setBounds(area.removeFromLeft(containerNew1.proportionOfWidth(0.33f)).reduced(buttonMargin));
+    //buttonPlay.setBounds(area.removeFromLeft(containerNew1.proportionOfWidth(0.33f)).reduced(buttonMargin));
+    buttonPlay.setBounds(area.removeFromTop(containerNew1.proportionOfHeight(0.5f)).reduced(buttonMargin));
 
     //labelFileName
-    labelFileName.setBounds(area.removeFromTop(containerNew1.proportionOfHeight(0.2f)));
+    labelFileName.setBounds(areaLabels.removeFromTop(containerNew1Labels.proportionOfHeight(0.2f)));
     //labelSampleRate
-    labelSampleRate.setBounds(area.removeFromTop(containerNew1.proportionOfHeight(0.2f)));
+    labelSampleRate.setBounds(areaLabels.removeFromTop(containerNew1Labels.proportionOfHeight(0.2f)));
     //labelBitDepth
-    labelBitDepth.setBounds(area.removeFromTop(containerNew1.proportionOfHeight(0.2f)));
+    labelBitDepth.setBounds(areaLabels.removeFromTop(containerNew1Labels.proportionOfHeight(0.2f)));
     
     
     //waveformDisplay
@@ -146,6 +152,7 @@ void fileComponentGUI::loadURL(juce::URL fileToLoad)
     player->loadURL(fileToLoad);
     waveformDisplay.loadURL(fileToLoad);
     FFTDisplay.loadURL(fileToLoad);
+    
     
     auto tempStr = juce::String("Sample Rate: ");
     tempStr.append(juce::String(player->sampleRate), 23);

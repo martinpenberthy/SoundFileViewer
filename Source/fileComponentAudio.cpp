@@ -59,6 +59,7 @@ void fileComponentAudio::loadURL(juce::URL audioURL)
         
         sampleRate = reader->sampleRate;
         bitDepth = reader->bitsPerSample;
+        lengthInSecs = transportSource.getLengthInSeconds();
     }
     else
     {

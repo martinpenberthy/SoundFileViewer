@@ -32,6 +32,7 @@ public:
     
     double sampleRate;
     unsigned int bitDepth;
+    double lengthInSecs;
 private:
     juce::AudioFormatManager* formatManager;
     
