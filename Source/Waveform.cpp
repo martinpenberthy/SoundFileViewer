@@ -105,21 +105,5 @@ void Waveform::timerCallback()
     repaint();
     
     
-    if (fCA->isPlaying())
-        {
-            juce::RelativeTime position (fCA->getCurrentPosition());
 
-            auto minutes = ((int) position.inMinutes()) % 60;
-            auto seconds = ((int) position.inSeconds()) % 60;
-            auto millis  = ((int) position.inMilliseconds()) % 1000;
-
-           // auto positionString = juce::String::formatted ("%02d:%02d:%03d", minutes, seconds, millis);
-            positionFormatted = juce::String::formatted ("%02d:%02d:%03d", minutes, seconds, millis);
-
-            //currentPositionLabel.setText (positionString, juce::dontSendNotification);
-        }
-        else
-        {
-            //currentPositionLabel.setText ("Stopped", juce::dontSendNotification);
-        }
 }

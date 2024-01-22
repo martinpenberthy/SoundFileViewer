@@ -14,7 +14,7 @@
 #include "Waveform.h"
 #include "FFTGenerator.h"
 
-class fileComponentGUI : public juce::Component
+class fileComponentGUI : public juce::Component, private juce::Timer
 {
 public:
     fileComponentGUI(fileComponentAudio *player, juce::AudioFormatManager *formatManagerToUse, juce::AudioThumbnailCache *cacheToUse);
@@ -30,6 +30,9 @@ public:
     void playButtonClicked();
     
     void loadURL(juce::URL fileToLoad);
+    
+    void timerCallback() override;
+
     
     fileComponentAudio* player;
     juce::TextButton buttonPlay;

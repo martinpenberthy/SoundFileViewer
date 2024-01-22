@@ -40,6 +40,9 @@ fileComponentGUI::fileComponentGUI(fileComponentAudio *player,
     
     addAndMakeVisible(&waveformDisplay);
     addAndMakeVisible(&FFTDisplay);
+    
+    
+    startTimer(30);
 }
 
 fileComponentGUI::~fileComponentGUI()
@@ -170,9 +173,32 @@ void fileComponentGUI::loadURL(juce::URL fileToLoad)
     tempStr.append(juce::String(fileToLoad.getFileName()), 25);
     labelFileName.setText(tempStr, juce::NotificationType::dontSendNotification);
     
-    tempStr = juce::String("Position: ");
-    tempStr.append(waveformDisplay.positionFormatted);
-    labelPosition.setText(tempStr, juce::NotificationType::dontSendNotification);
+
+    
+    //player->
 }
 
 
+void fileComponentGUI::timerCallback()
+{
+    if (player->isPlaying())
+        {
+            juce::RelativeTime position (player->getCurrentPosition());
+
+            auto minutes = ((int) position.inMinutes()) % 60;
+            auto seconds = ((int) position.inSeconds()) % 60;
+            auto millis  = ((int) position.inMilliseconds()) % 1000;
+
+           // auto positionString = juce::String::formatted ("%02d:%02d:%03d", minutes, seconds, millis);
+            juce::String positionFormatted = juce::String::formatted ("%02d:%02d:%03d", minutes, seconds, millis);
+
+            auto tempStr = juce::String("Position: ");
+            tempStr.append(positionFormatted, 25);
+            labelPosition.setText(tempStr, juce::NotificationType::dontSendNotification);
+            //currentPositionLabel.setText (positionString, juce::dontSendNotification);
+        }
+        else
+        {
+            //currentPositionLabel.setText ("Stopped", juce::dontSendNotification);
+        }
+}
