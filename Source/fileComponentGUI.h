@@ -47,6 +47,6 @@ private:
     juce::Label labelSampleRate;
     juce::Label labelBitDepth;
     juce::Label labelPosition;
-    
+    juce::Label labelLength;
 
 };

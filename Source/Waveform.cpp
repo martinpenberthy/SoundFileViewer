@@ -103,7 +103,4 @@ void Waveform::loadURL(juce::URL audioURL)
 void Waveform::timerCallback()
 {
     repaint();
-    
-    
-
 }

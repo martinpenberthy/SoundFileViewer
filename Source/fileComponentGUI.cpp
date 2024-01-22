@@ -38,6 +38,9 @@ fileComponentGUI::fileComponentGUI(fileComponentAudio *player,
     addAndMakeVisible(&labelPosition);
     labelPosition.setText("Position: ", juce::NotificationType::dontSendNotification);
     
+    addAndMakeVisible(&labelLength);
+    labelLength.setText("Length: ", juce::NotificationType::dontSendNotification);
+    
     addAndMakeVisible(&waveformDisplay);
     addAndMakeVisible(&FFTDisplay);
     
@@ -90,6 +93,8 @@ void fileComponentGUI::resized()
     labelBitDepth.setBounds(areaLabels.removeFromTop(containerNew1Labels.proportionOfHeight(0.2f)));
     //labelPosition
     labelPosition.setBounds(areaLabels.removeFromTop(containerNew1Labels.proportionOfHeight(0.2f)));
+    //labelLength
+    labelLength.setBounds(areaLabels.removeFromTop(containerNew1Labels.proportionOfHeight(0.2f)));
     
     //waveformDisplay
     waveformDisplay.setBounds(area2);
@@ -173,8 +178,19 @@ void fileComponentGUI::loadURL(juce::URL fileToLoad)
     tempStr.append(juce::String(fileToLoad.getFileName()), 25);
     labelFileName.setText(tempStr, juce::NotificationType::dontSendNotification);
     
+    tempStr = juce::String("Length: ");
+    
+    juce::RelativeTime position (player->lengthInSecs);
+    auto minutes = ((int) position.inMinutes()) % 60;
+    auto seconds = ((int) position.inSeconds()) % 60;
+    auto millis  = ((int) position.inMilliseconds()) % 1000;
+    juce::String positionFormatted = juce::String::formatted ("%02d:%02d:%03d", minutes, seconds, millis);
+    
+    tempStr.append(positionFormatted, 25);
+    labelLength.setText(tempStr, juce::NotificationType::dontSendNotification);
 
     
+
     //player->
 }
 
@@ -182,23 +198,30 @@ void fileComponentGUI::loadURL(juce::URL fileToLoad)
 void fileComponentGUI::timerCallback()
 {
     if (player->isPlaying())
-        {
-            juce::RelativeTime position (player->getCurrentPosition());
-
-            auto minutes = ((int) position.inMinutes()) % 60;
-            auto seconds = ((int) position.inSeconds()) % 60;
-            auto millis  = ((int) position.inMilliseconds()) % 1000;
+    {
+        juce::RelativeTime position (player->getCurrentPosition());
+        
+        auto minutes = ((int) position.inMinutes()) % 60;
+        auto seconds = ((int) position.inSeconds()) % 60;
+        auto millis  = ((int) position.inMilliseconds()) % 1000;
 
            // auto positionString = juce::String::formatted ("%02d:%02d:%03d", minutes, seconds, millis);
-            juce::String positionFormatted = juce::String::formatted ("%02d:%02d:%03d", minutes, seconds, millis);
+        juce::String positionFormatted = juce::String::formatted ("%02d:%02d:%03d", minutes, seconds, millis);
 
-            auto tempStr = juce::String("Position: ");
-            tempStr.append(positionFormatted, 25);
-            labelPosition.setText(tempStr, juce::NotificationType::dontSendNotification);
+        auto tempStr = juce::String("Position: ");
+        tempStr.append(positionFormatted, 25);
+        labelPosition.setText(tempStr, juce::NotificationType::dontSendNotification);
             //currentPositionLabel.setText (positionString, juce::dontSendNotification);
-        }
-        else
-        {
-            //currentPositionLabel.setText ("Stopped", juce::dontSendNotification);
-        }
+    }
+    else
+    {
+        //juce::String positionFormatted = juce::String::formatted ("%02d:%02d:%03d", 0.0f, 0.0f, 0.0f);
+
+        auto tempStr = juce::String("Position: 00:00:000");
+        labelPosition.setText(tempStr, juce::NotificationType::dontSendNotification);
+
+        /*tempStr.append(positionFormatted, 25);
+        labelPosition.setText(tempStr, juce::NotificationType::dontSendNotification);*/
+
+    }
 }
