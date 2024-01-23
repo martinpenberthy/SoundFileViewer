@@ -51,6 +51,9 @@ private:
 
     float RMSLevelL = 0.0f;
     float RMSLevelR = 0.0f;
+    
+    float truePeakL = 0.0f;
+    float truePeakR = 0.0f;
     std::unique_ptr<juce::AudioBuffer<float>> fileBuffer;
     
     //std::unique_ptr<juce::AudioFormatReader> reader;

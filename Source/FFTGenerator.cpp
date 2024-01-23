@@ -157,7 +157,11 @@ void FFTGenerator::drawFrame (juce::Graphics& g)
                               juce::jmap (scopeDataSummed[i],     0.0f, 1.0f, (float) height, 0.0f) }); //endY
     }
     
-    g.drawText(juce::String(RMSLevelL), 0, 0, 50, 20, juce::Justification::centred);
+    
+    //g.drawText(juce::String(RMSLevelL), 0, 0, 50, 20, juce::Justification::centred);
+    g.drawText(juce::String(truePeakL), 0, 0, 50, 20, juce::Justification::centred);
+    g.drawText(juce::String(truePeakR), 50, 0, 50, 20, juce::Justification::centred);
+
 }
 
 
@@ -200,10 +204,20 @@ void FFTGenerator::getLoudnessMeasurements()
     for(int i = 0; i < fileBuffer->getNumChannels(); i++)
     {
         if(i == 0)
-            RMSLevelL =fileBuffer->getRMSLevel(i, 0, fileBuffer->getNumSamples());
+            RMSLevelL = fileBuffer->getRMSLevel(i, 0, fileBuffer->getNumSamples());
         else
-            RMSLevelR =fileBuffer->getRMSLevel(i, 0, fileBuffer->getNumSamples());
+            RMSLevelR = fileBuffer->getRMSLevel(i, 0, fileBuffer->getNumSamples());
     }
     
+    juce::dsp::Oversampling<float> overSamp = juce::dsp::Oversampling<float>(fileBuffer->getNumChannels());
+    overSamp.initProcessing(256);
+    
+    auto blockOverSamp = overSamp.processSamplesUp(juce::dsp::AudioBlock<float>(*fileBuffer.get()));
+    
+    juce::AudioBuffer<float> buffOversamp = juce::AudioBuffer<float>(blockOverSamp.getNumChannels(), blockOverSamp.getNumSamples());
+    
+    truePeakL = buffOversamp.getMagnitude(0, 0, buffOversamp.getNumSamples());
+    truePeakR = buffOversamp.getMagnitude(1, 0, buffOversamp.getNumSamples());
+
     
 }
