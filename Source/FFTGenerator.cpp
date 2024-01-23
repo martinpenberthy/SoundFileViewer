@@ -66,8 +66,12 @@ void FFTGenerator::generateFFT()
     
     for(int i = 0; i < scopeSize; i++)
     {
-        scopeDataSummed[i] = fmod(scopeDataSummed[i], 1);
+        scopeDataSummed[i] = fmod(scopeDataSummed[i], 1) *  2.0f;
+        
+        if(scopeDataSummed[i] < 0.29f)
+            scopeDataSummed[i] = 0.0f;
         //DBG(scopeDataSummed[i]);
+        std::cout << scopeDataSummed[i] << std::endl;
     }
 }
 
