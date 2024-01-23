@@ -27,12 +27,12 @@ public:
     void paint (juce::Graphics& g) override;
     void setWindowingFunction(juce::dsp::WindowingFunction<float>::WindowingMethod func);
 
-    
+    void getLoudnessMeasurements();
     enum
     {
         fftOrder  = 10,
         fftSize   = 1 << fftOrder,
-        scopeSize = 256
+        scopeSize = 1024
     };
 private:
     juce::AudioFormatManager* formatManager;
@@ -46,8 +46,11 @@ private:
     bool nextFFTBlockReady = false;                 // [9]
     float scopeDataSummed [scopeSize];
     
-    int frameCount = 0;
+    float avgLevel = 0.0f;
     
+
+    float RMSLevelL = 0.0f;
+    float RMSLevelR = 0.0f;
     std::unique_ptr<juce::AudioBuffer<float>> fileBuffer;
     
     //std::unique_ptr<juce::AudioFormatReader> reader;

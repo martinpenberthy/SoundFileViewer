@@ -27,7 +27,6 @@ FFTGenerator::~FFTGenerator()
 void FFTGenerator::loadURL(juce::URL audioURL)
 {
     juce::zeromem(scopeDataSummed, sizeof(scopeDataSummed));
-    frameCount = 0;
     //Make a file out of the URL
     juce::File file = audioURL.getLocalFile();
     
@@ -44,7 +43,10 @@ void FFTGenerator::loadURL(juce::URL audioURL)
         delete reader;
 
         if(fileBuffer.get() != nullptr)
+        {
             generateFFT();
+            getLoudnessMeasurements();
+        }
     }
 }
 
@@ -66,12 +68,17 @@ void FFTGenerator::generateFFT()
     
     for(int i = 0; i < scopeSize; i++)
     {
-        scopeDataSummed[i] = fmod(scopeDataSummed[i], 1) *  2.0f;
-        
-        if(scopeDataSummed[i] < 0.29f)
-            scopeDataSummed[i] = 0.0f;
-        //DBG(scopeDataSummed[i]);
+        //scopeDataSummed[i] = fmod(scopeDataSummed[i], 1) *  2.0f;
+        scopeDataSummed[i] = fmod(scopeDataSummed[i], 1);
         std::cout << scopeDataSummed[i] << std::endl;
+        avgLevel += scopeDataSummed[i];
+    }
+    
+    avgLevel /= scopeSize;
+    for(int i = 0; i < scopeSize; i++)
+    {
+        if(scopeDataSummed[i] < avgLevel)
+            scopeDataSummed[i] = 0.0f;
     }
 }
 
@@ -96,7 +103,6 @@ void FFTGenerator::pushNextSampleIntoFifo (float sample) noexcept
     
     if (nextFFTBlockReady)
     {
-        frameCount++;
         drawNextFrameOfSpectrum();
         nextFFTBlockReady = false;
         repaint();
@@ -145,11 +151,13 @@ void FFTGenerator::drawFrame (juce::Graphics& g)
                       (float) juce::jmap (i,     0, scopeSize - 1, 0, width),
                               juce::jmap (scopeData[i],     0.0f, 1.0f, (float) height-100, 0.0f) });*/
     
-        g.drawLine ({ (float) juce::jmap (i - 1, 0, scopeSize - 1, 0, width),
-                              juce::jmap (scopeDataSummed[i - 1], 0.0f, 1.0f, (float) height, 0.0f),
-                      (float) juce::jmap (i,     0, scopeSize - 1, 0, width),
-                              juce::jmap (scopeDataSummed[i],     0.0f, 1.0f, (float) height, 0.0f) });
-        }
+        g.drawLine ({ (float) juce::jmap (i - 1, 0, scopeSize - 1, 0, width), //startX
+                              juce::jmap (scopeDataSummed[i - 1], 0.0f, 1.0f, (float) height, 0.0f),//startY
+                      (float) juce::jmap (i,     0, scopeSize - 1, 0, width), //endX
+                              juce::jmap (scopeDataSummed[i],     0.0f, 1.0f, (float) height, 0.0f) }); //endY
+    }
+    
+    g.drawText(juce::String(RMSLevelL), 0, 0, 50, 20, juce::Justification::centred);
 }
 
 
@@ -184,4 +192,18 @@ void FFTGenerator::setWindowingFunction(juce::dsp::WindowingFunction<float>::Win
     delete window;
     window = new juce::dsp::WindowingFunction<float>(fftSize, func);
     generateFFT();
+}
+
+void FFTGenerator::getLoudnessMeasurements()
+{
+
+    for(int i = 0; i < fileBuffer->getNumChannels(); i++)
+    {
+        if(i == 0)
+            RMSLevelL =fileBuffer->getRMSLevel(i, 0, fileBuffer->getNumSamples());
+        else
+            RMSLevelR =fileBuffer->getRMSLevel(i, 0, fileBuffer->getNumSamples());
+    }
+    
+    
 }
