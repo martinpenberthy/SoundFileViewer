@@ -10,7 +10,7 @@
 
 #include "FFTGenerator.h"
 
-FFTGenerator::FFTGenerator(juce::AudioFormatManager* formatManagerToUse) : formatManager(formatManagerToUse), forwardFFT(fftOrder)//, window (fftSize, juce::dsp::WindowingFunction<float>::triangular)
+FFTGenerator::FFTGenerator(juce::AudioFormatManager* formatManagerToUse) : formatManager(formatManagerToUse), forwardFFT(fftOrder), os(2, 2, juce::dsp::Oversampling<float>::FilterType::filterHalfBandFIREquiripple)
 {
     juce::zeromem(scopeDataSummed, sizeof(scopeDataSummed));
     //startTimerHz (30);
@@ -164,11 +164,11 @@ void FFTGenerator::drawFrame (juce::Graphics& g)
     g.drawText(juce::String("R: "), 100, 0, 50, 20, juce::Justification::right);
     g.drawText(juce::String(juce::Decibels::gainToDecibels(RMSLevelR)), 150, 0, 50, 20, juce::Justification::right);
     
-    g.drawText(juce::String("TP L: "), 200, 0, 50, 20, juce::Justification::right);
-    g.drawText(juce::String(truePeakL), 250, 0, 50, 20, juce::Justification::right);
+    g.drawText(juce::String("P L: "), 200, 0, 50, 20, juce::Justification::right);
+    g.drawText(juce::String(juce::Decibels::gainToDecibels(peakL)), 250, 0, 50, 20, juce::Justification::right);
     
     g.drawText(juce::String("R: "), 300, 0, 50, 20, juce::Justification::right);
-    g.drawText(juce::String(truePeakR), 350, 0, 50, 20, juce::Justification::right);
+    g.drawText(juce::String(juce::Decibels::gainToDecibels(peakR)), 350, 0, 50, 20, juce::Justification::right);
 
 }
 
@@ -216,6 +216,26 @@ void FFTGenerator::getLoudnessMeasurements()
         else
             RMSLevelR = fileBuffer->getRMSLevel(i, 0, fileBuffer->getNumSamples());
     }
+    
+    for(int i = 0; i < fileBuffer->getNumChannels(); i++)
+    {
+        if(i == 0)
+            peakL = fileBuffer->getMagnitude(i, 0, fileBuffer->getNumSamples());
+        else
+            peakR = fileBuffer->getMagnitude(i, 0, fileBuffer->getNumSamples());
+    }
+    
+    
+    /*os.initProcessing(1);
+    std::cout << "init processing" << std::endl;
+    
+    juce::dsp::AudioBlock<float> block (*fileBuffer.get());
+    std::cout << "block created" << std::endl;
+    
+    os.processSamplesUp(block);
+    std::cout << "process samples up" << std::endl;
+    */
+    
    /* //Create oversampling object
     juce::dsp::Oversampling<float>* overSamp; //= juce::dsp::Oversampling<float>(fileBuffer->getNumChannels(), 2, juce::dsp::Oversampling<float>::FilterType::filterHalfBandFIREquiripple);
     std::cout << "Oversampling object created" << std::endl;

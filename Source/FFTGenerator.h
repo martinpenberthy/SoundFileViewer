@@ -54,7 +54,13 @@ private:
     
     float truePeakL = 0.0f;
     float truePeakR = 0.0f;
+    
+    float peakL = 0.0f;
+    float peakR = 0.0f;
+    
     std::unique_ptr<juce::AudioBuffer<float>> fileBuffer;
+    juce::dsp::Oversampling<float> os;
+    
     
     //std::unique_ptr<juce::AudioFormatReader> reader;
 
