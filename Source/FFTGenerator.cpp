@@ -157,7 +157,37 @@ void FFTGenerator::drawFrame (juce::Graphics& g)
                               juce::jmap (scopeDataSummed[i],     0.0f, 1.0f, (float) height, 0.0f) }); //endY
     }
 
-    drawLoudnessValues(g), 50, 20, juce::Justification::right);
+    drawLoudnessValues(g);
+    
+
+}
+
+void FFTGenerator::drawLoudnessValues(juce::Graphics& g)
+{
+    auto xOffset = 0;
+
+    //RMSlevelL
+    auto tempDouble = juce::Decibels::gainToDecibels(RMSLevelL);
+    auto tempString = juce::String(tempDouble);
+    tempString = tempString.substring(0, tempString.indexOf(".") + 2);
+    
+    g.drawText(juce::String("RMS L: "), xOffset, 0, 50, 20, juce::Justification::right);
+    g.drawText(tempString, xOffset += 30, 0, 50, 20, juce::Justification::right);
+    
+    //RMSlevelR
+    tempDouble = juce::Decibels::gainToDecibels(RMSLevelR);
+    tempString = juce::String(tempDouble);
+    tempString = tempString.substring(0, tempString.indexOf(".") + 2);
+    
+    g.drawText(juce::String("R: "), xOffset += 30, 0, 50, 20, juce::Justification::right);
+    g.drawText(tempString, xOffset += 30, 0, 50, 20, juce::Justification::right);
+    
+    //PeakL
+    tempDouble = juce::Decibels::gainToDecibels(peakL);
+    tempString = juce::String(tempDouble);
+    tempString = tempString.substring(0, tempString.indexOf(".") + 2);
+    
+    g.drawText(juce::String("P L: "), xOffset += 30, 0, 50, 20, juce::Justification::right);
     g.drawText(tempString, xOffset += 30, 0, 50, 20, juce::Justification::right);
     
     //PeakR
@@ -168,6 +198,8 @@ void FFTGenerator::drawFrame (juce::Graphics& g)
     g.drawText(juce::String("R: "), xOffset += 30, 0, 50, 20, juce::Justification::right);
     g.drawText(tempString, xOffset += 30, 0, 50, 20, juce::Justification::right);
 }
+
+
 
 void FFTGenerator::paint (juce::Graphics& g)
 {
