@@ -216,17 +216,50 @@ void FFTGenerator::getLoudnessMeasurements()
         else
             RMSLevelR = fileBuffer->getRMSLevel(i, 0, fileBuffer->getNumSamples());
     }
-    //Create oversampling object
-    /*juce::dsp::Oversampling<float> overSamp = juce::dsp::Oversampling<float>(fileBuffer->getNumChannels());
-    overSamp.initProcessing(256);
+   /* //Create oversampling object
+    juce::dsp::Oversampling<float>* overSamp; //= juce::dsp::Oversampling<float>(fileBuffer->getNumChannels(), 2, juce::dsp::Oversampling<float>::FilterType::filterHalfBandFIREquiripple);
+    std::cout << "Oversampling object created" << std::endl;
+    overSamp = new juce::dsp::Oversampling<float>(
+                                                fileBuffer->getNumChannels(),
+                                                2,
+                                                juce::dsp::Oversampling<float>::FilterType::filterHalfBandFIREquiripple,
+                                                true,
+                                                  true);;
     
+    overSamp->reset();
+    
+    
+    overSamp->initProcessing(128);
+    std::cout << "initProcessing called" << std::endl;
     //Upsample
-    auto blockOverSamp = overSamp.processSamplesUp(juce::dsp::AudioBlock<float>(*fileBuffer.get()));
+    //auto blockOverSamp = overSamp.processSamplesUp(juce::dsp::AudioBlock<float>(*fileBuffer.get()));
+    auto tempBlock = juce::dsp::AudioBlock<float>(*fileBuffer);
     
-    juce::AudioBuffer<float> buffOversamp = juce::AudioBuffer<float>(blockOverSamp.getNumChannels(), blockOverSamp.getNumSamples());
+    std::cout << "tempBlock created" << std::endl;
+    std::cout << "Oversamp factor: " << overSamp->factorOversampling << std::endl;
+    std::cout << "numChannels: " << overSamp->numChannels << std::endl;
     
-    truePeakL = buffOversamp.getMagnitude(0, 0, buffOversamp.getNumSamples());
-    truePeakR = buffOversamp.getMagnitude(1, 0, buffOversamp.getNumSamples());
+    //overSamp->addOversamplingStage(juce::dsp::Oversampling<float>::filterHalfBandFIREquiripple, 0.1f, -50.0f, 0.1f, -45.0f);
+    //std::cout << "Added oversampling stage" << std::endl;
+    
+    auto blockOverSamp = overSamp->processSamplesUp(tempBlock);
+    std::cout << "blockOverSamp created and processed" << std::endl;
+    
+    juce::AudioBuffer<float> buffOverSamp = juce::AudioBuffer<float>(blockOverSamp.getNumChannels(), blockOverSamp.getNumSamples());
+    
+    
+    for(int i = 0; i < buffOverSamp.getNumChannels(); i++)
+    {
+        std::cout << "Channel being copied over" << std::endl;
+        for(int j = 0; j < buffOverSamp.getNumSamples(); j++)
+        {
+            buffOverSamp.setSample(i, j, blockOverSamp.getSample(i, j));
+        }
+    }
+     
+    
+    truePeakL = buffOverSamp.getMagnitude(0, 0, buffOverSamp.getNumSamples());
+    truePeakR = buffOverSamp.getMagnitude(1, 0, buffOverSamp.getNumSamples());
 */
     
 }
