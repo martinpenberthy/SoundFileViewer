@@ -28,6 +28,7 @@ public:
     void setWindowingFunction(juce::dsp::WindowingFunction<float>::WindowingMethod func);
 
     void getLoudnessMeasurements();
+    void drawLoudnessValues(juce::Graphics& g);
     enum
     {
         fftOrder  = 10,
