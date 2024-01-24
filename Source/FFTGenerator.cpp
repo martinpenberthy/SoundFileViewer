@@ -156,19 +156,41 @@ void FFTGenerator::drawFrame (juce::Graphics& g)
                       (float) juce::jmap (i,     0, scopeSize - 1, 0, width), //endX
                               juce::jmap (scopeDataSummed[i],     0.0f, 1.0f, (float) height, 0.0f) }); //endY
     }
+    int xOffset = 0;
     
     //g.drawText(juce::String(RMSLevelL), 0, 0, 50, 20, juce::Justification::centred);
-    g.drawText(juce::String("RMS L: "), 0, 0, 50, 20, juce::Justification::right);
-    g.drawText(juce::String(juce::Decibels::gainToDecibels(RMSLevelL)), 50, 0, 50, 20, juce::Justification::right);
+    //RMSlevelL
+    auto tempDouble = juce::Decibels::gainToDecibels(RMSLevelL);
+    auto tempString = juce::String(tempDouble);
+    tempString = tempString.substring(0, tempString.indexOf(".") + 2);
     
-    g.drawText(juce::String("R: "), 100, 0, 50, 20, juce::Justification::right);
-    g.drawText(juce::String(juce::Decibels::gainToDecibels(RMSLevelR)), 150, 0, 50, 20, juce::Justification::right);
+    g.drawText(juce::String("RMS L: "), xOffset, 0, 50, 20, juce::Justification::right);
+    g.drawText(tempString, xOffset += 30, 0, 50, 20, juce::Justification::right);
     
-    g.drawText(juce::String("P L: "), 200, 0, 50, 20, juce::Justification::right);
-    g.drawText(juce::String(juce::Decibels::gainToDecibels(peakL)), 250, 0, 50, 20, juce::Justification::right);
     
-    g.drawText(juce::String("R: "), 300, 0, 50, 20, juce::Justification::right);
-    g.drawText(juce::String(juce::Decibels::gainToDecibels(peakR)), 350, 0, 50, 20, juce::Justification::right);
+    //RMSLevelR
+    tempDouble = juce::Decibels::gainToDecibels(RMSLevelR);
+    tempString = juce::String(tempDouble);
+    tempString = tempString.substring(0, tempString.indexOf(".") + 2);
+    
+    g.drawText(juce::String("R: "), xOffset += 30, 0, 50, 20, juce::Justification::right);
+    g.drawText(tempString, xOffset += 30, 0, 50, 20, juce::Justification::right);
+    
+    //PeakL
+    tempDouble = juce::Decibels::gainToDecibels(peakL);
+    tempString = juce::String(tempDouble);
+    tempString = tempString.substring(0, tempString.indexOf(".") + 2);
+    
+    g.drawText(juce::String("P L: "), xOffset += 30, 0, 50, 20, juce::Justification::right);
+    g.drawText(tempString, xOffset += 30, 0, 50, 20, juce::Justification::right);
+    
+    //PeakR
+    tempDouble = juce::Decibels::gainToDecibels(peakR);
+    tempString = juce::String(tempDouble);
+    tempString = tempString.substring(0, tempString.indexOf(".") + 2);
+    
+    g.drawText(juce::String("R: "), xOffset += 30, 0, 50, 20, juce::Justification::right);
+    g.drawText(tempString, xOffset += 30, 0, 50, 20, juce::Justification::right);
 
 }
 
@@ -224,6 +246,22 @@ void FFTGenerator::getLoudnessMeasurements()
         else
             peakR = fileBuffer->getMagnitude(i, 0, fileBuffer->getNumSamples());
     }
+    
+    int buffSize = 256;
+    //juce::dsp::AudioBlock<float> block(*fileBuffer.get(), fileBuffer->getNumChannels(), fileBuffer->getNumSamples());
+    
+    juce::dsp::AudioBlock<float> block (*fileBuffer.get());
+    std::cout << "block created" << std::endl;
+    /*
+    for(int i = 0; i < block.getNumSamples(); i += buffSize)
+    {
+        for(int j = i; j < j + buffSize; j++)
+        {
+            
+        }
+        
+    }
+    */
     
     
     /*os.initProcessing(1);
