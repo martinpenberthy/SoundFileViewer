@@ -164,7 +164,7 @@ void fileComponentGUI::loadURL(juce::URL fileToLoad)
     player->loadURL(fileToLoad);
     waveformDisplay.loadURL(fileToLoad);
     FFTDisplay.loadURL(fileToLoad);
-    
+    FFTDisplay.sampleRate = player->sampleRate;
     
     auto tempStr = juce::String("Sample Rate: ");
     tempStr.append(juce::String(player->sampleRate), 23);

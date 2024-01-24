@@ -35,6 +35,8 @@ public:
         fftSize   = 1 << fftOrder,
         scopeSize = 1024
     };
+    
+    double sampleRate = 0.0f;
 private:
     juce::AudioFormatManager* formatManager;
     

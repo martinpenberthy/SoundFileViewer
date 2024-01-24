@@ -155,11 +155,19 @@ void FFTGenerator::drawFrame (juce::Graphics& g)
                               juce::jmap (scopeDataSummed[i - 1], 0.0f, 1.0f, (float) height, 0.0f),//startY
                       (float) juce::jmap (i,     0, scopeSize - 1, 0, width), //endX
                               juce::jmap (scopeDataSummed[i],     0.0f, 1.0f, (float) height, 0.0f) }); //endY
+        
+        if(i % 100 == 0)
+        {
+            //Freq = (sr * index) / FFTSize
+            auto freq = (sampleRate * i) / forwardFFT.getSize();
+            auto x = juce::jmap (i, 0, scopeSize - 1, 0, width);
+            
+            g.drawVerticalLine(x, 0, 20);
+            g.drawText(juce::String(freq), x, 20, 45, 20, juce::Justification::centred);
+        }
     }
 
     drawLoudnessValues(g);
-    
-
 }
 
 void FFTGenerator::drawLoudnessValues(juce::Graphics& g)
