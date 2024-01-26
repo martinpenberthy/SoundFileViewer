@@ -46,7 +46,6 @@ void FFTGenerator::loadURL(juce::URL audioURL)
         {
             getLoudnessMeasurements();
             generateFFT();
-            repaint();
         }
     }
 }
@@ -107,7 +106,7 @@ void FFTGenerator::pushNextSampleIntoFifo (float sample) noexcept
     {
         drawNextFrameOfSpectrum();
         nextFFTBlockReady = false;
-        //repaint();
+        repaint();
     }
 }
 
