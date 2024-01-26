@@ -46,12 +46,14 @@ void FFTGenerator::loadURL(juce::URL audioURL)
         {
             getLoudnessMeasurements();
             generateFFT();
+            repaint();
         }
     }
 }
 
 void FFTGenerator::generateFFT()
 {
+    std::cout << "generateFFT" << std::endl;
     juce::zeromem(scopeDataSummed, sizeof(scopeDataSummed));
 
     if(fileBuffer.get() != nullptr)
@@ -105,7 +107,7 @@ void FFTGenerator::pushNextSampleIntoFifo (float sample) noexcept
     {
         drawNextFrameOfSpectrum();
         nextFFTBlockReady = false;
-        repaint();
+        //repaint();
     }
 }
 
@@ -156,14 +158,19 @@ void FFTGenerator::drawFrame (juce::Graphics& g)
                       (float) juce::jmap (i,     0, scopeSize - 1, 0, width), //endX
                               juce::jmap (scopeDataSummed[i],     0.0f, 1.0f, (float) height, 0.0f) }); //endY
         
-        if(i % 100 == 0)
+        if(i % 150 == 0)
         {
             //Freq = (sr * index) / FFTSize
-            auto freq = (sampleRate * i) / forwardFFT.getSize();
+            std::cout << "Mod" << std::endl;
+            
+            auto freq = (sampleRate * i) / scopeSize;
+            std::cout << "freq: " << freq << std::endl;
+            
             auto x = juce::jmap (i, 0, scopeSize - 1, 0, width);
+            std::cout << "x: " << x << std::endl;
             
             g.drawVerticalLine(x, 0, 20);
-            g.drawText(juce::String(freq), x, 20, 45, 20, juce::Justification::centred);
+            g.drawText(juce::String((int)freq), x, height - 20, 45, 20, juce::Justification::centred);
         }
     }
 
