@@ -251,8 +251,8 @@ void MainComponent::resized()
 {
     auto area = getLocalBounds();
     auto area2 = getLocalBounds();
-    area = area.removeFromTop(proportionOfHeight(0.05f));
-    area2 = area2.removeFromBottom(proportionOfHeight(0.95f));
+    area = area.removeFromTop(proportionOfHeight(0.1f));
+    area2 = area2.removeFromBottom(proportionOfHeight(0.9f));
     auto const container = area;
     /*auto containerMenu = area.removeFromTop(0.2f);
     auto containerMenuLeft = containerMenu.removeFromLeft(containerMenu.proportionOfWidth(0.5f));
@@ -266,8 +266,8 @@ void MainComponent::resized()
     /*for(it = fileComponents.begin(); it != fileComponents.end(); it++)
         it->get()->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));*/
 
-    buttonOpenChooser.setBounds(area.removeFromLeft(container.proportionOfWidth(0.5f)));
-    comboWindowType.setBounds(area.removeFromLeft(container.proportionOfWidth(0.5f)));
+    buttonOpenChooser.setBounds(area.removeFromLeft(container.proportionOfWidth(0.5f)).reduced(7));
+    comboWindowType.setBounds(area.removeFromLeft(container.proportionOfWidth(0.5f)).reduced(7));
     
     /*if(file1 != nullptr)
     {

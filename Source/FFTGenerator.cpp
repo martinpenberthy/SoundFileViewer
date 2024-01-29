@@ -171,31 +171,42 @@ void FFTGenerator::drawFrame (juce::Graphics& g)
             g.drawVerticalLine(x, 0, 20);
             g.drawText(juce::String((int)freq), x, height - 20, 45, 20, juce::Justification::centred);
         }*/
+        
+        if(i == 2 || i == 10)
+        {
+            //auto freq = (sampleRate * i) / forwardFFT.getSize();
+            auto freq = (sampleRate * i) / scopeSize;
+
+
+            std::cout << "i: " << i;
+            std::cout << "freq: " << freq << std::endl;
+            
+            auto x = juce::jmap (i, 0, forwardFFT.getSize(), 0, width);
+            std::cout << "x: " << x << std::endl;
+            
+            g.drawVerticalLine(x, 0, 20);
+            //g.drawText(juce::String((int)freq), x, height - 20, 45, 20, juce::Justification::centred);
+        }
+        
     }
-    
+    /*
     for(int i = 0; i < forwardFFT.getSize(); i++)
     {
         auto freq = (sampleRate * i) / forwardFFT.getSize();
 
-        /*if(i % 100 == 0)
-        {
-            std::cout << "i: " << i;
-            std::cout << "freq: " << freq << std::endl;
-        }
-        else */
-        if(i == 25) //|| i == 25)// || i == 50 || i == 200)
+        if(i == 2 || i == 10) //|| i == 25)// || i == 50 || i == 200)
         {
             std::cout << "i: " << i;
             std::cout << "freq: " << freq << std::endl;
             
-            auto x = juce::jmap (i, 0, scopeSize - 1, 0, width);
+            auto x = juce::jmap (i, 0, forwardFFT.getSize(), 0, width);
             std::cout << "x: " << x << std::endl;
             
             g.drawVerticalLine(x, height, 20);
-            g.drawText(juce::String((int)freq), x, height - 20, 45, 20, juce::Justification::centred);
+            //g.drawText(juce::String((int)freq), x, height - 20, 45, 20, juce::Justification::centred);
         }
     }
-
+     */
     drawLoudnessValues(g);
 }
 
