@@ -141,11 +141,11 @@ void FFTGenerator::drawNextFrameOfSpectrum()
 
 void FFTGenerator::drawFrame (juce::Graphics& g)
 {
+    auto width  = getLocalBounds().getWidth();
+    auto height = getLocalBounds().getHeight();
+    
     for (int i = 1; i < scopeSize; ++i)
     {
-        auto width  = getLocalBounds().getWidth();
-        auto height = getLocalBounds().getHeight();
-
         //Map the scope levels to the size of the window
         /*g.drawLine ({ (float) juce::jmap (i - 1, 0, scopeSize - 1, 0, width),
                               juce::jmap (scopeData[i - 1], 0.0f, 1.0f, (float) height-100, 0.0f),
@@ -175,10 +175,24 @@ void FFTGenerator::drawFrame (juce::Graphics& g)
     
     for(int i = 0; i < forwardFFT.getSize(); i++)
     {
-        if(i % 100 == 0)
+        auto freq = (sampleRate * i) / forwardFFT.getSize();
+
+        /*if(i % 100 == 0)
         {
-            auto freq = (sampleRate * i) / forwardFFT.getSize();
+            std::cout << "i: " << i;
             std::cout << "freq: " << freq << std::endl;
+        }
+        else */
+        if(i == 25) //|| i == 25)// || i == 50 || i == 200)
+        {
+            std::cout << "i: " << i;
+            std::cout << "freq: " << freq << std::endl;
+            
+            auto x = juce::jmap (i, 0, scopeSize - 1, 0, width);
+            std::cout << "x: " << x << std::endl;
+            
+            g.drawVerticalLine(x, height, 20);
+            g.drawText(juce::String((int)freq), x, height - 20, 45, 20, juce::Justification::centred);
         }
     }
 

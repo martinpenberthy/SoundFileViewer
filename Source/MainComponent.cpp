@@ -45,8 +45,18 @@ MainComponent::MainComponent()
             {
                 //DBG("No directories yet");
                 std::cout << "No directories yet" << std::endl;
-                int numFiles = result.getNumberOfChildFiles(20);
+                //int numFiles = result.getNumberOfChildFiles(juce::File::TypesOfFileToFind::findFiles, "*.wav");
                 //auto array = result.getc
+                
+                juce::Array<juce::File> filesArray = result.findChildFiles(juce::File::TypesOfFileToFind::findFiles, false, "*.wav");
+                
+                for(int i = 0; i < filesArray.size(); i++)
+                {
+                    auto tempFile = filesArray[i];
+                    juce::URL audioURL = juce::URL{tempFile};
+                    //Make a fileComponent and add it to the vector
+                    filesVec.push_back(makeNewFileComponent(audioURL));
+                }
             }
             else if(results.size() == 1) //User picked one file
             {
@@ -241,8 +251,8 @@ void MainComponent::resized()
 {
     auto area = getLocalBounds();
     auto area2 = getLocalBounds();
-    area = area.removeFromTop(proportionOfHeight(0.2f));
-    area2 = area2.removeFromBottom(proportionOfHeight(0.8f));
+    area = area.removeFromTop(proportionOfHeight(0.05f));
+    area2 = area2.removeFromBottom(proportionOfHeight(0.95f));
     auto const container = area;
     /*auto containerMenu = area.removeFromTop(0.2f);
     auto containerMenuLeft = containerMenu.removeFromLeft(containerMenu.proportionOfWidth(0.5f));
