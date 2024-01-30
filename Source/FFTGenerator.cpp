@@ -161,10 +161,10 @@ void FFTGenerator::drawFrame (juce::Graphics& g)
 
         
         //1000 hz
-        g.drawVerticalLine(width / 5, 0, 20);
+        g.drawVerticalLine(width / 5, height - 10, height);
         
         //5000 hz
-        g.drawVerticalLine(width / 1.5, 0, 20);
+        g.drawVerticalLine(width / 1.5, height - 10, height);
 
             //g.drawText(juce::String((int)freq), x, height - 20, 45, 20, juce::Justification::centred);
         //}
