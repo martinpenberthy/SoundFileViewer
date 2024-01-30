@@ -156,37 +156,18 @@ void FFTGenerator::drawFrame (juce::Graphics& g)
                               juce::jmap (scopeDataSummed[i - 1], 0.0f, 1.0f, (float) height, 0.0f),//startY
                       (float) juce::jmap (i,     0, scopeSize - 1, 0, width), //endX
                               juce::jmap (scopeDataSummed[i],     0.0f, 1.0f, (float) height, 0.0f) }); //endY
-        
-        /*if(i % 150 == 0)
-        {
-            //Freq = (sr * index) / FFTSize
-            std::cout << "Mod" << std::endl;
-            
-            auto freq = (sampleRate * i) / forwardFFT.getSize();
-            std::cout << "freq: " << freq << std::endl;
-            
-            auto x = juce::jmap (i, 0, scopeSize - 1, 0, width);
-            std::cout << "x: " << x << std::endl;
-            
-            g.drawVerticalLine(x, 0, 20);
-            g.drawText(juce::String((int)freq), x, height - 20, 45, 20, juce::Justification::centred);
-        }*/
-        
-        if(i == 2 || i == 10)
-        {
-            //auto freq = (sampleRate * i) / forwardFFT.getSize();
-            auto freq = (sampleRate * i) / scopeSize;
+        //100 hz
+        g.drawVerticalLine(width / 25, 0, 20);
 
+        
+        //1000 hz
+        g.drawVerticalLine(width / 5, 0, 20);
+        
+        //5000 hz
+        g.drawVerticalLine(width / 1.2, 0, 20);
 
-            std::cout << "i: " << i;
-            std::cout << "freq: " << freq << std::endl;
-            
-            auto x = juce::jmap (i, 0, forwardFFT.getSize(), 0, width);
-            std::cout << "x: " << x << std::endl;
-            
-            g.drawVerticalLine(x, 0, 20);
             //g.drawText(juce::String((int)freq), x, height - 20, 45, 20, juce::Justification::centred);
-        }
+        //}
         
     }
     /*
