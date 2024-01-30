@@ -157,14 +157,14 @@ void FFTGenerator::drawFrame (juce::Graphics& g)
                       (float) juce::jmap (i,     0, scopeSize - 1, 0, width), //endX
                               juce::jmap (scopeDataSummed[i],     0.0f, 1.0f, (float) height, 0.0f) }); //endY
         //100 hz
-        g.drawVerticalLine(width / 25, 0, 20);
+        g.drawVerticalLine(width / 25, height - 10, height);
 
         
         //1000 hz
         g.drawVerticalLine(width / 5, 0, 20);
         
         //5000 hz
-        g.drawVerticalLine(width / 1.2, 0, 20);
+        g.drawVerticalLine(width / 1.5, 0, 20);
 
             //g.drawText(juce::String((int)freq), x, height - 20, 45, 20, juce::Justification::centred);
         //}
