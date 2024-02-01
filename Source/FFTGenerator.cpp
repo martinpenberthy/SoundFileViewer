@@ -144,6 +144,8 @@ void FFTGenerator::drawFrame (juce::Graphics& g)
     auto width  = getLocalBounds().getWidth();
     auto height = getLocalBounds().getHeight();
     
+    auto heightScope = height - 20;
+    
     for (int i = 1; i < scopeSize; ++i)
     {
         //Map the scope levels to the size of the window
@@ -153,11 +155,14 @@ void FFTGenerator::drawFrame (juce::Graphics& g)
                               juce::jmap (scopeData[i],     0.0f, 1.0f, (float) height-100, 0.0f) });*/
     
         g.drawLine ({ (float) juce::jmap (i - 1, 0, scopeSize - 1, 0, width), //startX
-                              juce::jmap (scopeDataSummed[i - 1], 0.0f, 1.0f, (float) height, 0.0f),//startY
+                              juce::jmap (scopeDataSummed[i - 1], 0.0f, 1.0f, (float) heightScope, 0.0f),//startY
                       (float) juce::jmap (i,     0, scopeSize - 1, 0, width), //endX
-                              juce::jmap (scopeDataSummed[i],     0.0f, 1.0f, (float) height, 0.0f) }); //endY
+                              juce::jmap (scopeDataSummed[i],     0.0f, 1.0f, (float) heightScope, 0.0f) }); //endY
+        
+        
+        //height += 20;
         //100 hz
-        g.drawVerticalLine(width / 25, height - 10, height);
+        g.drawVerticalLine(width / 28, height - 10, height);
 
         
         //1000 hz
@@ -282,11 +287,10 @@ void FFTGenerator::getLoudnessMeasurements()
             peakR = fileBuffer->getMagnitude(i, 0, fileBuffer->getNumSamples());
     }
     
-    int buffSize = 256;
-    //juce::dsp::AudioBlock<float> block(*fileBuffer.get(), fileBuffer->getNumChannels(), fileBuffer->getNumSamples());
+    /*int buffSize = 256;
     
     juce::dsp::AudioBlock<float> block (*fileBuffer.get());
-    std::cout << "block created" << std::endl;
+    std::cout << "block created" << std::endl;*/
     /*
     for(int i = 0; i < block.getNumSamples(); i += buffSize)
     {
