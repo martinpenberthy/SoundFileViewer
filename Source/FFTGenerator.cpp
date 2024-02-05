@@ -159,26 +159,11 @@ void FFTGenerator::drawFrame (juce::Graphics& g)
                       (float) juce::jmap (i,     0, scopeSize - 1, 0, width), //endX
                               juce::jmap (scopeDataSummed[i],     0.0f, 1.0f, (float) heightScope, 0.0f) }); //endY
         
-        auto currFont = juce::Font(juce::String("Arial"), 20, 0);
+        /*auto currFont = juce::Font(juce::String("Arial"), 20, 0);
         g.setFont(currFont);
+*/
 
-        //100 hz
-        int x100hz = width / 28;
-        g.drawVerticalLine(x100hz, height - 5, height);
-        g.drawText(juce::String("100hz"), x100hz + 3, height - 15, 50, 20, juce::Justification::left);
-        
-        //1000 hz
-        int x1000hz = width / 5;
-        g.drawVerticalLine(x1000hz, height - 5, height);
-        g.drawText(juce::String("1khz"), x1000hz + 3, height - 15, 50, 20, juce::Justification::left);
 
-        
-        //5000 hz
-        int x5000hz = width / 1.5;
-        g.drawVerticalLine(x5000hz, height - 5, height);
-        g.drawText(juce::String("5khz"), x5000hz + 3, height - 15, 50, 20, juce::Justification::left);
-
-            //g.drawText(juce::String((int)freq), x, height - 20, 45, 20, juce::Justification::centred);
         //}
         
     }
@@ -238,6 +223,28 @@ void FFTGenerator::drawLoudnessValues(juce::Graphics& g)
     
     g.drawText(juce::String("R: "), xOffset += 30, 0, 50, 20, juce::Justification::right);
     g.drawText(tempString, xOffset += 30, 0, 50, 20, juce::Justification::right);
+    
+    
+    auto width  = getLocalBounds().getWidth();
+    auto height = getLocalBounds().getHeight();
+    auto heightScope = height - 20;
+
+    //100 hz
+    int x100hz = width / 28;
+    g.drawVerticalLine(x100hz, height - 5, height);
+    g.drawText(juce::String("100hz"), x100hz + 3, height - 15, 50, 20, juce::Justification::left);
+    
+    //1000 hz
+    int x1000hz = width / 5;
+    g.drawVerticalLine(x1000hz, height - 5, height);
+    g.drawText(juce::String("1khz"), x1000hz + 3, height - 15, 50, 20, juce::Justification::left);
+
+    
+    //5000 hz
+    int x5000hz = width / 1.5;
+    g.drawVerticalLine(x5000hz, height - 5, height);
+    g.drawText(juce::String("5khz"), x5000hz + 3, height - 15, 50, 20, juce::Justification::left);
+    
 }
 
 
