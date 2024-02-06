@@ -10,13 +10,15 @@
 
 #include "FFTGenerator.h"
 
-FFTGenerator::FFTGenerator(juce::AudioFormatManager* formatManagerToUse) : formatManager(formatManagerToUse), forwardFFT(fftOrder), os(2, 2, juce::dsp::Oversampling<float>::FilterType::filterHalfBandFIREquiripple)
+FFTGenerator::FFTGenerator(juce::AudioFormatManager* formatManagerToUse) : formatManager(formatManagerToUse), forwardFFT(fftOrder)
 {
     juce::zeromem(scopeDataSummed, sizeof(scopeDataSummed));
     //startTimerHz (30);
     
     window = new juce::dsp::WindowingFunction<float>(fftSize, juce::dsp::WindowingFunction<float>::triangular);
-    
+    addAndMakeVisible(&sliderFreqHighlight);
+    sliderFreqHighlight.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
+    sliderFreqHighlight.setRange(0.0f, 1.0f);
 }
 
 FFTGenerator::~FFTGenerator()
@@ -75,12 +77,12 @@ void FFTGenerator::generateFFT()
         avgLevel += scopeDataSummed[i];
     }
     
-    avgLevel /= scopeSize;
+    /*avgLevel /= scopeSize;
     for(int i = 0; i < scopeSize; i++)
     {
         if(scopeDataSummed[i] < avgLevel)
             scopeDataSummed[i] = 0.0f;
-    }
+    }*/
 }
 
 
@@ -159,32 +161,7 @@ void FFTGenerator::drawFrame (juce::Graphics& g)
                       (float) juce::jmap (i,     0, scopeSize - 1, 0, width), //endX
                               juce::jmap (scopeDataSummed[i],     0.0f, 1.0f, (float) heightScope, 0.0f) }); //endY
         
-        /*auto currFont = juce::Font(juce::String("Arial"), 20, 0);
-        g.setFont(currFont);
-*/
-
-
-        //}
-        
     }
-    /*
-    for(int i = 0; i < forwardFFT.getSize(); i++)
-    {
-        auto freq = (sampleRate * i) / forwardFFT.getSize();
-
-        if(i == 2 || i == 10) //|| i == 25)// || i == 50 || i == 200)
-        {
-            std::cout << "i: " << i;
-            std::cout << "freq: " << freq << std::endl;
-            
-            auto x = juce::jmap (i, 0, forwardFFT.getSize(), 0, width);
-            std::cout << "x: " << x << std::endl;
-            
-            g.drawVerticalLine(x, height, 20);
-            //g.drawText(juce::String((int)freq), x, height - 20, 45, 20, juce::Justification::centred);
-        }
-    }
-     */
     drawLoudnessValues(g);
 }
 
@@ -300,77 +277,5 @@ void FFTGenerator::getLoudnessMeasurements()
         else
             peakR = fileBuffer->getMagnitude(i, 0, fileBuffer->getNumSamples());
     }
-    
-    /*int buffSize = 256;
-    
-    juce::dsp::AudioBlock<float> block (*fileBuffer.get());
-    std::cout << "block created" << std::endl;*/
-    /*
-    for(int i = 0; i < block.getNumSamples(); i += buffSize)
-    {
-        for(int j = i; j < j + buffSize; j++)
-        {
-            
-        }
-        
-    }
-    */
-    
-    
-    /*os.initProcessing(1);
-    std::cout << "init processing" << std::endl;
-    
-    juce::dsp::AudioBlock<float> block (*fileBuffer.get());
-    std::cout << "block created" << std::endl;
-    
-    os.processSamplesUp(block);
-    std::cout << "process samples up" << std::endl;
-    */
-    
-   /* //Create oversampling object
-    juce::dsp::Oversampling<float>* overSamp; //= juce::dsp::Oversampling<float>(fileBuffer->getNumChannels(), 2, juce::dsp::Oversampling<float>::FilterType::filterHalfBandFIREquiripple);
-    std::cout << "Oversampling object created" << std::endl;
-    overSamp = new juce::dsp::Oversampling<float>(
-                                                fileBuffer->getNumChannels(),
-                                                2,
-                                                juce::dsp::Oversampling<float>::FilterType::filterHalfBandFIREquiripple,
-                                                true,
-                                                  true);;
-    
-    overSamp->reset();
-    
-    
-    overSamp->initProcessing(128);
-    std::cout << "initProcessing called" << std::endl;
-    //Upsample
-    //auto blockOverSamp = overSamp.processSamplesUp(juce::dsp::AudioBlock<float>(*fileBuffer.get()));
-    auto tempBlock = juce::dsp::AudioBlock<float>(*fileBuffer);
-    
-    std::cout << "tempBlock created" << std::endl;
-    std::cout << "Oversamp factor: " << overSamp->factorOversampling << std::endl;
-    std::cout << "numChannels: " << overSamp->numChannels << std::endl;
-    
-    //overSamp->addOversamplingStage(juce::dsp::Oversampling<float>::filterHalfBandFIREquiripple, 0.1f, -50.0f, 0.1f, -45.0f);
-    //std::cout << "Added oversampling stage" << std::endl;
-    
-    auto blockOverSamp = overSamp->processSamplesUp(tempBlock);
-    std::cout << "blockOverSamp created and processed" << std::endl;
-    
-    juce::AudioBuffer<float> buffOverSamp = juce::AudioBuffer<float>(blockOverSamp.getNumChannels(), blockOverSamp.getNumSamples());
-    
-    
-    for(int i = 0; i < buffOverSamp.getNumChannels(); i++)
-    {
-        std::cout << "Channel being copied over" << std::endl;
-        for(int j = 0; j < buffOverSamp.getNumSamples(); j++)
-        {
-            buffOverSamp.setSample(i, j, blockOverSamp.getSample(i, j));
-        }
-    }
-     
-    
-    truePeakL = buffOverSamp.getMagnitude(0, 0, buffOverSamp.getNumSamples());
-    truePeakR = buffOverSamp.getMagnitude(1, 0, buffOverSamp.getNumSamples());
-*/
-    
+  
 }

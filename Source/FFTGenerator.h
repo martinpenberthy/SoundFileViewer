@@ -63,8 +63,8 @@ private:
     float peakR = 0.0f;
     
     std::unique_ptr<juce::AudioBuffer<float>> fileBuffer;
-    juce::dsp::Oversampling<float> os;
     
+    juce::Slider sliderFreqHighlight;
     
     //std::unique_ptr<juce::AudioFormatReader> reader;
 

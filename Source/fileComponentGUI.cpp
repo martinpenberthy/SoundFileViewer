@@ -50,7 +50,9 @@ fileComponentGUI::fileComponentGUI(fileComponentAudio *player,
 
 fileComponentGUI::~fileComponentGUI()
 {
-    
+    player->~fileComponentAudio();
+    waveformDisplay.~Waveform();
+    FFTDisplay.~FFTGenerator();
 }
 
 
