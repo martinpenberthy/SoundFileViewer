@@ -226,7 +226,7 @@ void MainComponent::paint (juce::Graphics& g)
 void MainComponent::resized()
 {
     contComponent.setBounds(0, 0, 900, 700);
-    myViewport.setBounds(0, 0, 900, 200);
+    myViewport.setBounds(0, 0, getWidth(), getHeight());
     
     auto area = contComponent.getLocalBounds();
     auto area2 = contComponent.getLocalBounds();
