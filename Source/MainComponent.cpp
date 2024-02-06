@@ -16,13 +16,7 @@ MainComponent::MainComponent()
         setAudioChannels (2, 2);
     }    
     
-   
-    
-    /*addAndMakeVisible(&fileGUI);
-    addAndMakeVisible(&fileGUI2);
-    */
-    
-    addAndMakeVisible(buttonOpenChooser);
+    contComponent.addAndMakeVisible(buttonOpenChooser);
     buttonOpenChooser.setButtonText("Add file");
     
     buttonOpenChooser.onClick = [this]
@@ -87,7 +81,7 @@ MainComponent::MainComponent()
         });
     };
 
-    addAndMakeVisible(comboWindowType);
+    contComponent.addAndMakeVisible(comboWindowType);
     comboWindowType.addItem("Hann", 1);
     comboWindowType.addItem("Flat Top", 2);
     comboWindowType.addItem("Rectangular", 3);
@@ -144,11 +138,15 @@ MainComponent::MainComponent()
         }
     };
     
-    //addAndMakeVisible(file1.getFileComponentGUI());
+    myViewport.setViewedComponent(&contComponent, false);
+    addAndMakeVisible(myViewport);
+    
+    contComponent.setBounds(0, 0, 900, 300);
+    myViewport.setBounds(0, 0, 900, 700);
     
     // Make sure you set the size of the component after
     // you add any child components.
-    setSize (900, 600);
+    setSize (900, 300);
 }
 
 MainComponent::~MainComponent()
@@ -174,31 +172,10 @@ fileComponent* MainComponent::makeNewFileComponent(juce::URL audioURL)
 //==============================================================================
 void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
-    // This function will be called when the audio device is started, or when
-    // its settings (i.e. sample rate, block size, etc) are changed.
-
-    // You can use this function to initialise any resources you might need,
-    // but be careful - it will be called on the audio thread, not the GUI thread.
-
-    // For more details, see the help for AudioProcessor::prepareToPlay()
     std::cout << "prepareToPlay" << std::endl;
-    
-    //fileAudio.prepareToPlay(samplesPerBlockExpected, sampleRate);
-    //fileAudio2.prepareToPlay(samplesPerBlockExpected, sampleRate);
     
     mySampleRate = sampleRate;
     myBlockSize = samplesPerBlockExpected;
-    /*
-    if(file1 != nullptr)
-    {
-        auto tempAudio = file1->getFileComponentAudio();
-        tempAudio->prepareToPlay(samplesPerBlockExpected, sampleRate);
-        mixer.addInputSource(tempAudio, false);
-        mixer.prepareToPlay(samplesPerBlockExpected, sampleRate);
-    }*/
-    //mixer.addInputSource(&fileAudio, false);
-    //mixer.addInputSource(&fileAudio2, false);
-
 
     for(int i = 0; i < filesVec.size(); i++)
     {
@@ -254,26 +231,13 @@ void MainComponent::resized()
     area = area.removeFromTop(proportionOfHeight(0.1f));
     area2 = area2.removeFromBottom(proportionOfHeight(0.9f));
     auto const container = area;
-    /*auto containerMenu = area.removeFromTop(0.2f);
-    auto containerMenuLeft = containerMenu.removeFromLeft(containerMenu.proportionOfWidth(0.5f));
-    auto containerMenuRight = containerMenu;*/
     
     auto heightFile1 = 100;
     auto marginFile1 = 7;
     
     
-
-    /*for(it = fileComponents.begin(); it != fileComponents.end(); it++)
-        it->get()->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));*/
-
     buttonOpenChooser.setBounds(area.removeFromLeft(container.proportionOfWidth(0.5f)).reduced(7));
     comboWindowType.setBounds(area.removeFromLeft(container.proportionOfWidth(0.5f)).reduced(7));
-    
-    /*if(file1 != nullptr)
-    {
-        auto tempGUI = file1->getFileComponentGUI();
-        tempGUI->setBounds(area.removeFromTop(heightFile1).reduced(marginFile1));
-    }*/
     
     for(int i = 0; i < filesVec.size(); i++)
     {

@@ -40,9 +40,10 @@ private:
     
     juce::ComboBox comboWindowType;
     
-    
     std::vector<fileComponent*> filesVec;
     
+    juce::Viewport myViewport;
+    juce::Component contComponent;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
