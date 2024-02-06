@@ -141,8 +141,7 @@ MainComponent::MainComponent()
     myViewport.setViewedComponent(&contComponent, false);
     addAndMakeVisible(myViewport);
     
-    contComponent.setBounds(0, 0, 900, 300);
-    myViewport.setBounds(0, 0, 900, 700);
+
     
     // Make sure you set the size of the component after
     // you add any child components.
@@ -219,17 +218,20 @@ void MainComponent::releaseResources()
 void MainComponent::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+    g.fillAll (juce::Colours::darkgrey);
 
     // You can add your drawing code here!
 }
 
 void MainComponent::resized()
 {
-    auto area = getLocalBounds();
-    auto area2 = getLocalBounds();
-    area = area.removeFromTop(proportionOfHeight(0.1f));
-    area2 = area2.removeFromBottom(proportionOfHeight(0.9f));
+    contComponent.setBounds(0, 0, 900, 700);
+    myViewport.setBounds(0, 0, 900, 700);
+    
+    auto area = contComponent.getLocalBounds();
+    auto area2 = contComponent.getLocalBounds();
+    area = area.removeFromTop(contComponent.proportionOfHeight(0.1f));
+    area2 = area2.removeFromBottom(contComponent.proportionOfHeight(0.9f));
     auto const container = area;
     
     auto heightFile1 = 100;
