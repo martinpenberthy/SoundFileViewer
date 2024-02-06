@@ -145,7 +145,7 @@ MainComponent::MainComponent()
     
     // Make sure you set the size of the component after
     // you add any child components.
-    setSize (900, 300);
+    setSize (900, 200);
 }
 
 MainComponent::~MainComponent()
@@ -161,7 +161,7 @@ fileComponent* MainComponent::makeNewFileComponent(juce::URL audioURL)
     //Load the chosen file
     fc->loadFile(audioURL);
     //Make the GUI visible
-    addAndMakeVisible(fc->getFileComponentGUI());
+    contComponent.addAndMakeVisible(fc->getFileComponentGUI());
     
     return fc;
 }
@@ -226,7 +226,7 @@ void MainComponent::paint (juce::Graphics& g)
 void MainComponent::resized()
 {
     contComponent.setBounds(0, 0, 900, 700);
-    myViewport.setBounds(0, 0, 900, 700);
+    myViewport.setBounds(0, 0, 900, 200);
     
     auto area = contComponent.getLocalBounds();
     auto area2 = contComponent.getLocalBounds();
