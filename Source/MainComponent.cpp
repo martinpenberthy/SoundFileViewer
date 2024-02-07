@@ -237,7 +237,6 @@ void MainComponent::resized()
     auto heightFile1 = 100;
     auto marginFile1 = 7;
     
-    
     buttonOpenChooser.setBounds(area.removeFromLeft(container.proportionOfWidth(0.5f)).reduced(7));
     comboWindowType.setBounds(area.removeFromLeft(container.proportionOfWidth(0.5f)).reduced(7));
     

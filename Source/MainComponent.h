@@ -26,6 +26,8 @@ public:
     
     fileComponent* makeNewFileComponent(juce::URL audioURL);
 
+    
+
 private:
     //==============================================================================
     float myBlockSize = 0.0f;
