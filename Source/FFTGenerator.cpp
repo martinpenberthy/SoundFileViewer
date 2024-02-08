@@ -147,6 +147,7 @@ void FFTGenerator::drawFrame (juce::Graphics& g)
     auto height = getLocalBounds().getHeight();
     
     auto heightScope = height - 20;
+    auto bottomScope = 15.0f;
     
     for (int i = 1; i < scopeSize; ++i)
     {
@@ -157,9 +158,9 @@ void FFTGenerator::drawFrame (juce::Graphics& g)
                               juce::jmap (scopeData[i],     0.0f, 1.0f, (float) height-100, 0.0f) });*/
     
         g.drawLine ({ (float) juce::jmap (i - 1, 0, scopeSize - 1, 0, width), //startX
-                              juce::jmap (scopeDataSummed[i - 1], 0.0f, 1.0f, (float) heightScope, 0.0f),//startY
+                              juce::jmap (scopeDataSummed[i - 1], 0.0f, 1.0f, (float) heightScope, bottomScope),//startY
                       (float) juce::jmap (i,     0, scopeSize - 1, 0, width), //endX
-                              juce::jmap (scopeDataSummed[i],     0.0f, 1.0f, (float) heightScope, 0.0f) }); //endY
+                              juce::jmap (scopeDataSummed[i],     0.0f, 1.0f, (float) heightScope, bottomScope) }); //endY
         
     }
     drawLoudnessValues(g);
