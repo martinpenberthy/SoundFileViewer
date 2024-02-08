@@ -29,6 +29,7 @@ void Waveform::paint(juce::Graphics& g)
     g.setColour (juce::Colours::grey);
     g.drawRect (getLocalBounds(), 1);   // draw an outline around the component
     
+    //Set bounds for the thumbnail
     auto lb = getLocalBounds();
     juce::Rectangle<int> thumbnailBounds (lb.getWidth() / 2, lb.getY(), lb.getWidth() / 2, lb.getHeight());
 
@@ -94,7 +95,8 @@ void Waveform::loadURL(juce::URL audioURL)
     {
         repaint();
     }
-    else {
+    else
+    {
         std::cout << "wfd: not loaded! " << std::endl;
     }
 

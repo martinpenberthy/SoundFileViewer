@@ -18,9 +18,9 @@ fileComponentGUI::fileComponentGUI(fileComponentAudio *player,
 {
     DBG("fcGUI constructor");
     
-    addAndMakeVisible(&buttonLoad);
+    /*addAndMakeVisible(&buttonLoad);
     buttonLoad.setButtonText("Change File");
-    buttonLoad.onClick = [this] {loadButtonClicked();};
+    buttonLoad.onClick = [this] {loadButtonClicked();};*/
     
     addAndMakeVisible(&buttonPlay);
     buttonPlay.setButtonText("Play/Stop");
@@ -82,9 +82,8 @@ void fileComponentGUI::resized()
     auto const containerNew2 = area2;
 
     //buttonLoad
-    buttonLoad.setBounds(area.removeFromTop(containerNew1.proportionOfHeight(0.5f)).reduced(buttonMargin));
+    //buttonLoad.setBounds(area.removeFromTop(containerNew1.proportionOfHeight(0.5f)).reduced(buttonMargin));
     //buttonPlay
-    //buttonPlay.setBounds(area.removeFromLeft(containerNew1.proportionOfWidth(0.33f)).reduced(buttonMargin));
     buttonPlay.setBounds(area.removeFromTop(containerNew1.proportionOfHeight(0.5f)).reduced(buttonMargin));
 
     //labelFileName
@@ -102,20 +101,6 @@ void fileComponentGUI::resized()
     waveformDisplay.setBounds(area2);
     //FFTDisplay
     FFTDisplay.setBounds(area2.removeFromLeft(containerNew2.proportionOfWidth(0.5f)));
-    
-    /*buttonLoad.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.1f)).reduced(buttonMargin));
-    buttonPlay.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.1f)).reduced(buttonMargin));
-    //buttonLoad.setBounds(
-    
-    labelFileName.setBounds(bounds.removeFromTop(container.proportionOfHeight(0.2f)).removeFromLeft(container.proportionOfWidth(0.2f)));
-    labelSampleRate.setBounds(bounds.removeFromTop(container.proportionOfHeight(0.2f)).removeFromLeft(container.proportionOfWidth(0.2f)));
-    labelBitDepth.setBounds(bounds.removeFromTop(container.proportionOfHeight(0.2f)).removeFromLeft(container.proportionOfWidth(0.2f)));
-    
-    bounds.removeFromLeft(container.proportionOfWidth(0.2f));
-    
-    waveformDisplay.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.5f)));
-    
-    FFTDisplay.setBounds(bounds.removeFromLeft(container.proportionOfWidth(0.5f)));*/
 }
     
 void fileComponentGUI::loadButtonClicked()

@@ -36,7 +36,7 @@ public:
     
     fileComponentAudio* player;
     juce::TextButton buttonPlay;
-    juce::TextButton buttonLoad;
+    //juce::TextButton buttonLoad;
 
     Waveform waveformDisplay;
     FFTGenerator FFTDisplay;

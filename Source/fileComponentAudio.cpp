@@ -45,17 +45,16 @@ void fileComponentAudio::releaseResources()
 /* loadURL from FileChooser and assign AudioFormatSourceReader* to transportSource and readerSource* */
 void fileComponentAudio::loadURL(juce::URL audioURL)
 {
-    //auto* reader = formatManager->createReaderFor(audioURL.createInputStream(false));
-    
+    //Create InputStreamOptions object to pass to createReaderFoor
     auto inStreamOpts = juce::URL::InputStreamOptions(juce::URL::ParameterHandling::inPostData);
     auto* reader = formatManager->createReaderFor(audioURL.createInputStream(inStreamOpts));
     
     
     if (reader != nullptr) // good file!
     {
+        //Make an AudioFormatReaderSource
         std::unique_ptr<juce::AudioFormatReaderSource> newSource (new juce::AudioFormatReaderSource (reader, true));
         transportSource.setSource (newSource.get(), 0, nullptr, reader->sampleRate);
-        
         
         //reset to delete, release doesnt delete
         readerSource.reset (newSource.release());
@@ -82,7 +81,7 @@ void fileComponentAudio::start()
 void fileComponentAudio::stop()
 {
     std::cout <<"transport stopped" << std::endl;
-    transportSource.stop(); //pausing only
+    transportSource.stop();
     transportSource.setPosition(0.0f);
 }
 
