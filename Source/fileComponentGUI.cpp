@@ -18,9 +18,9 @@ fileComponentGUI::fileComponentGUI(fileComponentAudio *player,
 {
     DBG("fcGUI constructor");
     
-    /*addAndMakeVisible(&buttonLoad);
-    buttonLoad.setButtonText("Change File");
-    buttonLoad.onClick = [this] {loadButtonClicked();};*/
+    addAndMakeVisible(&buttonDelete);
+    buttonDelete.setButtonText("Delete");
+    buttonDelete.onClick = [this] {deleteButtonClicked();};
     
     addAndMakeVisible(&buttonPlay);
     buttonPlay.setButtonText("Play/Stop");
@@ -50,6 +50,7 @@ fileComponentGUI::fileComponentGUI(fileComponentAudio *player,
 
 fileComponentGUI::~fileComponentGUI()
 {
+    std::cout << "fileComponentGUI Destructor" << std::endl;
     player->~fileComponentAudio();
     waveformDisplay.~Waveform();
     FFTDisplay.~FFTGenerator();
@@ -81,10 +82,10 @@ void fileComponentGUI::resized()
     auto const containerNew1Labels = areaLabels;
     auto const containerNew2 = area2;
 
-    //buttonLoad
-    //buttonLoad.setBounds(area.removeFromTop(containerNew1.proportionOfHeight(0.5f)).reduced(buttonMargin));
     //buttonPlay
     buttonPlay.setBounds(area.removeFromTop(containerNew1.proportionOfHeight(0.5f)).reduced(buttonMargin));
+    //buttonLoad
+    buttonDelete.setBounds(area.removeFromTop(containerNew1.proportionOfHeight(0.5f)).reduced(buttonMargin));
 
     //labelFileName
     labelFileName.setBounds(areaLabels.removeFromTop(containerNew1Labels.proportionOfHeight(0.2f)));
@@ -103,8 +104,9 @@ void fileComponentGUI::resized()
     FFTDisplay.setBounds(area2.removeFromLeft(containerNew2.proportionOfWidth(0.5f)));
 }
     
-void fileComponentGUI::loadButtonClicked()
+void fileComponentGUI::deleteButtonClicked()
 {
+    this->~fileComponentGUI();
     /*DBG("loadButtonClicked");
 
     myChooser = std::make_unique<juce::FileChooser> ("Please select the .wav you want to load...",

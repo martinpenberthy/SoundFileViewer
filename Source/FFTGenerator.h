@@ -38,7 +38,6 @@ public:
     
     double sampleRate = 0.0f;
 private:
-    juce::Graphics* graphicsPtr;
     juce::AudioFormatManager* formatManager;
     
     juce::dsp::FFT forwardFFT;

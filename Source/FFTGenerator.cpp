@@ -16,13 +16,14 @@ FFTGenerator::FFTGenerator(juce::AudioFormatManager* formatManagerToUse) : forma
     //startTimerHz (30);
     
     window = new juce::dsp::WindowingFunction<float>(fftSize, juce::dsp::WindowingFunction<float>::triangular);
-    addAndMakeVisible(&sliderFreqHighlight);
+    //addAndMakeVisible(&sliderFreqHighlight);
     sliderFreqHighlight.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
     sliderFreqHighlight.setRange(0.0f, 1.0f);
 }
 
 FFTGenerator::~FFTGenerator()
 {
+    std::cout << "FFTGenerator Destructor" << std::endl;
     delete window;
 }
 

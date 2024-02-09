@@ -21,7 +21,7 @@ Waveform::Waveform(juce::AudioFormatManager* formatManagerToUse, juce::AudioThum
 
 Waveform::~Waveform()
 {
-    
+    std::cout << "Waveform Destructor" << std::endl;
 }
 
 void Waveform::paint(juce::Graphics& g)
