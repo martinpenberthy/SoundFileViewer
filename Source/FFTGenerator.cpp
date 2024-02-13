@@ -65,25 +65,12 @@ void FFTGenerator::generateFFT()
                 pushNextSampleIntoFifo(fileBuffer->getSample(i, j));
     }
     
-    /*for(int i = 0; i < scopeSize; i++)
-        DBG(scopeDataSummed[i]);*/
-    
-    //DBG("=================================================================");
-    
     for(int i = 0; i < scopeSize; i++)
     {
-        //scopeDataSummed[i] = fmod(scopeDataSummed[i], 1) *  2.0f;
         scopeDataSummed[i] = fmod(scopeDataSummed[i], 1);
-        std::cout << scopeDataSummed[i] << std::endl;
+        //std::cout << scopeDataSummed[i] << std::endl;
         avgLevel += scopeDataSummed[i];
     }
-    
-    /*avgLevel /= scopeSize;
-    for(int i = 0; i < scopeSize; i++)
-    {
-        if(scopeDataSummed[i] < avgLevel)
-            scopeDataSummed[i] = 0.0f;
-    }*/
 }
 
 
@@ -170,13 +157,15 @@ void FFTGenerator::drawFrame (juce::Graphics& g)
 void FFTGenerator::drawLoudnessValues(juce::Graphics& g)
 {
     auto xOffset = 0;
-
+    g.setColour(juce::Colours::white);
+    
     //RMSlevelL
     auto tempDouble = juce::Decibels::gainToDecibels(RMSLevelL);
     auto tempString = juce::String(tempDouble);
     tempString = tempString.substring(0, tempString.indexOf(".") + 2);
     
     g.drawText(juce::String("RMS L: "), xOffset, 0, 50, 20, juce::Justification::right);
+    g.setColour(juce::Colours::green);
     g.drawText(tempString, xOffset += 30, 0, 50, 20, juce::Justification::right);
     
     //RMSlevelR
@@ -184,15 +173,23 @@ void FFTGenerator::drawLoudnessValues(juce::Graphics& g)
     tempString = juce::String(tempDouble);
     tempString = tempString.substring(0, tempString.indexOf(".") + 2);
     
+    g.setColour(juce::Colours::white);
+
     g.drawText(juce::String("R: "), xOffset += 30, 0, 50, 20, juce::Justification::right);
+    
+    g.setColour(juce::Colours::green);
+
     g.drawText(tempString, xOffset += 30, 0, 50, 20, juce::Justification::right);
     
     //PeakL
     tempDouble = juce::Decibels::gainToDecibels(peakL);
     tempString = juce::String(tempDouble);
     tempString = tempString.substring(0, tempString.indexOf(".") + 2);
-    
-    g.drawText(juce::String("P L: "), xOffset += 30, 0, 50, 20, juce::Justification::right);
+    g.setColour(juce::Colours::white);
+
+    g.drawText(juce::String("P L: "), xOffset += 60, 0, 50, 20, juce::Justification::right);
+    g.setColour(juce::Colours::green);
+
     g.drawText(tempString, xOffset += 30, 0, 50, 20, juce::Justification::right);
     
     //PeakR
@@ -200,13 +197,20 @@ void FFTGenerator::drawLoudnessValues(juce::Graphics& g)
     tempString = juce::String(tempDouble);
     tempString = tempString.substring(0, tempString.indexOf(".") + 2);
     
+    g.setColour(juce::Colours::white);
+
     g.drawText(juce::String("R: "), xOffset += 30, 0, 50, 20, juce::Justification::right);
+    
+    g.setColour(juce::Colours::green);
+
     g.drawText(tempString, xOffset += 30, 0, 50, 20, juce::Justification::right);
     
     
     auto width  = getLocalBounds().getWidth();
     auto height = getLocalBounds().getHeight();
     auto heightScope = height - 20;
+
+    g.setColour(juce::Colours::white);
 
     //100 hz
     int x100hz = width / 28;
