@@ -138,6 +138,17 @@ MainComponent::MainComponent()
         }
     };
     
+    
+    contComponent.addAndMakeVisible(&buttonDelete);
+    buttonDelete.setButtonText("Delete");
+    buttonDelete.onClick = [this]
+    {
+        for(int i = 0; i < filesVec.size(); i++)
+        {
+            filesVec[i]->~fileComponent();
+        }
+    };
+    
     myViewport.setViewedComponent(&contComponent, false);
     addAndMakeVisible(myViewport);
     
@@ -237,8 +248,9 @@ void MainComponent::resized()
     auto heightFile1 = 100;
     auto marginFile1 = 7;
     
-    buttonOpenChooser.setBounds(area.removeFromLeft(container.proportionOfWidth(0.5f)).reduced(7));
-    comboWindowType.setBounds(area.removeFromLeft(container.proportionOfWidth(0.5f)).reduced(7));
+    buttonOpenChooser.setBounds(area.removeFromLeft(container.proportionOfWidth(0.33f)).reduced(7));
+    comboWindowType.setBounds(area.removeFromLeft(container.proportionOfWidth(0.33f)).reduced(7));
+    buttonDelete.setBounds(area.removeFromLeft(container.proportionOfWidth(0.34f)).reduced(7));
     
     for(int i = 0; i < filesVec.size(); i++)
     {

@@ -25,6 +25,8 @@ fileComponent::fileComponent()
 
 fileComponent::~fileComponent()
 {
+    thisAudio->~fileComponentAudio();
+    thisGUI->~fileComponentGUI();
     std::cout << "fileComponent Destructor" << std::endl;
 }
 

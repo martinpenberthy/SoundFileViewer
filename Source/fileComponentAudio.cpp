@@ -16,6 +16,7 @@ fileComponentAudio::fileComponentAudio(juce::AudioFormatManager* formatManager) 
 
 fileComponentAudio::~fileComponentAudio()
 {
+    formatManager->~AudioFormatManager();
     std::cout << "fileComponentAudio Destructor" << std::endl;
 }
 

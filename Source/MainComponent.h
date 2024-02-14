@@ -26,8 +26,6 @@ public:
     
     fileComponent* makeNewFileComponent(juce::URL audioURL);
 
-    
-
 private:
     //==============================================================================
     float myBlockSize = 0.0f;
@@ -39,6 +37,7 @@ private:
     
     std::unique_ptr<juce::FileChooser> myChooser;
     juce::TextButton buttonOpenChooser;
+    juce::TextButton buttonDelete;
     
     juce::ComboBox comboWindowType;
     
