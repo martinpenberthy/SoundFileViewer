@@ -51,9 +51,9 @@ fileComponentGUI::fileComponentGUI(fileComponentAudio *player,
 fileComponentGUI::~fileComponentGUI()
 {
     std::cout << "fileComponentGUI Destructor" << std::endl;
-    player->~fileComponentAudio();
-    waveformDisplay.~Waveform();
-    FFTDisplay.~FFTGenerator();
+    //player->~fileComponentAudio();
+    //waveformDisplay.~Waveform();
+    //FFTDisplay.~FFTGenerator();
 }
 
 
