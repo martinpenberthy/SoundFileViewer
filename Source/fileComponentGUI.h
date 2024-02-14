@@ -26,7 +26,6 @@ public:
     
     //void buttonClicked(juce::Button *button) override;
     
-    void deleteButtonClicked();
     void playButtonClicked();
     
     void loadURL(juce::URL fileToLoad);
@@ -36,7 +35,7 @@ public:
     
     fileComponentAudio* player;
     juce::TextButton buttonPlay;
-    juce::TextButton buttonDelete;
+    juce::ToggleButton buttonToggleDelete;
 
     Waveform waveformDisplay;
     FFTGenerator FFTDisplay;

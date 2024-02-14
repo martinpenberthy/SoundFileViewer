@@ -18,9 +18,7 @@ fileComponentGUI::fileComponentGUI(fileComponentAudio *player,
 {
     DBG("fcGUI constructor");
     
-    addAndMakeVisible(&buttonDelete);
-    buttonDelete.setButtonText("Delete");
-    buttonDelete.onClick = [this] {deleteButtonClicked();};
+    addAndMakeVisible(&buttonToggleDelete);
     
     addAndMakeVisible(&buttonPlay);
     buttonPlay.setButtonText("Play/Stop");
@@ -51,9 +49,6 @@ fileComponentGUI::fileComponentGUI(fileComponentAudio *player,
 fileComponentGUI::~fileComponentGUI()
 {
     std::cout << "fileComponentGUI Destructor" << std::endl;
-    //player->~fileComponentAudio();
-    //waveformDisplay.~Waveform();
-    //FFTDisplay.~FFTGenerator();
 }
 
 
@@ -84,8 +79,9 @@ void fileComponentGUI::resized()
 
     //buttonPlay
     buttonPlay.setBounds(area.removeFromTop(containerNew1.proportionOfHeight(0.5f)).reduced(buttonMargin));
-    //buttonLoad
-    buttonDelete.setBounds(area.removeFromTop(containerNew1.proportionOfHeight(0.5f)).reduced(buttonMargin));
+    //buttonToggleDelete
+    buttonToggleDelete.setBounds(area.removeFromTop(containerNew1.proportionOfHeight(0.5f)).reduced(buttonMargin));
+
 
     //labelFileName
     labelFileName.setBounds(areaLabels.removeFromTop(containerNew1Labels.proportionOfHeight(0.2f)));
@@ -103,38 +99,7 @@ void fileComponentGUI::resized()
     //FFTDisplay
     FFTDisplay.setBounds(area2.removeFromLeft(containerNew2.proportionOfWidth(0.5f)));
 }
-    
-void fileComponentGUI::deleteButtonClicked()
-{
-    this->~fileComponentGUI();
-    /*DBG("loadButtonClicked");
 
-    myChooser = std::make_unique<juce::FileChooser> ("Please select the .wav you want to load...",
-                                                     juce::File{},
-                                                     "*.wav");
-    auto folderChooserFlags = juce::FileBrowserComponent::openMode | juce::FileBrowserComponent::canSelectFiles;
-    
-
-    myChooser->launchAsync (folderChooserFlags, [this] (const juce::FileChooser& chooser)
-    {
-        DBG("Chooser callback");
-        juce::URL audioURL = juce::URL{chooser.getResult()};
-        player->loadURL(audioURL);
-        waveformDisplay.loadURL(audioURL);
-        FFTDisplay.loadURL(audioURL);
-        
-        auto tempStr = juce::String("Sample Rate: ");
-        tempStr.append(juce::String(player->sampleRate), 23);
-        
-        labelSampleRate.setText(tempStr, juce::NotificationType::dontSendNotification);
-        
-        auto tempStr2 = juce::String("Bit Depth: ");
-        tempStr2.append(juce::String(player->bitDepth), 23);
-        
-        labelBitDepth.setText(tempStr2, juce::NotificationType::dontSendNotification);
-        
-    });*/
-}
 
 void fileComponentGUI::playButtonClicked()
 {
