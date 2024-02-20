@@ -36,6 +36,8 @@ public:
     fileComponentAudio* player;
     juce::TextButton buttonPlay;
     juce::ToggleButton buttonToggleDelete;
+    
+    bool toggledForDelete = false;
 
     Waveform waveformDisplay;
     FFTGenerator FFTDisplay;

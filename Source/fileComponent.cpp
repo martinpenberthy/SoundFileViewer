@@ -54,7 +54,10 @@ void fileComponent::setWindowingFunction(juce::dsp::WindowingFunction<float>::Wi
 }
 
 
-
+bool fileComponent::getDeleteState()
+{
+    return thisGUI->toggledForDelete;
+}
 
 
 /*

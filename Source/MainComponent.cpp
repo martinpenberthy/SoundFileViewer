@@ -145,7 +145,10 @@ MainComponent::MainComponent()
     {
         for(int i = 0; i < filesVec.size(); i++)
         {
-            filesVec[i]->~fileComponent();
+            auto tempFile = filesVec[i];
+            
+            if(tempFile->getDeleteState())
+                tempFile->~fileComponent();
         }
     };
     
@@ -156,7 +159,7 @@ MainComponent::MainComponent()
     
     // Make sure you set the size of the component after
     // you add any child components.
-    setSize (900, 200);
+    setSize (910, 200);
 }
 
 MainComponent::~MainComponent()
@@ -236,7 +239,7 @@ void MainComponent::paint (juce::Graphics& g)
 
 void MainComponent::resized()
 {
-    contComponent.setBounds(0, 0, 900, 700);
+    contComponent.setBounds(0, 0, 900, 1500);
     myViewport.setBounds(0, 0, getWidth(), getHeight());
     
     auto area = contComponent.getLocalBounds();
@@ -248,9 +251,9 @@ void MainComponent::resized()
     auto heightFile1 = 100;
     auto marginFile1 = 7;
     
-    buttonOpenChooser.setBounds(area.removeFromLeft(container.proportionOfWidth(0.33f)).reduced(7));
-    comboWindowType.setBounds(area.removeFromLeft(container.proportionOfWidth(0.33f)).reduced(7));
-    buttonDelete.setBounds(area.removeFromLeft(container.proportionOfWidth(0.34f)).reduced(7));
+    buttonOpenChooser.setBounds(area.removeFromLeft(container.proportionOfWidth(0.33f)).reduced(15));
+    comboWindowType.setBounds(area.removeFromLeft(container.proportionOfWidth(0.33f)).reduced(15));
+    buttonDelete.setBounds(area.removeFromLeft(container.proportionOfWidth(0.34f)).reduced(15));
     
     for(int i = 0; i < filesVec.size(); i++)
     {

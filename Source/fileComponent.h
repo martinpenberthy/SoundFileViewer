@@ -26,6 +26,8 @@ public:
     
     void loadFile(juce::URL fileToLoad);
     void setWindowingFunction(juce::dsp::WindowingFunction<float>::WindowingMethod func);
+    
+    bool getDeleteState();
 
 private:
     fileComponentAudio* thisAudio;

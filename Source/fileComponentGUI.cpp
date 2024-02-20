@@ -20,6 +20,7 @@ fileComponentGUI::fileComponentGUI(fileComponentAudio *player,
     
     addAndMakeVisible(&buttonToggleDelete);
     
+    
     addAndMakeVisible(&buttonPlay);
     buttonPlay.setButtonText("Play/Stop");
     buttonPlay.onClick = [this] {playButtonClicked();};
@@ -55,6 +56,11 @@ fileComponentGUI::~fileComponentGUI()
 void fileComponentGUI::paint(juce::Graphics& g)
 {
     g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId).withSaturationHSL(0.1).darker());
+    
+    if(buttonToggleDelete.getToggleState())
+        toggledForDelete = true;
+    else
+        toggledForDelete = false;
 }
 
 void fileComponentGUI::resized()
