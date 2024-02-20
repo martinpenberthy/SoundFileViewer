@@ -148,7 +148,10 @@ MainComponent::MainComponent()
             auto tempFile = filesVec[i];
             
             if(tempFile->getDeleteState())
+            {
                 tempFile->~fileComponent();
+                resized();
+            }
         }
     };
     

@@ -148,10 +148,6 @@ void fileComponentGUI::loadURL(juce::URL fileToLoad)
     
     tempStr.append(positionFormatted, 25);
     labelLength.setText(tempStr, juce::NotificationType::dontSendNotification);
-
-    
-
-    //player->
 }
 
 
